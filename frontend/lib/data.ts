@@ -58,7 +58,7 @@ export const roles: Role[] = [
     bullets: [
       "{2,000+} downloads across app store and play store",
       "Gained {520k+} views across socials",
-      "Featured at toronto fashion week, summer '26",
+      "Featured at Toronto Fashion Week, summer '26",
     ],
   },
   {
@@ -68,13 +68,13 @@ export const roles: Role[] = [
     dates: "Aug 2026 - present",
     location: "Waterloo",
     tags: ["growth", "ops"],
-    bullets: ["Scaling notion in waterloo by hosting events, building templates, and creating content"],
+    bullets: ["Scaling Notion in Waterloo by hosting events, building templates, and creating content"],
   },
   {
     title: "Software Engineer Intern",
     company: "Rocket",
     logo: "/assets/logos/rocket.png",
-    dates: "May - aug 2026",
+    dates: "May - Aug 2026",
     location: "Remote",
     tags: ["engineering", "product"],
     bullets: [
@@ -85,7 +85,7 @@ export const roles: Role[] = [
   {
     title: "Product Manager",
     company: "UW Blueprint",
-    dates: "Apr - aug 2026",
+    dates: "Apr - Aug 2026",
     location: "Waterloo",
     tags: ["product", "ops"],
     bullets: [
@@ -96,7 +96,7 @@ export const roles: Role[] = [
   {
     title: "Growth",
     company: "Stan",
-    dates: "Mar - jun 2026",
+    dates: "Mar - Jun 2026",
     location: "Remote",
     tags: ["growth"],
     bullets: ["Wrote content reaching {370k+} impressions"],
@@ -104,7 +104,7 @@ export const roles: Role[] = [
   {
     title: "Growth",
     company: "Polarity",
-    dates: "Apr - may 2026",
+    dates: "Apr - May 2026",
     location: "Remote",
     tags: ["growth"],
     bullets: ["Wrote content reaching {200k+} impressions"],
@@ -135,7 +135,7 @@ export const roles: Role[] = [
     title: "Founder & Chief Executive Officer",
     company: "The Pink Stairs",
     logo: "/assets/logos/pinkstairs.png",
-    dates: "Jun 2024 - dec 2025",
+    dates: "Jun 2024 - Dec 2025",
     location: "Toronto",
     tags: ["growth", "ops"],
     bullets: [
@@ -163,7 +163,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     name: "Reeled In",
-    date: "jul 2026",
+    date: "Jul 2026",
     description:
       "A/B test your short-form content on a predictive model of the human brain.",
     tags: ["Data Visualization", "MongoDB"],
@@ -175,7 +175,7 @@ export const projects: Project[] = [
   },
   {
     name: "Autoblog",
-    date: "may 2026",
+    date: "May 2026",
     description:
       "Multi-agent orchestration (g-stack) to generate and post technical content for companies.",
     tags: ["AI Agents", "Next.js"],
@@ -187,7 +187,7 @@ export const projects: Project[] = [
   },
   {
     name: "Godseye",
-    date: "mar 2026",
+    date: "Mar 2026",
     award: "Best use of Polymarket @ YHack",
     description:
       "Multi-agent swarm analysis on Polymarket events. Watch simulated societies, based on real people, debate the evidence, form alliances, and argue over the future of the market.",
@@ -200,7 +200,7 @@ export const projects: Project[] = [
   },
   {
     name: "Slidefund",
-    date: "mar 2026",
+    date: "Mar 2026",
     award: "Best use of Solana @ Hack Canada",
     description:
       "ETFs for prediction markets. Four agentic AI systems finding combinatorial arbitrages across Polymarket, Kalshi and Manifold.",
@@ -213,7 +213,7 @@ export const projects: Project[] = [
   },
   {
     name: "Post It",
-    date: "sep 2025",
+    date: "Sep 2025",
     award: "Top 32 @ Hack the North · Top 10 @ HTN Snapchat",
     description:
       "An augmented reality app for Snapchat Spectacles that anchors digital sticky notes in real-world locations.",
@@ -226,7 +226,7 @@ export const projects: Project[] = [
   },
   {
     name: "MIND - Math in Nature's Design",
-    date: "may - dec 2024",
+    date: "May - Dec 2024",
     description:
       "A math blog with 600+ readers, exploring how math is intertwined with everyday life.",
     tags: ["Canva"],
@@ -335,7 +335,7 @@ export const story = [
   "So when it came time to pick a path for university, I couldn't choose. Cs or business? I decided I wanted both. Waterloo's cs/bba. I locked in and got the offer.",
   "Then I started making content. That led to growth work at 4 startups - I got obsessed with how products spread and why people care.",
   "Around the same time I started building in public and posting about a side project: an ai stylist. It got so much attention that we turned it into a real company. That's Oro today.",
-  "I recently wrapped up my first swe internship at Rocket. Now I'm growing Oro and hosting events in waterloo - scaling Notion, and bringing value to the city's founder community through Sip & Scale. All these random threads actually weave together to become my strength.",
+  "I recently wrapped up my first swe internship at Rocket. Now I'm growing Oro and hosting events in Waterloo - scaling Notion, and bringing value to the city's founder community through Sip & Scale. All these random threads actually weave together to become my strength.",
   "To be honest, I don't have much of my career figured out. I'm learning to navigate being a founder, builder, and creator all at once. Some days it feels scattered.",
 ];
 
