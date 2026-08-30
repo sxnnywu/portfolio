@@ -22,7 +22,7 @@ export default function Projects() {
   return (
     <>
       <SkyBand
-        sublineLength={54}
+        sublineText={"What happens when you give me a weekend and a deadline"}
         title="Projects"
         subline="What happens when you give me a weekend and a deadline"
       />

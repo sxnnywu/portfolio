@@ -7,12 +7,12 @@ import { color, font, gradient, type } from "@/lib/tokens";
 export default function SkyBand({
   title,
   subline,
-  sublineLength,
+  sublineText,
 }: {
   title: string;
   subline: ReactNode;
-  /** Plain-text length of the subline, which drives its typing speed. */
-  sublineLength: number;
+  /** Plain-text copy of the subline; drives the timing and the accessible name. */
+  sublineText: string;
 }) {
   return (
     <div
@@ -55,11 +55,11 @@ export default function SkyBand({
           willChange: "transform, opacity",
         }}
       >
-        <Typed length={title.length} style={type.pageTitle}>
+        <Typed text={title} style={type.pageTitle}>
           {title}
         </Typed>
         <Typed
-          length={sublineLength}
+          text={sublineText}
           delay={sequenceEnd(title.length)}
           style={{
             marginTop: 14,

@@ -9,7 +9,7 @@ export default function Awards() {
   return (
     <>
       <SkyBand
-        sublineLength={55}
+        sublineText={"Recognition is a lagging indicator, but it's a nice one"}
         title="Awards" subline="Recognition is a lagging indicator, but it's a nice one" />
 
       <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "90px 6vw 34px" }} />

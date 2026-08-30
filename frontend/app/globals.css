@@ -178,31 +178,72 @@ img {
   }
 }
 
-/* Character-by-character reveal. Clipping rather than appending text keeps the
-   element at its final width, so a centred line does not jitter as it fills. */
-@keyframes oro-type {
+/* Typewriter. Every character is already laid out and only its visibility
+   flips, so the line never reflows. Clipping the line instead would step by
+   width rather than by glyph and leave half-drawn letters mid-run. */
+@keyframes oro-char {
   from {
-    clip-path: inset(0 100% 0 0);
+    visibility: hidden;
   }
   to {
-    clip-path: inset(0 0 0 0);
+    visibility: visible;
   }
 }
 
-[data-typed] {
-  animation: oro-type var(--type-duration, 900ms)
-    steps(var(--type-steps, 12), end) var(--type-delay, 0ms) both;
+/* Held at opacity 1 for exactly one character's worth of time, with no fill,
+   so the caret sits on the character being typed and then moves on. */
+@keyframes oro-caret {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.oro-ch {
+  position: relative;
+  visibility: hidden;
+  animation: oro-char 1ms linear both;
+}
+
+.oro-ch::after {
+  content: "";
+  position: absolute;
+  right: -0.07em;
+  top: 0.1em;
+  bottom: 0.12em;
+  width: 0.055em;
+  background: currentColor;
+  opacity: 0;
+  animation: oro-caret var(--type-step, 85ms) linear;
+  animation-delay: inherit;
+}
+
+/* Reads the line to assistive tech without exposing the per-character spans. */
+.oro-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-typed] {
+  .oro-ch {
+    visibility: visible !important;
     animation: none !important;
-    clip-path: none !important;
+  }
+
+  .oro-ch::after {
+    display: none;
   }
 }
 
-/* Held back until the title has finished typing. The delay is computed from
-   the same duration the typing uses, so the two cannot drift apart. */
 @keyframes oro-fade-in {
   from {
     opacity: 0;

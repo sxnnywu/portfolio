@@ -76,7 +76,7 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <Typed length={HEADLINE.length} style={type.heroDisplay}>
+        <Typed text={HEADLINE} style={type.heroDisplay}>
           Hey, I&apos;m{" "}
           <span
             style={{
@@ -90,7 +90,7 @@ function Hero() {
           </span>
         </Typed>
         <Typed
-          length={TAGLINE.length}
+          text={TAGLINE}
           delay={sequenceEnd(HEADLINE.length)}
           style={{
             marginTop: 20,

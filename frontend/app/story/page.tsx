@@ -10,7 +10,7 @@ export default function Story() {
   return (
     <>
       <SkyBand
-        sublineLength={43}
+        sublineText={"How a theatre kid ended up writing software"}
         title="Story"
         subline={
           <>

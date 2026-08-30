@@ -9,7 +9,7 @@ export default function Work() {
   return (
     <>
       <SkyBand
-        sublineLength={90}
+        sublineText={"I've been the technical person in business rooms and the business person in technical ones"}
         title="Work"
         subline={
           <>
