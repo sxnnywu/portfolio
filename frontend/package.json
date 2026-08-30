@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.3",
     "@vercel/analytics": "^2.0.1",
     "next": "16.2.4",
     "react": "19.2.4",

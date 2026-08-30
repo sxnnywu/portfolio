@@ -6,6 +6,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import ParallaxRoot from "@/components/ParallaxRoot";
 import ScrollReveal from "@/components/ScrollReveal";
+import LikeButton from "@/components/LikeButton";
 
 const newsreader = Newsreader({
   variable: "--font-newsreader",
@@ -62,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           {children}
         </div>
+        <LikeButton />
         <ParallaxRoot />
         <ScrollReveal />
         <Analytics />

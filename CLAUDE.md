@@ -55,6 +55,12 @@ The site implements `~/Downloads/design_handoff_sunny_site/` (a design handoff).
 
 `components/Cloud.tsx` deliberately uses `<img>`, not `next/image`; the clouds need a fixed `height` with auto width plus a CSS mask. The resulting `@next/next/no-img-element` lint warning is expected — lint should still show **0 errors**.
 
+## Likes
+
+The sticky like button (`components/LikeButton.tsx` → `app/api/likes/route.ts`) counts in Upstash Redis under `likes:total`, carried over from the old portfolio's Mongo-backed counter. The route accepts either `KV_REST_API_*` or `UPSTASH_REDIS_REST_*` because the marketplace integration names them differently by version, and it returns `count: null` when the store is missing or erroring so the button hides instead of showing a broken state.
+
+The old endpoint incremented on every POST with no checks, which is how it reached 1.2M. This one rate-limits per address in Redis and remembers the visitor in `localStorage`. A rejected write still resolves the fetch, so the client rolls back the optimistic like on any non-ok response, not only on a thrown error.
+
 ## Build state
 
 All five pages are built: Home, Work, Projects, Awards, Story. Every header link resolves.
