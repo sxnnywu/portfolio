@@ -34,9 +34,9 @@ export const roleSlug = (company: string) =>
 
 /** Tints deepen down the stack so the list leans into the contact sky. */
 export const navRows = [
-  { href: "/work", title: "Work", blurb: "9 roles across swe, product, growth and ops", tint: 0.1, bloom: "rgba(150,190,225,.62)" },
-  { href: "/projects", title: "Projects", blurb: "Things I build for fun", tint: 0.16, bloom: "rgba(238,224,190,.72)" },
-  { href: "/awards", title: "Awards", blurb: "3 hackathon wins", tint: 0.22, bloom: "rgba(196,157,58,.34)" },
+  { href: "/work", title: "Work", blurb: "My lanyard collection", tint: 0.1, bloom: "rgba(150,190,225,.62)" },
+  { href: "/projects", title: "Projects", blurb: "Silly little things I made", tint: 0.16, bloom: "rgba(238,224,190,.72)" },
+  { href: "/awards", title: "Awards", blurb: "My mom's favourite page", tint: 0.22, bloom: "rgba(196,157,58,.34)" },
   { href: "/story", title: "Story", blurb: "Theatre kid who learned to build", tint: 0.28, bloom: "rgba(206,160,175,.46)" },
 ];
 
