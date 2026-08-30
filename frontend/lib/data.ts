@@ -81,7 +81,7 @@ export const roles: Role[] = [
   {
     title: "Waterloo Lead",
     company: "Sip & Scale",
-    dates: "Aug 2026 - Present",
+    dates: "Jun 2026 - Present",
     location: "Waterloo",
     tags: ["growth", "ops"],
     bullets: [
