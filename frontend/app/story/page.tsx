@@ -1,7 +1,8 @@
 import { Fragment } from "react";
 import ContactSection from "@/components/ContactSection";
 import SkyBand from "@/components/SkyBand";
-import { story, storyAside, storyAsideAfter } from "@/lib/data";
+import StoryPhotos from "@/components/StoryPhotos";
+import { story, storyAside, storyAsideAfter, storyPhotoRows } from "@/lib/data";
 import { color, emphasis, font, layout } from "@/lib/tokens";
 
 export const metadata = { title: "Story", description: "How a theatre kid ended up writing software." };
@@ -55,17 +56,30 @@ export default function Story() {
                   </Fragment>
                 ))}
               </div>
+              {/* Rows sit between paragraphs, keyed to the words a paragraph opens with. */}
+              {storyPhotoRows
+                .filter((row) => row.after !== "aside" && paragraph.startsWith(row.after))
+                .map((row) => (
+                  <StoryPhotos key={row.after} row={row} />
+                ))}
               {i + 1 === storyAsideAfter && (
-                <div
-                  style={{
-                    fontFamily: font.serif,
-                    fontStyle: "italic",
-                    fontSize: 16,
-                    color: color.mutedLight,
-                  }}
-                >
-                  {storyAside}
-                </div>
+                <>
+                  <div
+                    style={{
+                      fontFamily: font.serif,
+                      fontStyle: "italic",
+                      fontSize: 16,
+                      color: color.mutedLight,
+                    }}
+                  >
+                    {storyAside}
+                  </div>
+                  {storyPhotoRows
+                    .filter((row) => row.after === "aside")
+                    .map((row) => (
+                      <StoryPhotos key={row.after} row={row} />
+                    ))}
+                </>
               )}
             </Fragment>
           ))}

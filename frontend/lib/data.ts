@@ -346,3 +346,64 @@ export const story = [
 /** Sits directly after the hackathon paragraph. */
 export const storyAside = "(thank you Aishwarya Tandon, Anahat Chhatwal, Vrinda Joshi)";
 export const storyAsideAfter = 3;
+
+export interface StoryPhoto {
+  src: string;
+  alt: string;
+  /** CSS aspect-ratio; the crop is object-fit: cover. */
+  aspect: string;
+  width: number;
+  rotate: number;
+  /** Negative, so prints after the first overlap the one before. */
+  marginLeft?: number;
+  caption?: string;
+}
+
+export interface StoryPhotoRow {
+  /** Opening words of the paragraph this row follows, or "aside". */
+  after: string;
+  /** The theatre trio must not wrap. */
+  nowrap?: boolean;
+  photos: StoryPhoto[];
+}
+
+const photo = (name: string) => `/assets/story/${name}.jpg`;
+
+export const storyPhotoRows: StoryPhotoRow[] = [
+  {
+    after: "In high school",
+    nowrap: true,
+    photos: [
+      { src: photo("dance-kids"), alt: "Dance performance as a kid", aspect: "16/10", width: 252, rotate: -2.4, caption: "skipping school for shows" },
+      { src: photo("backstage"), alt: "Backstage before a show", aspect: "3/4", width: 176, rotate: 3, marginLeft: -46, caption: "backstage, years later" },
+      { src: photo("curtain-call"), alt: "Curtain call for a school play", aspect: "16/9", width: 248, rotate: 2, marginLeft: -52, caption: "curtain call" },
+    ],
+  },
+  {
+    after: "aside",
+    photos: [
+      { src: photo("hack-the-north"), alt: "Hack the North photobooth strip", aspect: "2/3", width: 158, rotate: -3.2, caption: "Hack the North '25" },
+      { src: photo("uni-friends"), alt: "With friends on campus", aspect: "4/3", width: 238, rotate: 2.2, marginLeft: -30, caption: "the ones who dragged me there" },
+    ],
+  },
+  {
+    after: "Then I started making content",
+    photos: [
+      { src: photo("stan"), alt: "At the Stan office", aspect: "3/4", width: 180, rotate: 2.6, caption: "Stan" },
+      { src: photo("polarity"), alt: "Group photo with the Polarity team", aspect: "4/3", width: 246, rotate: -2, marginLeft: -32, caption: "Polarity" },
+    ],
+  },
+  {
+    after: "Around the same time",
+    photos: [
+      { src: photo("fashion-art-toronto"), alt: "On the carpet at Fashion Week", aspect: "3/4", width: 196, rotate: 3, caption: "Fashion Week '26" },
+    ],
+  },
+  {
+    after: "I recently wrapped up",
+    photos: [
+      { src: photo("rocket-team"), alt: "With the Rocket team", aspect: "5/4", width: 262, rotate: -2, caption: "the Rocket team" },
+      { src: photo("desk"), alt: "Working from the office", aspect: "3/4", width: 172, rotate: 3, marginLeft: -28, caption: "still building" },
+    ],
+  },
+];

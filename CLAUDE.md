@@ -55,6 +55,15 @@ The site implements `~/Downloads/design_handoff_sunny_site/` (a design handoff).
 
 `components/Cloud.tsx` deliberately uses `<img>`, not `next/image`; the clouds need a fixed `height` with auto width plus a CSS mask. The resulting `@next/next/no-img-element` lint warning is expected — lint should still show **0 errors**.
 
+## Story photos
+
+Pinned prints (`components/StoryPhotos.tsx`, rows in `storyPhotoRows`) sit between the Story paragraphs, placed by matching the words a paragraph opens with rather than by index. Three paragraphs deliberately have no photo.
+
+Two things the design handoff's values do not survive on their own in this codebase:
+
+- `[data-print]` sets `box-sizing: content-box`. The handoff's widths are the *image* width; its prototype has no border-box reset and this site has a global one, so inheriting it made every print 16px narrow and threw the overlap offsets out.
+- The three-photo row cannot take the same narrow-screen width as the pairs. At 390px, three prints at `46vw` need 441px inside a 343px column and the outer two get clipped, so `[data-nowrap] [data-print]` caps at `29vw` instead.
+
 ## Likes
 
 The sticky like button (`components/LikeButton.tsx` → `app/api/likes/route.ts`) counts in Upstash Redis under `likes:total`, carried over from the old portfolio's Mongo-backed counter. The route accepts either `KV_REST_API_*` or `UPSTASH_REDIS_REST_*` because the marketplace integration names them differently by version, and it returns `count: null` when the store is missing or erroring so the button hides instead of showing a broken state.
