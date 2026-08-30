@@ -97,3 +97,11 @@ img {
     text-align: left !important;
   }
 }
+
+/* Tablet: three columns squeeze the cards to ~218px and overflow the grid's
+   own container, so step down to two before the single-column breakpoint. */
+@media (min-width: 769px) and (max-width: 1023px) {
+  [data-project-grid] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
