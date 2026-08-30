@@ -8,6 +8,7 @@ const LIKED_KEY = "sunny-liked";
 export default function LikeButton() {
   const [count, setCount] = useState<number | null>(null);
   const [liked, setLiked] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   useEffect(() => {
     // Both reads resolve together, after the effect body, so neither cascades a render.
@@ -24,26 +25,30 @@ export default function LikeButton() {
       .catch(() => setCount(null));
   }, []);
 
-  async function like() {
-    if (liked || count === null) return;
-    setLiked(true);
-    setCount((current) => (current ?? 0) + 1);
+  async function toggle() {
+    if (count === null || busy) return;
+    const adding = !liked;
+    setBusy(true);
+    setLiked(adding);
+    setCount((current) => (current ?? 0) + (adding ? 1 : -1));
     try {
-      localStorage.setItem(LIKED_KEY, "1");
+      if (adding) localStorage.setItem(LIKED_KEY, "1");
+      else localStorage.removeItem(LIKED_KEY);
     } catch {}
 
     // Undoes the optimistic like. A rejected write still resolves the fetch, so
     // this has to run on any non-ok response, not only on a thrown error.
     const undo = (serverCount?: number) => {
-      setCount((current) => serverCount ?? (current ?? 1) - 1);
-      setLiked(false);
+      setCount((current) => serverCount ?? (current ?? 1) + (adding ? -1 : 1));
+      setLiked(!adding);
       try {
-        localStorage.removeItem(LIKED_KEY);
+        if (adding) localStorage.removeItem(LIKED_KEY);
+        else localStorage.setItem(LIKED_KEY, "1");
       } catch {}
     };
 
     try {
-      const res = await fetch("/api/likes", { method: "POST" });
+      const res = await fetch("/api/likes", { method: adding ? "POST" : "DELETE" });
       const data = await res.json().catch(() => ({}));
       const serverCount = typeof data.count === "number" ? data.count : undefined;
       if (!res.ok) {
@@ -53,6 +58,8 @@ export default function LikeButton() {
       if (serverCount !== undefined) setCount(serverCount);
     } catch {
       undo();
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -62,9 +69,10 @@ export default function LikeButton() {
   return (
     <button
       type="button"
-      onClick={like}
-      disabled={liked}
-      aria-label={liked ? `Liked. ${count} likes` : `Like this site. ${count} likes so far`}
+      onClick={toggle}
+      disabled={busy}
+      aria-pressed={liked}
+      aria-label={liked ? `You liked this. ${count} likes. Click to undo` : `Like this site. ${count} likes so far`}
       data-like-button
       style={{
         // Bottom-right rather than centred: the hero's "Scroll" cue owns the centre.
@@ -84,7 +92,7 @@ export default function LikeButton() {
         color: color.inkDeepSky,
         fontFamily: font.sans,
         fontSize: 13,
-        cursor: liked ? "default" : "pointer",
+        cursor: "pointer",
         boxShadow: "0 4px 14px -6px rgba(17,40,58,.35)",
         transition: "transform .25s ease, box-shadow .25s ease",
       }}
