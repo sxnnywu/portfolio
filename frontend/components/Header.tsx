@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/work", label: "Work" },
   { href: "/projects", label: "Projects" },
   { href: "/awards", label: "Awards" },
+  { href: "/content", label: "Content" },
   { href: "/story", label: "Story" },
 ];
 
@@ -67,7 +68,7 @@ export default function Header() {
       >
         Sunny Wu
       </Link>
-      <div style={{ display: "flex", gap: "clamp(18px,2.4vw,34px)", fontSize: 13.5 }}>
+      <div style={{ display: "flex", gap: "clamp(16px,2.2vw,30px)", fontSize: 13.5 }}>
         {LINKS.map(({ href, label }) => (
           <Link
             key={href}

@@ -25,7 +25,7 @@ export const stats: { value: string; label: string; href?: string }[] = [
   { value: "3", label: "Hackathon wins", href: "/projects" },
   { value: "8M+", label: "Community built", href: "/work#the-pink-stairs" },
   { value: "1M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
-  { value: "13k", label: "Followers" },
+  { value: "13k", label: "Followers", href: "/content" },
 ];
 
 /** Anchor id for a role, so a stat can point at the entry it comes from. */
@@ -409,5 +409,146 @@ export const storyPhotoRows: StoryPhotoRow[] = [
       { src: photo("rocket-team"), alt: "With the Rocket team", aspect: "5/4", width: 262, rotate: -2, caption: "the Rocket team" },
       { src: photo("desk"), alt: "Working from the office", aspect: "3/4", width: 172, rotate: 3, marginLeft: -28, caption: "still building" },
     ],
+  },
+];
+
+export const contentIntro =
+  "I started posting to think out loud, and writing it down made me figure out what i believed, so here we are. I believe in two things: connection and mentorship. Posting got me both - mentors who answer my questions, students who now ask me theirs, and a long list of friends i'd never have met otherwise.";
+
+export const contentAside = "(i still get nervous before hitting post)";
+
+export interface ContentPhone {
+  platform: string;
+  count: string;
+  topics: string;
+  video: string;
+  poster: string;
+  /** Resting tilt in degrees; the pair lean away from each other. */
+  rotate: number;
+  /** Omitted until the real profile URL is known. */
+  profile?: string;
+}
+
+export const contentPhones: ContentPhone[] = [
+  {
+    platform: "LinkedIn",
+    count: "10.5k followers",
+    topics: "student life, startups, early career",
+    video: "/assets/content/linkedin-scroll.mp4",
+    poster: "/assets/content/linkedin-poster.jpg",
+    rotate: -2,
+    profile: "https://www.linkedin.com/in/sunny-wu-dev/",
+  },
+  {
+    platform: "Instagram",
+    count: "2.5k followers",
+    topics: "fashion, gratitude & mindset, early career",
+    video: "/assets/content/insta-scroll.mp4",
+    poster: "/assets/content/insta-poster.jpg",
+    rotate: 2.4,
+    profile: "https://www.instagram.com/imsunnywu/",
+  },
+];
+
+export interface ContentPost {
+  hook: string;
+  image: string;
+  href: string;
+  cta: string;
+  /** LinkedIn shots crop from the left so the hook's first word survives. */
+  objectPosition: string;
+  rotate: number;
+}
+
+const LINKEDIN_POST = "https://www.linkedin.com/posts/sunny-wu-dev_";
+
+export const contentPosts: ContentPost[] = [
+  {
+    hook: "I wasn't allowed to eat lunch until I practiced piano.",
+    image: "post-piano",
+    href: `${LINKEDIN_POST}i-wasnt-allowed-to-eat-lunch-until-i-practiced-activity-7356127507705643008-7Ucx`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: -2.6,
+  },
+  {
+    hook: "Time is the only thing you steal without getting caught.",
+    image: "post-time",
+    href: `${LINKEDIN_POST}time-is-the-only-thing-you-steal-without-activity-7357379594850566144-yChT`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: 2.2,
+  },
+  {
+    hook: "walked out of a brutal math quiz and straight into one of the prettiest sunsets",
+    image: "post-sunset",
+    href: `${LINKEDIN_POST}walked-out-of-a-brutal-math-quiz-and-straight-activity-7393145531688165376-1iB7`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: -1.6,
+  },
+  {
+    hook: "i'm 19 today. (long post ahead, i'm sorry in advance)",
+    image: "post-19",
+    href: `${LINKEDIN_POST}im-19-today-long-post-ahead-im-sorry-activity-7473347813569941504-tM4P`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: 3,
+  },
+  {
+    hook: "my net worth is $14 million.",
+    image: "post-networth",
+    href: `${LINKEDIN_POST}my-net-worth-is-14-million-i-ran-the-activity-7458737347828862977-G0pQ`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: -2.2,
+  },
+  {
+    hook: "never hire a jack of all trades",
+    image: "post-jack",
+    href: `${LINKEDIN_POST}never-hire-a-jack-of-all-trades-if-you-activity-7488564097308082177-_udh`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: 1.8,
+  },
+  {
+    hook: "i don't want to be impressive for my age.",
+    image: "post-impressive",
+    href: `${LINKEDIN_POST}i-dont-want-to-be-impressive-for-my-age-activity-7488926451539304448-QfB5`,
+    cta: "read it",
+    objectPosition: "left top",
+    rotate: -3,
+  },
+  {
+    hook: "just do the scary thing.",
+    image: "ig-scary",
+    href: "https://www.instagram.com/reel/DZAXpcMumqW/",
+    cta: "watch it",
+    objectPosition: "center top",
+    rotate: 2.4,
+  },
+  {
+    hook: "fits recently",
+    image: "ig-fits",
+    href: "https://www.instagram.com/p/Dcjs_3xmqB0/",
+    cta: "watch it",
+    objectPosition: "center top",
+    rotate: -2,
+  },
+  {
+    hook: "i get bored of everything",
+    image: "ig-bored",
+    href: "https://www.instagram.com/reel/Dclhs01BGYg/",
+    cta: "watch it",
+    objectPosition: "center top",
+    rotate: 1.6,
+  },
+  {
+    hook: "maxxing my stats at 19",
+    image: "ig-maxxing",
+    href: "https://www.instagram.com/reel/DaIrDj5glqv/",
+    cta: "watch it",
+    objectPosition: "center top",
+    rotate: -2.8,
   },
 ];

@@ -621,3 +621,220 @@ img {
     transition: none !important;
   }
 }
+
+/* Content page: the two phones. */
+[data-phone-row] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(28px, 4vw, 72px);
+  padding-top: 80px;
+}
+
+[data-phone-block] {
+  flex: 0 1 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+[data-phone] {
+  position: relative;
+  width: 300px;
+  height: 610px;
+  flex: 0 0 auto;
+  padding: 11px;
+  border-radius: 46px;
+  background: linear-gradient(160deg, #2b2b26 0%, #3d3d36 42%, #22221e 100%);
+  box-shadow:
+    0 2px 4px rgba(26, 26, 21, 0.22),
+    0 34px 60px -34px rgba(17, 40, 58, 0.6);
+  transition: transform 0.5s cubic-bezier(0.34, 1.2, 0.5, 1);
+}
+
+[data-phone-slit] {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  margin-left: -30px;
+  width: 60px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.22);
+  z-index: 1;
+}
+
+[data-phone-screen] {
+  width: 100%;
+  height: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+}
+
+[data-phone-screen] video,
+[data-phone-screen] img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.45s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-phone-block]:hover [data-phone] {
+    transform: rotate(0deg) translateY(-6px);
+  }
+}
+
+[data-phone-caption] {
+  max-width: 320px;
+  width: 100%;
+  margin-top: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+[data-phone-row] [data-phone-caption] > [data-phone-row] {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(42, 42, 36, 0.16);
+}
+
+[data-phone-link] {
+  font-size: 13px;
+  color: #2635a8;
+  border-bottom: 1px solid rgba(38, 53, 168, 0.3);
+  align-self: flex-start;
+  transition: border-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-phone-link]:hover {
+    border-bottom-color: #2635a8;
+  }
+}
+
+/* Content page: the featured posts rail. */
+[data-rail-head] {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(42, 42, 36, 0.16);
+}
+
+[data-rail-arrow] {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(42, 42, 36, 0.2);
+  background: transparent;
+  color: #4a463c;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-rail-arrow]:hover {
+    background: #11283a;
+    color: #f6fafd;
+    border-color: transparent;
+  }
+}
+
+[data-rail] {
+  display: flex;
+  gap: 26px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 6px 2px 4px;
+  scrollbar-width: none;
+}
+
+[data-rail]::-webkit-scrollbar {
+  display: none;
+}
+
+[data-post-card] {
+  position: relative;
+  flex: 0 0 258px;
+  scroll-snap-align: center;
+  margin: 14px 0 26px;
+  padding: 11px 11px 14px;
+  border-radius: 3px;
+  background: #fffdf7;
+  box-shadow:
+    0 1px 1px rgba(26, 26, 21, 0.1),
+    0 12px 26px -16px rgba(26, 26, 21, 0.45);
+  transform: rotate(var(--post-rot));
+  transition: transform 0.35s cubic-bezier(0.34, 1.2, 0.5, 1), box-shadow 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-post-card]:hover {
+    transform: rotate(0deg) translateY(-8px) scale(1.02);
+    box-shadow:
+      0 2px 3px rgba(26, 26, 21, 0.12),
+      0 20px 36px -16px rgba(26, 26, 21, 0.45);
+  }
+}
+
+[data-post-well] {
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f2f0e8;
+  border-radius: 1px;
+}
+
+[data-post-well] img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+[data-post-hook] {
+  display: block;
+  padding: 11px 3px 0;
+  font-family: var(--font-newsreader), serif;
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #1a1a15;
+  text-wrap: pretty;
+}
+
+[data-post-card] > span:last-child {
+  padding: 6px 3px 0;
+}
+
+/* The arrows duplicate a swipe that already works with a thumb. */
+@media (max-width: 560px) {
+  [data-rail-arrow] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-phone],
+  [data-post-card],
+  [data-rail-arrow] {
+    transition: none !important;
+  }
+
+  [data-rail] {
+    scroll-behavior: auto;
+  }
+}

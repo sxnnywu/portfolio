@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Cloud from "@/components/Cloud";
 import { socials } from "@/lib/data";
 import { externalLinkProps } from "@/lib/links";
@@ -5,7 +6,7 @@ import { color, emphasis, font, gradient, pill } from "@/lib/tokens";
 
 const CONTACT_TOP_FADE = "linear-gradient(to bottom, transparent 0px, #000 110px)";
 
-export default function ContactSection() {
+export default function ContactSection({ subline }: { subline?: ReactNode }) {
   return (
     <div
       id="contact"
@@ -59,8 +60,12 @@ export default function ContactSection() {
           If you&apos;ve read this far, say something ;)
         </div>
         <div style={{ marginTop: 16, fontSize: 15.5, color: color.skyInk }}>
-          Open to <em style={emphasis()}>product</em> and <em style={emphasis()}>engineering</em> roles,
-          and being convinced otherwise. Always up for <em style={emphasis()}>side quests</em>.
+          {subline ?? (
+            <>
+              Open to <em style={emphasis()}>product</em> and <em style={emphasis()}>engineering</em> roles,
+              and being convinced otherwise. Always up for <em style={emphasis()}>side quests</em>.
+            </>
+          )}
         </div>
         <a href={socials[2].href} style={{ ...pill.close, marginTop: 34 }}>
           Say hi &rarr;
