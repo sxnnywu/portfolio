@@ -516,3 +516,108 @@ img {
     transform: none;
   }
 }
+
+/* Sun easter egg. The note and face are styled here rather than inline so the
+   640px switch follows a resize instead of the width at click time. */
+@keyframes oro-sun-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.9) rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(-4deg);
+  }
+}
+
+@keyframes oro-sun-face-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+[data-sun-note] {
+  position: absolute;
+  left: calc(100% + 16px);
+  top: 14px;
+  white-space: nowrap;
+  border-radius: 16px 16px 16px 4px;
+  padding: 8px 16px;
+  background: #fffdf7;
+  box-shadow: 0 8px 22px -12px rgba(17, 40, 58, 0.55);
+  font-family: var(--font-caveat), cursive;
+  font-weight: 700;
+  font-size: clamp(20px, 2vw, 26px);
+  color: #2635a8;
+  animation: oro-sun-note-in 0.38s cubic-bezier(0.34, 1.35, 0.5, 1) forwards;
+}
+
+/* Beneath the sun on narrow screens, because the longest note is wider than the
+   gap to the viewport edge and would be clipped by the page's overflow-x. */
+@media (max-width: 639px) {
+  [data-sun-note] {
+    left: 50%;
+    top: calc(100% + 10px);
+    margin-left: -39vw;
+    width: 78vw;
+    max-width: 320px;
+    white-space: normal;
+    text-align: center;
+    border-radius: 4px 16px 16px 16px;
+  }
+}
+
+[data-sun-face] {
+  position: absolute;
+  inset: 0;
+  animation: oro-sun-face-in 0.28s ease;
+}
+
+[data-sun-face] > div {
+  position: absolute;
+  background: #8a5a00;
+}
+
+[data-sun-eye] {
+  left: 39%;
+  top: 44%;
+  width: 8%;
+  height: 8%;
+  border-radius: 50%;
+}
+
+[data-sun-wink] {
+  right: 36%;
+  top: 47%;
+  width: 13%;
+  height: 3.4%;
+  border-radius: 2px;
+}
+
+[data-sun-smile] {
+  left: 50%;
+  top: 58%;
+  margin-left: -11%;
+  width: 22%;
+  height: 11%;
+  background: none;
+  border: 3px solid #8a5a00;
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sun-note],
+  [data-sun-face] {
+    animation: none;
+  }
+
+  [data-sun] {
+    transition: none !important;
+  }
+}

@@ -67,7 +67,19 @@ export function SunFilterDefs() {
 
 export default function Sun({ size = 116 }: { size?: number }) {
   return (
-    <div style={{ width: size, height: size }}>
+    <div
+      data-sun
+      style={{
+        width: size,
+        height: size,
+        position: "relative",
+        cursor: "pointer",
+        // The parallax layer above is [data-decor], which is pointer-events: none.
+        pointerEvents: "auto",
+        touchAction: "none",
+        transition: "transform .5s cubic-bezier(.34,1.4,.5,1)",
+      }}
+    >
       <svg viewBox="0 0 240 240" style={{ width: "100%", height: "100%", overflow: "visible" }} aria-hidden>
         <g filter="url(#sunTex)">
           <path d={BODY_PATH} fill="#f7b500" />

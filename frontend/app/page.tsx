@@ -3,6 +3,7 @@ import Link from "next/link";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
+import SunEasterEgg from "@/components/SunEasterEgg";
 import Logo from "@/components/Logo";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import Bloom from "@/components/Bloom";
@@ -24,14 +25,17 @@ const blueItalic = { fontStyle: "italic", color: color.blueInk } as const;
 function Hero() {
   return (
     <div
+      data-sky
       style={{
         position: "relative",
         height: "100vh",
         minHeight: 660,
         zIndex: 2,
         background: gradient.heroSky,
+        transition: "background 1s ease",
       }}
     >
+      <SunEasterEgg />
       <div data-decor data-speed="0.28" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
         <Cloud height={150} opacity={0.4} style={{ left: -170, top: 24 }} />
         <Cloud height={112} opacity={0.28} flipped style={{ left: 96, top: 2 }} />
