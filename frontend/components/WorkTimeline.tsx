@@ -167,7 +167,7 @@ export default function WorkTimeline() {
                 </span>
               </div>
 
-              <div style={{ marginTop: 2, display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div style={{ marginTop: -4, display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {role.tags.map((tag) => (
                   <span
                     key={tag}
