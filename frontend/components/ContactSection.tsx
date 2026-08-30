@@ -10,21 +10,21 @@ export default function ContactSection() {
       data-scene
       style={{ position: "relative", overflow: "hidden", background: gradient.contact }}
     >
-      <div data-local="0.34" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 260, willChange: "transform" }}>
+      <div data-decor data-local="0.34" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 260, willChange: "transform" }}>
         <Cloud height={196} opacity={0.5} style={{ left: -210, top: 56 }} />
         <Cloud height={202} opacity={0.5} flipped style={{ right: -190, top: 88 }} />
       </div>
-      <div data-local="0.5" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 240, willChange: "transform" }}>
+      <div data-decor data-local="0.5" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 240, willChange: "transform" }}>
         <Cloud height={210} opacity={0.5} style={{ left: -200, bottom: -70 }} />
         <Cloud height={216} opacity={0.5} flipped style={{ right: -190, bottom: -84 }} />
       </div>
-      <div data-local="0.96" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 240, willChange: "transform" }}>
+      <div data-decor data-local="0.96" style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 240, willChange: "transform" }}>
         <Cloud height={180} opacity={0.62} flipped style={{ left: -120, bottom: -116 }} />
         <Cloud height={146} opacity={0.42} style={{ left: 96, bottom: -146 }} />
         <Cloud height={186} opacity={0.62} style={{ right: -104, bottom: -124 }} />
         <Cloud height={150} opacity={0.42} flipped style={{ right: 110, bottom: -150 }} />
       </div>
-      <div data-local="0.72" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 260, willChange: "transform" }}>
+      <div data-decor data-local="0.72" style={{ position: "absolute", left: 0, right: 0, top: 0, height: 260, willChange: "transform" }}>
         <Cloud height={158} opacity={0.42} flipped style={{ left: 100, top: -34 }} />
         <Cloud height={150} opacity={0.4} style={{ right: 110, top: -48 }} />
         <Cloud height={132} opacity={0.3} flipped style={{ left: "44%", top: -70 }} />

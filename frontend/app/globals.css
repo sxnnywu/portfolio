@@ -1,5 +1,8 @@
 html {
   scroll-behavior: smooth;
+  /* Clips the off-canvas clouds. Must live on the root: on a wrapper it forces
+     overflow-y to auto, which makes that wrapper swallow every anchor jump. */
+  overflow-x: hidden;
 }
 
 body {
@@ -43,6 +46,11 @@ a:active {
 
 img {
   max-width: 100%;
+}
+
+/* Cloud and sun layers overlap the hero copy, so they must not eat its clicks. */
+[data-decor] {
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

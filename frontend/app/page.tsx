@@ -29,14 +29,14 @@ function Hero() {
         background: gradient.heroSky,
       }}
     >
-      <div data-speed="0.28" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+      <div data-decor data-speed="0.28" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
         <Cloud height={150} opacity={0.4} style={{ left: -170, top: 24 }} />
         <Cloud height={112} opacity={0.28} flipped style={{ left: 96, top: 2 }} />
         <Cloud height={134} opacity={0.32} flipped style={{ right: -140, top: 110 }} />
         <Cloud height={104} opacity={0.22} style={{ right: 120, top: -30 }} />
       </div>
 
-      <div data-speed="0.58" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+      <div data-decor data-speed="0.58" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
         <Cloud height={196} opacity={0.72} style={{ left: -190, top: 120 }} />
         <Cloud height={150} opacity={0.5} flipped style={{ left: -60, top: 250 }} />
         <Cloud height={206} opacity={0.7} flipped style={{ right: -180, top: 168 }} />
@@ -44,6 +44,7 @@ function Hero() {
       </div>
 
       <div
+        data-decor
         data-speed="0.03"
         style={{
           position: "absolute",
@@ -100,6 +101,7 @@ function Hero() {
       </div>
 
       <div
+        data-decor
         data-speed="0.92"
         style={{ position: "absolute", left: 0, right: 0, bottom: 64, height: 230, willChange: "transform" }}
       >

@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${newsreader.variable} ${schibsted.variable} ${caveat.variable}`}
     >
       <body>
-        <div style={{ position: "relative", width: "100%", overflowX: "hidden" }}>
+        <div style={{ position: "relative", width: "100%" }}>
           <Header />
           {children}
         </div>
