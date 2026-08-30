@@ -8,7 +8,9 @@ export const metadata = { title: "Awards — Sunny Wu" };
 export default function Awards() {
   return (
     <>
-      <SkyBand title="Awards" subline="Recognition is a lagging indicator, but it's a nice one" />
+      <SkyBand
+        sublineLength={55}
+        title="Awards" subline="Recognition is a lagging indicator, but it's a nice one" />
 
       <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "90px 6vw 34px" }} />
 

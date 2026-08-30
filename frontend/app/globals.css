@@ -200,3 +200,24 @@ img {
     clip-path: none !important;
   }
 }
+
+/* Held back until the title has finished typing. The delay is computed from
+   the same duration the typing uses, so the two cannot drift apart. */
+@keyframes oro-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-after-type] {
+  animation: oro-fade-in 0.55s ease var(--after-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-after-type] {
+    animation: none !important;
+  }
+}

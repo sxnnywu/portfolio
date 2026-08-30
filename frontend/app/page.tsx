@@ -3,7 +3,7 @@ import Link from "next/link";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
-import Typed from "@/components/Typed";
+import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import StatBand from "@/components/StatBand";
 import { education, navRows } from "@/lib/data";
 import {
@@ -18,6 +18,9 @@ import {
 } from "@/lib/tokens";
 
 const blueItalic = { fontStyle: "italic", color: color.blueInk } as const;
+
+const HEADLINE = "Hey, I'm Sunny";
+const TAGLINE = "An engineer who speaks business";
 
 function Hero() {
   return (
@@ -73,7 +76,7 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <Typed length={"Hey, I'm Sunny".length} style={type.heroDisplay}>
+        <Typed length={HEADLINE.length} style={type.heroDisplay}>
           Hey, I&apos;m{" "}
           <span
             style={{
@@ -86,7 +89,9 @@ function Hero() {
             Sunny
           </span>
         </Typed>
-        <div
+        <Typed
+          length={TAGLINE.length}
+          delay={sequenceEnd(HEADLINE.length)}
           style={{
             marginTop: 20,
             fontSize: "clamp(19px,1.8vw,25px)",
@@ -95,8 +100,12 @@ function Hero() {
         >
           An <span style={emphasis(1.18)}>engineer</span> who speaks{" "}
           <span style={emphasis(1.18)}>business</span>
-        </div>
-        <a href="#work" style={{ ...pill.hero, marginTop: 42 }}>
+        </Typed>
+        <a
+          href="#work"
+          data-after-type
+          style={{ ...pill.hero, marginTop: 42, ...afterTyping(HEADLINE.length, TAGLINE.length) }}
+        >
           See what I&apos;ve built &rarr;
         </a>
       </div>
@@ -129,7 +138,9 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        Scroll &darr;
+        <span data-after-type style={afterTyping(HEADLINE.length, TAGLINE.length)}>
+          Scroll &darr;
+        </span>
       </div>
     </div>
   );

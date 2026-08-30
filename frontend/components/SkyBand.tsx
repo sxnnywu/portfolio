@@ -1,15 +1,18 @@
 import type { ReactNode } from "react";
 import Cloud from "@/components/Cloud";
-import Typed from "@/components/Typed";
+import Typed, { sequenceEnd } from "@/components/Typed";
 import { color, font, gradient, type } from "@/lib/tokens";
 
 /** The watercolour strip every inner page opens with. */
 export default function SkyBand({
   title,
   subline,
+  sublineLength,
 }: {
   title: string;
   subline: ReactNode;
+  /** Plain-text length of the subline, which drives its typing speed. */
+  sublineLength: number;
 }) {
   return (
     <div
@@ -55,7 +58,9 @@ export default function SkyBand({
         <Typed length={title.length} style={type.pageTitle}>
           {title}
         </Typed>
-        <div
+        <Typed
+          length={sublineLength}
+          delay={sequenceEnd(title.length)}
           style={{
             marginTop: 14,
             fontFamily: font.sans,
@@ -64,7 +69,7 @@ export default function SkyBand({
           }}
         >
           {subline}
-        </div>
+        </Typed>
       </div>
     </div>
   );
