@@ -269,6 +269,24 @@ img {
   box-shadow: 0 8px 20px -8px rgba(17, 40, 58, 0.45) !important;
 }
 
+/* One beat per click. */
+@keyframes oro-heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+[data-like-heart] {
+  animation: oro-heartbeat 0.34s ease;
+  transform-origin: center;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-like-button] {
     transition: none !important;
@@ -276,5 +294,9 @@ img {
 
   [data-like-button]:hover:not(:disabled) {
     transform: none;
+  }
+
+  [data-like-heart] {
+    animation: none !important;
   }
 }
