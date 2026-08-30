@@ -130,3 +130,208 @@ export const roles: Role[] = [
     ],
   },
 ];
+
+export interface Project {
+  name: string;
+  date: string;
+  /** Present only on hackathon winners, which get the gold sash and paper. */
+  award?: string;
+  description: string;
+  tags: string[];
+  /** Count of further tags the card summarises rather than lists. */
+  moreTags?: number;
+  links: { label: string; href?: string }[];
+}
+
+/** Newest first; the grid must preserve this order. */
+export const projects: Project[] = [
+  {
+    name: "Reeled In",
+    date: "jul 2026",
+    description:
+      "A/B test your short-form content on a predictive model of the human brain.",
+    tags: ["Data Visualization", "MongoDB"],
+    moreTags: 1,
+    links: [
+      { label: "GitHub", href: "https://github.com/sxnnywu/reeled-in" },
+      { label: "Devpost" },
+    ],
+  },
+  {
+    name: "Autoblog",
+    date: "may 2026",
+    description:
+      "Multi-agent orchestration (g-stack) to generate and post technical content for companies.",
+    tags: ["AI Agents", "Next.js"],
+    moreTags: 3,
+    links: [{ label: "Devpost" }, { label: "GitHub" }],
+  },
+  {
+    name: "Godseye",
+    date: "mar 2026",
+    award: "Best use of Polymarket @ YHack",
+    description:
+      "Multi-agent swarm analysis on Polymarket events. Watch simulated societies, based on real people, debate the evidence, form alliances, and argue over the future of the market.",
+    tags: ["AI Agents", "Multi-agent Systems"],
+    moreTags: 2,
+    links: [
+      { label: "GitHub", href: "https://github.com/sxnnywu/godseye" },
+      { label: "Devpost" },
+    ],
+  },
+  {
+    name: "Slidefund",
+    date: "mar 2026",
+    award: "Best use of Solana @ Hack Canada",
+    description:
+      "ETFs for prediction markets. Four agentic AI systems finding combinatorial arbitrages across Polymarket, Kalshi and Manifold.",
+    tags: ["Agentic AI Development", "React.js"],
+    moreTags: 3,
+    links: [{ label: "GitHub" }, { label: "Devpost" }],
+  },
+  {
+    name: "Post It",
+    date: "sep 2025",
+    award: "Top 32 @ Hack the North · Top 10 @ HTN Snapchat",
+    description:
+      "An augmented reality app for Snapchat Spectacles that anchors digital sticky notes in real-world locations.",
+    tags: ["TypeScript", "JavaScript"],
+    moreTags: 1,
+    links: [{ label: "Demo Video" }, { label: "Devpost" }],
+  },
+  {
+    name: "Bohanza",
+    date: "apr 2025",
+    description:
+      "Digital recreation of the German card game Bohanza. Player vs. player and player vs. AI.",
+    tags: ["Java Swing", "Project Management"],
+    moreTags: 2,
+    links: [{ label: "GitHub", href: "https://github.com/sxnnywu/Bohanza" }],
+  },
+  {
+    name: "Byte-Sized Learning",
+    date: "jul - nov 2024",
+    description:
+      "A coding workbook that makes programming engaging and accessible for young learners in underserved communities. Distributed to students in Peru and Kenya.",
+    tags: ["Stakeholder Management", "Canva"],
+    moreTags: 1,
+    links: [],
+  },
+  {
+    name: "MIND - Math in Nature's Design",
+    date: "may - dec 2024",
+    description:
+      "A math blog with 600+ readers, exploring how math is intertwined with everyday life.",
+    tags: ["Canva"],
+    links: [{ label: "Website" }],
+  },
+];
+
+export interface Award {
+  title: string;
+  issuer: string;
+  note?: string;
+}
+
+export const awards: { year: string; awards: Award[] }[] = [
+  {
+    year: "2026",
+    awards: [
+      { title: "Best Use of Prediction Markets", issuer: "YHack" },
+      { title: "Best Use of Solana", issuer: "Hack Canada · Major League Hacking" },
+    ],
+  },
+  {
+    year: "2025",
+    awards: [
+      {
+        title: "Best Speaker Award",
+        issuer: "Wilfrid Laurier University",
+        note: "Selected as a top speaker for the Cineplex Live Case Competition.",
+      },
+      { title: "Semi-finalist", issuer: "Hack the North", note: "Top 32 chosen from 1200+ hackers." },
+      { title: "Snapchat Finalist", issuer: "Hack the North", note: "Top 10 chosen from 40+ teams." },
+      {
+        title: "Top 10 Finalist",
+        issuer: "Fintech Nexus & ICUBE UTM",
+        note: "Recognised as a top startup from 600+ global entries.",
+      },
+      {
+        title: "Ted Roger's Future Leaders Scholarship",
+        issuer: "Ted Roger's",
+        note: "Awarded $26,800 for academic achievement by Canada's largest scholarship program.",
+      },
+      {
+        title: "2025 Tech Micro-Grant",
+        issuer: "DMZ x myBlueprint",
+        note: "Granted $500 to build Nom Nom, a domestic safety app disguised as a bakery ordering app.",
+      },
+      { title: "Principal's Award for Future Leadership", issuer: "Bur Oak Secondary School" },
+      { title: "President's Scholarship of Distinction", issuer: "University of Waterloo" },
+      {
+        title: "District Award: Spirit of the Festival",
+        issuer: "National Theatre School",
+        note: "Co-directed an award-winning play chosen to compete in the regional round of Dramafest, a national theatre competition.",
+      },
+    ],
+  },
+  {
+    year: "2024",
+    awards: [
+      {
+        title: "Provincial Scholarship",
+        issuer: "Loran Scholars Foundation",
+        note: "Top 1% of applicants in Canada to receive a national scholarship from the largest national scholars program.",
+      },
+      {
+        title: "Gr11 Computer Science",
+        issuer: "Bur Oak Secondary School",
+        note: "Top score for Grade 11 Computer Science (99%).",
+      },
+      { title: "Science Unlimited Design Challenge, Top 3", issuer: "University of Toronto" },
+      { title: "GoodWill Ambassador", issuer: "TedEd" },
+      { title: "2nd Place Nationals", issuer: "SAGE" },
+      { title: "Honourable Mention", issuer: "Engineers Without Borders: Moral Code Hackathon" },
+      {
+        title: "District Award: Spirit of the Festival",
+        issuer: "National Theatre School",
+        note: "Co-directed an award-winning play for DramaFest.",
+      },
+      { title: "Top 30 Provincials", issuer: "Ontario CMC Tesseract Math Competition" },
+    ],
+  },
+  {
+    year: "2023",
+    awards: [
+      {
+        title: "District Award: Distinctive Merit for Commitment to the Absurd",
+        issuer: "National Theatre School",
+        note: "Acted in an award-winning play for DramaFest.",
+      },
+    ],
+  },
+  {
+    year: "2021",
+    awards: [{ title: "Faith in Action Award", issuer: "St Julia Billiart Catholic School" }],
+  },
+  {
+    year: "2019",
+    awards: [{ title: "First Class Honours with Distinction", issuer: "Royal Conservatory of Music" }],
+  },
+];
+
+/** Sunny's own writing; a blank line inside a paragraph renders as a break. */
+export const story = [
+  "I grew up in the performing arts - dance, singing, every asian instrument out there. It was common for me to skip school for shows.",
+  "In high school I was throwing and directing plays. Storytelling was my thing. I figured I'd take that into business, use it to craft narratives, understand what makes people care.",
+  "Then my best friends dragged me to a hackathon.\n\nI didn't even know how to code. I barely knew what a hackathon was. But something clicked that weekend. I loved that the only limit was how fast you could learn. There's something about building at 3am with people you just met, fueled by nothing but redbull and delusion. I kept going back and forcing myself to learn more each time. I was addicted.",
+  "So when it came time to pick a path for university, I couldn't choose. Cs or business? I decided I wanted both. Waterloo's cs/bba. I locked in and got the offer.",
+  "Then I started making content. That led to growth work at 4 startups - I got obsessed with how products spread and why people care.",
+  "Around the same time I started building in public and posting about a side project: an ai stylist. It got so much attention that we turned it into a real company. That's Oro today.",
+  "I recently wrapped up my first swe internship at Rocket. Now I'm growing Oro and hosting events in waterloo - scaling Notion, and bringing value to the city's founder community through Sip & Scale. All these random threads actually weave together to become my strength.",
+  "To be honest, I don't have much of my career figured out. I'm learning to navigate being a founder, builder, and creator all at once. Some days it feels scattered.",
+];
+
+/** Sits directly after the hackathon paragraph. */
+export const storyAside = "(thank you Aishwarya Tandon, Anahat Chhatwal, Vrinda Joshi)";
+export const storyAsideAfter = 3;

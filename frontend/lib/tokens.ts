@@ -19,6 +19,7 @@ export const rule = {
   hairline: "rgba(42,42,36,.16)",
   hairlineLight: "rgba(42,42,36,.13)",
   statBand: "rgba(42,42,36,.18)",
+  hairlineDashed: "rgba(42,42,36,.2)",
 } as const;
 
 /** Sky-tint panel fill; alpha comes from the design's .10/.12/.16/.22/.28 scale. */
