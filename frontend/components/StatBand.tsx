@@ -4,19 +4,40 @@ import { useEffect, useRef, useState } from "react";
 import { color, rule, type } from "@/lib/tokens";
 import { stats } from "@/lib/data";
 
-/** Splits "8M+" into 8 and "M+" so only the figure animates. */
+const UNIT_SCALE: Record<string, number> = { m: 1_000_000, k: 1_000 };
+
+/**
+ * "8M+" counts to eight million, not to eight. Animating the mantissa gave
+ * "1M+" a single tick, so the run is over the real magnitude and each frame is
+ * abbreviated back down for display.
+ */
 function parse(value: string) {
-  const match = value.match(/^([\d.,]+)(.*)$/);
-  if (!match) return { target: 0, suffix: value };
-  return { target: Number(match[1].replace(/,/g, "")), suffix: match[2] };
+  const match = value.match(/^([\d.,]+)\s*([kKmM]?)(\+?)$/);
+  if (!match) return { magnitude: 0, unit: "" };
+  const base = Number(match[1].replace(/,/g, ""));
+  const unit = match[2].toLowerCase();
+  return { magnitude: base * (UNIT_SCALE[unit] ?? 1), unit };
 }
 
-const DURATION = 1100;
+/**
+ * A single million only yields eleven tenths of a step, so figures below two
+ * of their own unit roll in the unit beneath: 0k to 990k, landing on "1M+".
+ */
+function format(current: number, magnitude: number, unit: string) {
+  const scale = UNIT_SCALE[unit];
+  if (!scale) return String(Math.round(current));
+  if (unit === "m" && magnitude < 2 * UNIT_SCALE.m) {
+    return `${Math.round(current / UNIT_SCALE.k)}k`;
+  }
+  return `${(current / scale).toFixed(1)}${unit === "m" ? "M" : "k"}`;
+}
+
+const DURATION = 1400;
 
 function Stat({ value, label }: { value: string; label: string }) {
-  const { target, suffix } = parse(value);
-  // Renders the final figure first so the server and client markup agree.
-  const [shown, setShown] = useState(target);
+  const { magnitude, unit } = parse(value);
+  // Null renders the design's own string, which is also what the server sends.
+  const [running, setRunning] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,10 +56,11 @@ function Stat({ value, label }: { value: string; label: string }) {
       const begin = performance.now();
       const step = (now: number) => {
         const t = Math.min((now - begin) / DURATION, 1);
-        setShown(Math.round(target * (1 - Math.pow(1 - t, 3))));
+        // Landing on null restores the exact "8M+" the design specifies.
+        setRunning(t < 1 ? magnitude * (1 - Math.pow(1 - t, 3)) : null);
         if (t < 1) raf = requestAnimationFrame(step);
       };
-      setShown(0);
+      setRunning(0);
       raf = requestAnimationFrame(step);
     };
 
@@ -48,13 +70,12 @@ function Stat({ value, label }: { value: string; label: string }) {
       window.removeEventListener("scroll", run);
       cancelAnimationFrame(raf);
     };
-  }, [target]);
+  }, [magnitude]);
 
   return (
     <div ref={ref}>
       <div style={type.numeral}>
-        {shown}
-        {suffix}
+        {running === null ? value : format(running, magnitude, unit)}
       </div>
       <div style={{ marginTop: 8, fontSize: 12, color: color.muted }}>{label}</div>
     </div>
