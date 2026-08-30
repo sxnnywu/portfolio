@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { externalLinkProps } from "@/lib/links";
-import { color, font } from "@/lib/tokens";
+import { color, font, type } from "@/lib/tokens";
 import { contentPosts } from "@/lib/data";
 
 const CARD_WIDTH = 258;
@@ -23,17 +23,7 @@ export default function PostCarousel() {
   return (
     <>
       <div data-rail-head>
-        <span
-          style={{
-            fontFamily: font.serif,
-            fontSize: 11.5,
-            letterSpacing: ".22em",
-            textTransform: "uppercase",
-            color: "#8a8375",
-          }}
-        >
-          a few posts worth reading
-        </span>
+        <span style={type.sectionTitle}>my highlights</span>
         <div style={{ display: "flex", gap: 10 }}>
           <button type="button" data-rail-arrow aria-label="Previous posts" onClick={() => scrollBy(-1)}>
             &larr;

@@ -433,7 +433,7 @@ export const contentPhones: ContentPhone[] = [
   {
     platform: "LinkedIn",
     count: "10.5k followers",
-    topics: "student life, startups, early career",
+    topics: "student life, productivity, early career",
     video: "/assets/content/linkedin-scroll.mp4",
     poster: "/assets/content/linkedin-poster.jpg",
     rotate: -2,
@@ -538,7 +538,7 @@ export const contentPosts: ContentPost[] = [
   {
     hook: "i get bored of everything",
     image: "ig-bored",
-    href: "https://www.instagram.com/reel/Dclhs01BGYg/",
+    href: "https://www.instagram.com/reel/DaIrDj5glqv/",
     cta: "watch it",
     objectPosition: "center top",
     rotate: 1.6,
@@ -546,7 +546,7 @@ export const contentPosts: ContentPost[] = [
   {
     hook: "maxxing my stats at 19",
     image: "ig-maxxing",
-    href: "https://www.instagram.com/reel/DaIrDj5glqv/",
+    href: "https://www.instagram.com/reel/Dclhs01BGYg/",
     cta: "watch it",
     objectPosition: "center top",
     rotate: -2.8,
