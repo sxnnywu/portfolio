@@ -20,7 +20,8 @@ export default function SkyBand({
         position: "relative",
         height: "42vh",
         minHeight: 340,
-        overflow: "hidden",
+        // Deliberately not clipped: the clouds hang past the band and need to
+        // finish fading out. Clipping cut the tallest one at 68% opacity.
         background: gradient.bandSky,
       }}
     >
