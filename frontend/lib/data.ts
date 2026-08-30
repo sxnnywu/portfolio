@@ -1,6 +1,6 @@
 export const socials = [
-  { label: "Github", href: "https://github.com/sunnywuu" },
-  { label: "Linkedin", href: "https://linkedin.com/in/sunnywuu" },
+  { label: "Github", href: "https://github.com/sxnnywu" },
+  { label: "Linkedin", href: "https://www.linkedin.com/in/sunny-wu-dev/" },
   { label: "Email", href: "mailto:w.sunny0618@gmail.com" },
 ];
 
