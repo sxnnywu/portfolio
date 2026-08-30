@@ -209,15 +209,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    name: "Byte-Sized Learning",
-    date: "jul - nov 2024",
-    description:
-      "A coding workbook that makes programming engaging and accessible for young learners in underserved communities. Distributed to students in Peru and Kenya.",
-    tags: ["Stakeholder Management", "Canva"],
-    moreTags: 1,
-    links: [],
-  },
-  {
     name: "MIND - Math in Nature's Design",
     date: "may - dec 2024",
     description:
@@ -291,7 +282,7 @@ export const awards: { year: string; awards: Award[] }[] = [
       { title: "Science Unlimited Design Challenge, Top 3", issuer: "University of Toronto" },
       { title: "GoodWill Ambassador", issuer: "TedEd" },
       { title: "2nd Place Nationals", issuer: "SAGE" },
-      { title: "Honourable Mention", issuer: "Engineers Without Borders: Moral Code Hackathon" },
+      { title: "Top 4", issuer: "Engineers Without Borders: Moral Code Hackathon" },
       {
         title: "District Award: Spirit of the Festival",
         issuer: "National Theatre School",

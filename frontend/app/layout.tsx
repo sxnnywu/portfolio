@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { SITE_URL } from "@/lib/site";
 import { Caveat, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -26,7 +27,7 @@ const DESCRIPTION = "An engineer who speaks business. Computer science at Waterl
 
 export const metadata: Metadata = {
   // Required for the OG image to resolve to an absolute URL when shared.
-  metadataBase: new URL("https://www.sunny-wu.ca"),
+  metadataBase: new URL(SITE_URL),
   title: { default: "Sunny Wu", template: "%s — Sunny Wu" },
   description: DESCRIPTION,
   openGraph: {
