@@ -18,7 +18,7 @@ export const stats = [
 
 /** Tints deepen down the stack so the list leans into the contact sky. */
 export const navRows = [
-  { href: "/work", title: "Work", blurb: "11 roles across swe, product, growth and ops", tint: 0.1 },
+  { href: "/work", title: "Work", blurb: "9 roles across swe, product, growth and ops", tint: 0.1 },
   { href: "/projects", title: "Projects", blurb: "Things I build for fun", tint: 0.16 },
   { href: "/awards", title: "Awards", blurb: "4 hackathon wins", tint: 0.22 },
   { href: "/story", title: "Story", blurb: "Theatre kid who learned to build", tint: 0.28 },
