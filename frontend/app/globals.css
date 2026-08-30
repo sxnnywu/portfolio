@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #F5EDE4;
+  --indigo: #3535C4;
+  --yellow: #F5CF4A;
+  --blue: #1A1AFF;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-indigo: var(--indigo);
+  --color-yellow: var(--yellow);
+  --color-blue: var(--blue);
+  --font-display: var(--font-caveat);
+  --font-body: var(--font-anon);
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--indigo);
+}
+
+* {
+  box-sizing: border-box;
+}
