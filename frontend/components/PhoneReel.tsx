@@ -80,7 +80,7 @@ export default function PhoneReel({ phone }: { phone: ContentPhone }) {
       </div>
 
       <div data-phone-caption>
-        <div data-phone-row>
+        <div data-caption-row>
           <span style={{ fontFamily: font.serif, fontWeight: 300, fontSize: 26, color: color.inkDeepSky }}>
             {phone.platform}
           </span>

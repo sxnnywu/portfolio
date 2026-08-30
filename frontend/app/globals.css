@@ -695,7 +695,7 @@ img {
   gap: 14px;
 }
 
-[data-phone-row] [data-phone-caption] > [data-phone-row] {
+[data-caption-row] {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
