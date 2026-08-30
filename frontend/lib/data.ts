@@ -154,7 +154,7 @@ export const projects: Project[] = [
     moreTags: 1,
     links: [
       { label: "GitHub", href: "https://github.com/sxnnywu/reeled-in" },
-      { label: "Devpost" },
+      { label: "Devpost", href: "https://devpost.com/software/loopy-9ev74g" },
     ],
   },
   {
@@ -164,7 +164,10 @@ export const projects: Project[] = [
       "Multi-agent orchestration (g-stack) to generate and post technical content for companies.",
     tags: ["AI Agents", "Next.js"],
     moreTags: 3,
-    links: [{ label: "Devpost" }, { label: "GitHub" }],
+    links: [
+      { label: "Devpost", href: "https://devpost.com/software/gtmaestro" },
+      { label: "GitHub", href: "https://github.com/sebtsang/gmaestro" },
+    ],
   },
   {
     name: "Godseye",
@@ -176,7 +179,7 @@ export const projects: Project[] = [
     moreTags: 2,
     links: [
       { label: "GitHub", href: "https://github.com/sxnnywu/godseye" },
-      { label: "Devpost" },
+      { label: "Devpost", href: "https://devpost.com/software/godseye-uwma5h" },
     ],
   },
   {
@@ -187,7 +190,10 @@ export const projects: Project[] = [
       "ETFs for prediction markets. Four agentic AI systems finding combinatorial arbitrages across Polymarket, Kalshi and Manifold.",
     tags: ["Agentic AI Development", "React.js"],
     moreTags: 3,
-    links: [{ label: "GitHub" }, { label: "Devpost" }],
+    links: [
+      { label: "GitHub", href: "https://github.com/sxnnywu/slicefund" },
+      { label: "Devpost", href: "https://devpost.com/software/slicefund" },
+    ],
   },
   {
     name: "Post It",
@@ -197,16 +203,10 @@ export const projects: Project[] = [
       "An augmented reality app for Snapchat Spectacles that anchors digital sticky notes in real-world locations.",
     tags: ["TypeScript", "JavaScript"],
     moreTags: 1,
-    links: [{ label: "Demo Video" }, { label: "Devpost" }],
-  },
-  {
-    name: "Bohanza",
-    date: "apr 2025",
-    description:
-      "Digital recreation of the German card game Bohanza. Player vs. player and player vs. AI.",
-    tags: ["Java Swing", "Project Management"],
-    moreTags: 2,
-    links: [{ label: "GitHub", href: "https://github.com/sxnnywu/Bohanza" }],
+    links: [
+      { label: "Demo Video" },
+      { label: "Devpost", href: "https://devpost.com/software/post-it-jrswqx" },
+    ],
   },
   {
     name: "Byte-Sized Learning",
@@ -223,7 +223,7 @@ export const projects: Project[] = [
     description:
       "A math blog with 600+ readers, exploring how math is intertwined with everyday life.",
     tags: ["Canva"],
-    links: [{ label: "Website" }],
+    links: [{ label: "Website", href: "https://mindmathblog.wordpress.com/" }],
   },
 ];
 

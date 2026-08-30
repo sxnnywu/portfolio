@@ -61,7 +61,7 @@ All five pages are built: Home, Work, Projects, Awards, Story. Every header link
 
 `SkyBand` and `ContactSection` are shared by all four inner pages. The Work filter is the only real client state on the site: a `Set<Discipline>` in `WorkTimeline`, union semantics, empty set means show all.
 
-**Outstanding:** several project card links have no URL yet. `Project.links` entries carry an optional `href`, and `ProjectCard` renders only the ones that have it, so a missing URL drops the link rather than shipping a dead `#`. The Devpost, demo-video and MIND website URLs are still unknown.
+`Project.links` entries carry an optional `href`, and `ProjectCard` renders only the ones that have it, so a missing URL drops the link rather than shipping a dead `#`. Every project link is wired except Post It's demo video, which has no URL yet.
 
 The old site (cream/indigo, Caveat + Anonymous Pro, Tailwind, six different routes) is preserved in commit `9fd3f98` if anything needs recovering.
 
