@@ -56,7 +56,7 @@ export const roles: Role[] = [
     title: "Co-Founder",
     company: "Oro",
     logo: "/assets/logos/oro.png",
-    dates: "Jan 2026 - present",
+    dates: "Jan 2026 - Present",
     location: "Toronto",
     tags: ["engineering", "product", "growth", "ops"],
     bullets: [
@@ -69,7 +69,7 @@ export const roles: Role[] = [
     title: "Campus Leader",
     company: "Notion",
     logo: "/assets/logos/notion.png",
-    dates: "Aug 2026 - present",
+    dates: "Aug 2026 - Present",
     location: "Waterloo",
     tags: ["growth", "ops"],
     bullets: ["Scaling Notion in Waterloo by hosting events, building templates, and creating content"],

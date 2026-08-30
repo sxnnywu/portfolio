@@ -362,3 +362,23 @@ img {
     opacity: 0 !important;
   }
 }
+
+/* Each route fades in as it mounts. Short, and opacity only — see template.tsx. */
+@keyframes oro-page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-page] {
+  animation: oro-page-in 0.28s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page] {
+    animation: none !important;
+  }
+}
