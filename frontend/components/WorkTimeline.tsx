@@ -167,7 +167,7 @@ export default function WorkTimeline() {
                 </span>
               </div>
 
-              <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 6 }}>
+              <div style={{ marginTop: 5, display: "flex", flexWrap: "wrap", gap: 6 }}>
                 {role.tags.map((tag) => (
                   <span
                     key={tag}
@@ -188,7 +188,7 @@ export default function WorkTimeline() {
 
               <ul
                 style={{
-                  margin: "14px 0 0",
+                  margin: "11px 0 0",
                   padding: 0,
                   listStyle: "none",
                   display: "flex",
@@ -203,7 +203,7 @@ export default function WorkTimeline() {
                     style={{
                       fontFamily: font.serif,
                       fontWeight: 300,
-                      fontSize: 16.5,
+                      fontSize: 15.5,
                       lineHeight: 1.55,
                       color: color.body,
                     }}
