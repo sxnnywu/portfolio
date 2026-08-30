@@ -5,6 +5,7 @@ import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
 import Logo from "@/components/Logo";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
+import Bloom from "@/components/Bloom";
 import StatBand from "@/components/StatBand";
 import { education, navRows } from "@/lib/data";
 import {
@@ -228,12 +229,14 @@ function NavRows() {
         So, what do you want to see?
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {navRows.map(({ href, title, blurb, tint }) => (
+        {navRows.map(({ href, title, blurb, tint, bloom }) => (
           <Link
             key={href}
             data-reveal
+            data-navrow
             href={href}
             style={{
+              position: "relative",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -244,8 +247,11 @@ function NavRows() {
               color: "inherit",
             }}
           >
-            <span style={type.sectionTitle}>{title}</span>
-            <span style={{ fontSize: 12.5, color: color.skyInkLight }}>{blurb}</span>
+            <Bloom color={bloom} />
+            <span style={{ ...type.sectionTitle, position: "relative" }}>{title}</span>
+            <span style={{ position: "relative", fontSize: 12.5, color: color.skyInkLight }}>
+              {blurb}
+            </span>
           </Link>
         ))}
       </div>
