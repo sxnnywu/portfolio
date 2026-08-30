@@ -1,171 +1,262 @@
-"use client";
-
-import Image from "next/image";
+import { Fragment } from "react";
 import Link from "next/link";
-import { useState } from "react";
-import Polaroid from "@/components/Polaroid";
-import HobbiesModal from "@/components/HobbiesModal";
-import { socials } from "@/lib/data";
+import Cloud from "@/components/Cloud";
+import ContactSection from "@/components/ContactSection";
+import Sun, { SunFilterDefs } from "@/components/Sun";
+import { education, navRows, stats } from "@/lib/data";
+import {
+  color,
+  emphasis,
+  font,
+  gradient,
+  layout,
+  pill,
+  rule,
+  skyTint,
+  type,
+} from "@/lib/tokens";
 
-const coolThings = [
-  { caption: "i scaled my nonprofit to 30+ girls in 20 countries", rotation: -3 },
-  { caption: "i grew my startup's waitlist to 12k+ signups", rotation: 2 },
-  { caption: "i drive 200k+ impressions for a consumer startup ($20M ARR)", rotation: -2 },
-];
+const blueItalic = { fontStyle: "italic", color: color.blueInk } as const;
 
-const moreLinks = [
-  { label: "work experience", href: "/experience" },
-  { label: "awards", href: "/awards" },
-  { label: "projects", href: "/projects" },
-  { label: "features", href: "/features" },
-  { label: "community", href: "/community" },
-  { label: "hobbies", href: null },
-];
+function Hero() {
+  return (
+    <div
+      style={{
+        position: "relative",
+        height: "100vh",
+        minHeight: 660,
+        zIndex: 2,
+        background: gradient.heroSky,
+      }}
+    >
+      <div data-speed="0.28" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+        <Cloud height={150} opacity={0.4} style={{ left: -170, top: 24 }} />
+        <Cloud height={112} opacity={0.28} flipped style={{ left: 96, top: 2 }} />
+        <Cloud height={134} opacity={0.32} flipped style={{ right: -140, top: 110 }} />
+        <Cloud height={104} opacity={0.22} style={{ right: 120, top: -30 }} />
+      </div>
+
+      <div data-speed="0.58" style={{ position: "absolute", inset: 0, willChange: "transform" }}>
+        <Cloud height={196} opacity={0.72} style={{ left: -190, top: 120 }} />
+        <Cloud height={150} opacity={0.5} flipped style={{ left: -60, top: 250 }} />
+        <Cloud height={206} opacity={0.7} flipped style={{ right: -180, top: 168 }} />
+        <Cloud height={156} opacity={0.48} style={{ right: -70, top: 298 }} />
+      </div>
+
+      <div
+        data-speed="0.03"
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "11%",
+          display: "flex",
+          justifyContent: "center",
+          willChange: "transform",
+        }}
+      >
+        <Sun />
+      </div>
+
+      <div
+        data-speed="0.55"
+        data-fade="1"
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: "36%",
+          textAlign: "center",
+          padding: "0 6vw",
+          willChange: "transform, opacity",
+        }}
+      >
+        <div style={type.heroDisplay}>
+          Hey, i&apos;m{" "}
+          <span
+            style={{
+              fontFamily: font.script,
+              fontWeight: 700,
+              fontSize: "1.1em",
+              color: color.blueInk,
+            }}
+          >
+            Sunny
+          </span>
+        </div>
+        <div
+          style={{
+            marginTop: 20,
+            fontSize: "clamp(19px,1.8vw,25px)",
+            color: color.skyInk,
+          }}
+        >
+          An <span style={emphasis(1.18)}>engineer</span> who speaks{" "}
+          <span style={emphasis(1.18)}>business</span>
+        </div>
+        <a href="#work" style={{ ...pill.hero, marginTop: 42 }}>
+          See what i&apos;ve built &rarr;
+        </a>
+      </div>
+
+      <div
+        data-speed="0.92"
+        style={{ position: "absolute", left: 0, right: 0, bottom: 64, height: 230, willChange: "transform" }}
+      >
+        <Cloud masked height={224} opacity={0.96} style={{ left: -200, bottom: -10 }} />
+        <Cloud masked height={186} opacity={0.9} flipped style={{ left: -20, bottom: -52 }} />
+        <Cloud masked height={212} opacity={0.94} style={{ left: 210, bottom: -74 }} />
+        <Cloud masked height={184} opacity={0.9} flipped style={{ left: 440, bottom: -44 }} />
+        <Cloud masked height={214} opacity={0.94} style={{ left: 640, bottom: -72 }} />
+        <Cloud masked height={188} opacity={0.9} flipped style={{ left: 860, bottom: -40 }} />
+        <Cloud masked height={220} opacity={0.96} style={{ right: -200, bottom: -12 }} />
+      </div>
+
+      <div
+        data-speed="0.3"
+        data-fade="1"
+        style={{
+          ...type.metaLabel,
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 38,
+          textAlign: "center",
+          color: "#4a7091",
+          willChange: "transform, opacity",
+        }}
+      >
+        Scroll &darr;
+      </div>
+    </div>
+  );
+}
+
+function Lede() {
+  return (
+    <div
+      style={{
+        position: "relative",
+        zIndex: 1,
+        maxWidth: layout.maxWidth,
+        margin: "0 auto",
+        padding: "200px 6vw 0",
+        textAlign: "center",
+      }}
+    >
+      <div
+        style={{
+          fontFamily: font.serif,
+          fontSize: "clamp(20px,2.2vw,28px)",
+          fontWeight: 300,
+          lineHeight: 1.62,
+          color: color.body,
+        }}
+      >
+        I grew up in the <em style={blueItalic}>performing arts</em>, learned to{" "}
+        <em style={blueItalic}>code</em> at a <em style={blueItalic}>hackathon</em> my friends
+        dragged me to, and now <em style={blueItalic}>storytelling</em> is the part of{" "}
+        <em style={blueItalic}>engineering</em>{" "}
+        i&apos;m best at.
+      </div>
+
+      <div
+        style={{
+          marginTop: 52,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "stretch",
+          gap: 34,
+          fontSize: "clamp(14px,1.2vw,16px)",
+          lineHeight: 1.5,
+          color: color.bodyAlt,
+          textAlign: "left",
+        }}
+      >
+        {education.map(({ program, school }, i) => (
+          <Fragment key={program}>
+            {i > 0 && <span style={{ width: 1, background: "rgba(42,42,36,.2)" }} />}
+            <span style={{ flex: "none" }}>
+              {program}
+              <br />
+              <span style={{ fontFamily: font.serif, fontStyle: "italic", color: color.muted }}>
+                {school}
+              </span>
+            </span>
+          </Fragment>
+        ))}
+      </div>
+
+      <div
+        style={{
+          marginTop: 76,
+          display: "grid",
+          gridTemplateColumns: "repeat(4,1fr)",
+          gap: 26,
+          padding: "34px 0",
+          borderTop: `1px solid ${rule.statBand}`,
+          borderBottom: `1px solid ${rule.statBand}`,
+        }}
+      >
+        {stats.map(({ value, label }) => (
+          <div key={label}>
+            <div style={type.numeral}>{value}</div>
+            <div style={{ marginTop: 8, fontSize: 12, color: color.muted }}>{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function NavRows() {
+  return (
+    <div
+      id="work"
+      style={{
+        position: "relative",
+        zIndex: 1,
+        maxWidth: layout.maxWidth,
+        margin: "0 auto",
+        padding: "130px 6vw 150px",
+      }}
+    >
+      <div style={{ marginBottom: 24, fontSize: 16.5, color: color.muted }}>
+        So, what do you want to see?
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {navRows.map(({ href, title, blurb, tint }) => (
+          <Link
+            key={href}
+            href={href}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: 30,
+              padding: "30px 34px",
+              borderRadius: 16,
+              background: skyTint(tint),
+              color: "inherit",
+            }}
+          >
+            <span style={type.sectionTitle}>{title}</span>
+            <span style={{ fontSize: 12.5, color: color.skyInkLight }}>{blurb}</span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
-  const [hobbiesOpen, setHobbiesOpen] = useState(false);
-
   return (
-    <main className="max-w-3xl mx-auto px-8 pb-24">
-      {/* Hero */}
-      <section className="flex flex-col items-center text-center pt-12 pb-6">
-        <Image src="/assets/sun.png" alt="sun" width={96} height={96} className="mb-5" />
-        <h1 className="font-display text-7xl text-indigo mb-3">hey, i&apos;m Sunny</h1>
-        <p className="font-body text-sm text-indigo/70 leading-relaxed">
-          computer science @ uwaterloo<br />
-          business administration @ laurier
-        </p>
-      </section>
-
-      {/* About */}
-      <section className="flex gap-12 items-start py-10">
-        <div className="flex-1">
-          <h2 className="font-display text-5xl text-indigo mb-1">i like big ideas</h2>
-          <p className="font-body text-sm text-indigo/50 italic mb-5">... and the terror of trying them.</p>
-          <ul className="font-body text-sm space-y-1.5 mb-5 text-indigo/80">
-            <li className="flex items-center gap-2">
-              <Image src="/assets/bee.png" alt="" width={16} height={16} />
-              <span><strong>focus:</strong> software, product, growth</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Image src="/assets/butterfly.png" alt="" width={16} height={16} />
-              <span><strong>now:</strong> travel, polarity</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Image src="/assets/stars.png" alt="" width={16} height={16} />
-              <span><strong>past:</strong> stan, polarity, 1851 labs</span>
-            </li>
-          </ul>
-          <div className="flex gap-4 flex-wrap text-sm font-body mb-4">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target={s.href.startsWith("http") ? "_blank" : undefined}
-                rel="noopener noreferrer"
-                className="text-indigo underline hover:opacity-60 transition-opacity"
-              >
-                {s.label}
-              </a>
-            ))}
-          </div>
-          <p className="font-body text-sm text-indigo/80">
-            currently building{" "}
-            <a
-              href="https://buildingoro.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline hover:opacity-60 transition-opacity"
-            >
-              oro
-            </a>{" "}
-            (ask me about it)
-          </p>
-        </div>
-
-        <div className="relative flex-shrink-0 mt-2">
-          <div className="w-44 h-44 rounded-full overflow-hidden ring-4 ring-white shadow-md">
-            <Image
-              src="/assets/sunny_headshot.jpg"
-              alt="Sunny Wu"
-              width={176}
-              height={176}
-              className="object-cover w-full h-full"
-            />
-          </div>
-          <Image
-            src="/assets/sunflower.png"
-            alt=""
-            width={72}
-            height={72}
-            className="absolute -bottom-6 -right-8 pointer-events-none"
-          />
-        </div>
-      </section>
-
-      {/* Cool things */}
-      <section className="py-14 text-center">
-        <h2 className="font-display text-5xl text-indigo mb-10">some cool things about me</h2>
-        <div className="flex justify-center gap-8 flex-wrap items-start">
-          {coolThings.map((item, i) => (
-            <Polaroid
-              key={i}
-              caption={item.caption}
-              rotation={item.rotation}
-              className="w-44"
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* More about me */}
-      <section className="py-8">
-        <div className="flex items-center gap-3 mb-6">
-          <h2 className="font-display text-5xl text-indigo">more about me:</h2>
-          <Image src="/assets/smiley.png" alt="" width={36} height={36} />
-        </div>
-        <div className="grid grid-cols-2 gap-x-20 gap-y-3 max-w-xs">
-          {moreLinks.map((item) =>
-            item.href ? (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="font-body text-sm text-indigo underline hover:opacity-60 transition-opacity"
-              >
-                {item.label}
-              </Link>
-            ) : (
-              <button
-                key={item.label}
-                onClick={() => setHobbiesOpen(true)}
-                className="font-body text-sm text-indigo underline hover:opacity-60 transition-opacity text-left"
-              >
-                {item.label}
-              </button>
-            )
-          )}
-        </div>
-      </section>
-
-      {/* Let's chat */}
-      <section className="py-16 text-center">
-        <h2 className="font-display text-6xl text-indigo mb-6">let&apos;s chat!</h2>
-        <div className="flex justify-center gap-5 flex-wrap">
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target={s.href.startsWith("http") ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              className="font-body text-sm text-indigo underline hover:opacity-60 transition-opacity"
-            >
-              {s.label}
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {hobbiesOpen && <HobbiesModal onClose={() => setHobbiesOpen(false)} />}
-    </main>
+    <>
+      <SunFilterDefs />
+      <Hero />
+      <Lede />
+      <NavRows />
+      <ContactSection />
+    </>
   );
 }
