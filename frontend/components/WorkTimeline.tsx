@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Logo from "@/components/Logo";
 import { highlightMetrics } from "@/lib/highlight";
 import { color, font, layout, rule, skyTint } from "@/lib/tokens";
 import { disciplines, roles, type Discipline } from "@/lib/data";
@@ -140,6 +141,9 @@ export default function WorkTimeline() {
                 </span>
                 <span
                   style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 7,
                     fontFamily: font.serif,
                     fontStyle: "italic",
                     fontSize: 19,
@@ -147,7 +151,8 @@ export default function WorkTimeline() {
                     color: color.skyInkLight,
                   }}
                 >
-                  @&nbsp;{role.company}
+                  {role.logo && <Logo src={role.logo} />}
+                  <span>@&nbsp;{role.company}</span>
                 </span>
                 <span
                   data-role-dates

@@ -3,6 +3,7 @@ import Link from "next/link";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
+import Logo from "@/components/Logo";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import StatBand from "@/components/StatBand";
 import { education, navRows } from "@/lib/data";
@@ -189,14 +190,17 @@ function Lede() {
           textAlign: "left",
         }}
       >
-        {education.map(({ program, school }, i) => (
+        {education.map(({ program, school, logo }, i) => (
           <Fragment key={program}>
             {i > 0 && <span style={{ width: 1, background: "rgba(42,42,36,.2)" }} />}
-            <span style={{ flex: "none" }}>
-              {program}
-              <br />
-              <span style={{ fontFamily: font.serif, fontStyle: "italic", color: color.muted }}>
-                {school}
+            <span style={{ flex: "none", display: "flex", alignItems: "center", gap: 10 }}>
+              <Logo src={logo} size={26} />
+              <span>
+                {program}
+                <br />
+                <span style={{ fontFamily: font.serif, fontStyle: "italic", color: color.muted }}>
+                  {school}
+                </span>
               </span>
             </span>
           </Fragment>

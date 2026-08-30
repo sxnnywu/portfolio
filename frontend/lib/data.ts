@@ -5,8 +5,16 @@ export const socials = [
 ];
 
 export const education = [
-  { program: "Computer science", school: "University of Waterloo" },
-  { program: "Business administration", school: "Lazaridis School of Business" },
+  {
+    program: "Computer science",
+    school: "University of Waterloo",
+    logo: "/assets/logos/waterloo.png",
+  },
+  {
+    program: "Business administration",
+    school: "Lazaridis School of Business",
+    logo: "/assets/logos/laurier.png",
+  },
 ];
 
 export const stats = [
@@ -33,6 +41,8 @@ export interface Role {
   dates: string;
   location: string;
   tags: Discipline[];
+  /** Optional: entries without one simply show the company name. */
+  logo?: string;
   /** Braces mark the figures that print in blue ink. */
   bullets: string[];
 }
@@ -41,6 +51,7 @@ export const roles: Role[] = [
   {
     title: "Co-Founder",
     company: "Oro",
+    logo: "/assets/logos/oro.png",
     dates: "Jan 2026 - present",
     location: "Toronto",
     tags: ["engineering", "product", "growth", "ops"],
@@ -53,6 +64,7 @@ export const roles: Role[] = [
   {
     title: "Campus Leader",
     company: "Notion",
+    logo: "/assets/logos/notion.png",
     dates: "Aug 2026 - present",
     location: "Waterloo",
     tags: ["growth", "ops"],
@@ -61,6 +73,7 @@ export const roles: Role[] = [
   {
     title: "Software Engineer Intern",
     company: "Rocket",
+    logo: "/assets/logos/rocket.png",
     dates: "May - aug 2026",
     location: "Remote",
     tags: ["engineering", "product"],
