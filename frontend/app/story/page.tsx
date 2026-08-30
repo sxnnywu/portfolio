@@ -33,6 +33,7 @@ export default function Story() {
           {story.map((paragraph, i) => (
             <Fragment key={paragraph.slice(0, 40)}>
               <div
+                data-reveal
                 style={{
                   fontFamily: font.serif,
                   fontWeight: 300,

@@ -3,7 +3,8 @@ import Link from "next/link";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
-import { education, navRows, stats } from "@/lib/data";
+import StatBand from "@/components/StatBand";
+import { education, navRows } from "@/lib/data";
 import {
   color,
   emphasis,
@@ -11,7 +12,6 @@ import {
   gradient,
   layout,
   pill,
-  rule,
   skyTint,
   type,
 } from "@/lib/tokens";
@@ -147,6 +147,7 @@ function Lede() {
       }}
     >
       <div
+        data-reveal
         style={{
           fontFamily: font.serif,
           fontSize: "clamp(20px,2.2vw,28px)",
@@ -163,6 +164,7 @@ function Lede() {
       </div>
 
       <div
+        data-reveal
         style={{
           marginTop: 52,
           display: "flex",
@@ -189,25 +191,7 @@ function Lede() {
         ))}
       </div>
 
-      <div
-        data-stat-band
-        style={{
-          marginTop: 76,
-          display: "grid",
-          gridTemplateColumns: "repeat(4,1fr)",
-          gap: 26,
-          padding: "34px 0",
-          borderTop: `1px solid ${rule.statBand}`,
-          borderBottom: `1px solid ${rule.statBand}`,
-        }}
-      >
-        {stats.map(({ value, label }) => (
-          <div key={label}>
-            <div style={type.numeral}>{value}</div>
-            <div style={{ marginTop: 8, fontSize: 12, color: color.muted }}>{label}</div>
-          </div>
-        ))}
-      </div>
+      <StatBand />
     </div>
   );
 }
@@ -231,6 +215,7 @@ function NavRows() {
         {navRows.map(({ href, title, blurb, tint }) => (
           <Link
             key={href}
+            data-reveal
             href={href}
             style={{
               display: "flex",

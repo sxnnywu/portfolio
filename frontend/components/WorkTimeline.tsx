@@ -90,7 +90,11 @@ export default function WorkTimeline() {
       </div>
 
       <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "0 6vw 120px" }}>
-        <div style={{ position: "relative", display: "flex", flexDirection: "column", paddingLeft: 34 }}>
+        <div
+          data-filter-list
+          key={[...selected].sort().join(",") || "all"}
+          style={{ position: "relative", display: "flex", flexDirection: "column", paddingLeft: 34 }}
+        >
           <div
             style={{
               position: "absolute",

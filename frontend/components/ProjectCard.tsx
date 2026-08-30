@@ -41,6 +41,8 @@ export default function ProjectCard({
 
   return (
     <div
+      data-project-card
+      {...(isAward ? { "data-award": "" } : null)}
       style={{
         position: "relative",
         padding: "30px 30px 26px",

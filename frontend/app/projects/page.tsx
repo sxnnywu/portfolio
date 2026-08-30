@@ -40,12 +40,13 @@ export default function Projects() {
           }}
         >
           {projects.map((project, i) => (
-            <ProjectCard
-              key={project.name}
-              project={project}
-              paper={PAPER[i % PAPER.length]}
-              rotation={ROTATION[i % ROTATION.length]}
-            />
+            <div key={project.name} data-reveal>
+              <ProjectCard
+                project={project}
+                paper={PAPER[i % PAPER.length]}
+                rotation={ROTATION[i % ROTATION.length]}
+              />
+            </div>
           ))}
         </div>
       </div>
