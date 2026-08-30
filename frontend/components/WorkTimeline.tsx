@@ -130,7 +130,7 @@ export default function WorkTimeline() {
                 <span
                   style={{
                     fontFamily: font.serif,
-                    fontSize: "clamp(22px,2.2vw,28px)",
+                    fontSize: "clamp(20px,2vw,26px)",
                     fontWeight: 300,
                     lineHeight: 1.2,
                     color: color.inkDeepSky,
