@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { externalLinkProps } from "@/lib/links";
 import { color, font, type } from "@/lib/tokens";
-import { contentPosts } from "@/lib/data";
+import { cardTilts, contentPosts } from "@/lib/data";
 
 const CARD_WIDTH = 258;
 const CARD_GAP = 26;
@@ -35,13 +35,13 @@ export default function PostCarousel() {
       </div>
 
       <div data-rail ref={rail}>
-        {contentPosts.map((post) => (
+        {contentPosts.map((post, slot) => (
           <a
             key={post.image}
             href={post.href}
             {...externalLinkProps(post.href)}
             data-post-card
-            style={{ ["--post-rot" as string]: `${post.rotate}deg` }}
+            style={{ ["--post-rot" as string]: `${cardTilts[slot % cardTilts.length]}deg` }}
           >
             <span data-pin aria-hidden />
             <span data-post-well>

@@ -457,10 +457,12 @@ export interface ContentPost {
   cta: string;
   /** LinkedIn shots crop from the left so the hook's first word survives. */
   objectPosition: string;
-  rotate: number;
 }
 
 const LINKEDIN_POST = "https://www.linkedin.com/posts/sunny-wu-dev_";
+
+/** Resting tilts by slot, so the rail keeps alternating however posts are ordered. */
+export const cardTilts = [-2.6, 2.2, -1.6, 3, -2.2, 1.8, -3, 2.4, -2, 1.6, -2.8];
 
 export const contentPosts: ContentPost[] = [
   {
@@ -469,7 +471,6 @@ export const contentPosts: ContentPost[] = [
     href: `${LINKEDIN_POST}i-wasnt-allowed-to-eat-lunch-until-i-practiced-activity-7356127507705643008-7Ucx`,
     cta: "read it",
     objectPosition: "left top",
-    rotate: -2.6,
   },
   {
     hook: "Time is the only thing you steal without getting caught.",
@@ -477,47 +478,6 @@ export const contentPosts: ContentPost[] = [
     href: `${LINKEDIN_POST}time-is-the-only-thing-you-steal-without-activity-7357379594850566144-yChT`,
     cta: "read it",
     objectPosition: "left top",
-    rotate: 2.2,
-  },
-  {
-    hook: "walked out of a brutal math quiz and straight into one of the prettiest sunsets",
-    image: "post-sunset",
-    href: `${LINKEDIN_POST}walked-out-of-a-brutal-math-quiz-and-straight-activity-7393145531688165376-1iB7`,
-    cta: "read it",
-    objectPosition: "left top",
-    rotate: -1.6,
-  },
-  {
-    hook: "i'm 19 today. (long post ahead, i'm sorry in advance)",
-    image: "post-19",
-    href: `${LINKEDIN_POST}im-19-today-long-post-ahead-im-sorry-activity-7473347813569941504-tM4P`,
-    cta: "read it",
-    objectPosition: "left top",
-    rotate: 3,
-  },
-  {
-    hook: "my net worth is $14 million.",
-    image: "post-networth",
-    href: `${LINKEDIN_POST}my-net-worth-is-14-million-i-ran-the-activity-7458737347828862977-G0pQ`,
-    cta: "read it",
-    objectPosition: "left top",
-    rotate: -2.2,
-  },
-  {
-    hook: "never hire a jack of all trades",
-    image: "post-jack",
-    href: `${LINKEDIN_POST}never-hire-a-jack-of-all-trades-if-you-activity-7488564097308082177-_udh`,
-    cta: "read it",
-    objectPosition: "left top",
-    rotate: 1.8,
-  },
-  {
-    hook: "i don't want to be impressive for my age.",
-    image: "post-impressive",
-    href: `${LINKEDIN_POST}i-dont-want-to-be-impressive-for-my-age-activity-7488926451539304448-QfB5`,
-    cta: "read it",
-    objectPosition: "left top",
-    rotate: -3,
   },
   {
     hook: "just do the scary thing.",
@@ -525,7 +485,20 @@ export const contentPosts: ContentPost[] = [
     href: "https://www.instagram.com/reel/DZAXpcMumqW/",
     cta: "watch it",
     objectPosition: "center top",
-    rotate: 2.4,
+  },
+  {
+    hook: "walked out of a brutal math quiz and straight into one of the prettiest sunsets",
+    image: "post-sunset",
+    href: `${LINKEDIN_POST}walked-out-of-a-brutal-math-quiz-and-straight-activity-7393145531688165376-1iB7`,
+    cta: "read it",
+    objectPosition: "left top",
+  },
+  {
+    hook: "i'm 19 today. (long post ahead, i'm sorry in advance)",
+    image: "post-19",
+    href: `${LINKEDIN_POST}im-19-today-long-post-ahead-im-sorry-activity-7473347813569941504-tM4P`,
+    cta: "read it",
+    objectPosition: "left top",
   },
   {
     hook: "fits recently",
@@ -533,7 +506,20 @@ export const contentPosts: ContentPost[] = [
     href: "https://www.instagram.com/p/Dcjs_3xmqB0/",
     cta: "watch it",
     objectPosition: "center top",
-    rotate: -2,
+  },
+  {
+    hook: "my net worth is $14 million.",
+    image: "post-networth",
+    href: `${LINKEDIN_POST}my-net-worth-is-14-million-i-ran-the-activity-7458737347828862977-G0pQ`,
+    cta: "read it",
+    objectPosition: "left top",
+  },
+  {
+    hook: "never hire a jack of all trades",
+    image: "post-jack",
+    href: `${LINKEDIN_POST}never-hire-a-jack-of-all-trades-if-you-activity-7488564097308082177-_udh`,
+    cta: "read it",
+    objectPosition: "left top",
   },
   {
     hook: "i get bored of everything",
@@ -541,7 +527,13 @@ export const contentPosts: ContentPost[] = [
     href: "https://www.instagram.com/reel/DaIrDj5glqv/",
     cta: "watch it",
     objectPosition: "center top",
-    rotate: 1.6,
+  },
+  {
+    hook: "i don't want to be impressive for my age.",
+    image: "post-impressive",
+    href: `${LINKEDIN_POST}i-dont-want-to-be-impressive-for-my-age-activity-7488926451539304448-QfB5`,
+    cta: "read it",
+    objectPosition: "left top",
   },
   {
     hook: "maxxing my stats at 19",
@@ -549,6 +541,5 @@ export const contentPosts: ContentPost[] = [
     href: "https://www.instagram.com/reel/Dclhs01BGYg/",
     cta: "watch it",
     objectPosition: "center top",
-    rotate: -2.8,
   },
 ];

@@ -49,7 +49,7 @@ export default function Content() {
         </div>
       </div>
 
-      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "70px 6vw 30px" }}>
+      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "104px 6vw 64px" }}>
         <p
           data-reveal
           style={{
