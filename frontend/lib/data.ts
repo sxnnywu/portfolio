@@ -1,3 +1,7 @@
+/** The hero's two typed lines. Shared so the like button can wait for them. */
+export const heroHeadline = "Hey, I'm Sunny";
+export const heroTagline = "An engineer who speaks business";
+
 export const socials = [
   { label: "Github", href: "https://github.com/sxnnywu" },
   { label: "Linkedin", href: "https://www.linkedin.com/in/sunny-wu-dev/" },

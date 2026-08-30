@@ -7,7 +7,7 @@ import Logo from "@/components/Logo";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import Bloom from "@/components/Bloom";
 import StatBand from "@/components/StatBand";
-import { education, navRows } from "@/lib/data";
+import { education, heroHeadline, heroTagline, navRows } from "@/lib/data";
 import {
   color,
   emphasis,
@@ -20,9 +20,6 @@ import {
 } from "@/lib/tokens";
 
 const blueItalic = { fontStyle: "italic", color: color.blueInk } as const;
-
-const HEADLINE = "Hey, I'm Sunny";
-const TAGLINE = "An engineer who speaks business";
 
 function Hero() {
   return (
@@ -78,7 +75,7 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <Typed text={HEADLINE} style={type.heroDisplay}>
+        <Typed text={heroHeadline} style={type.heroDisplay}>
           Hey, I&apos;m{" "}
           <span
             style={{
@@ -92,8 +89,8 @@ function Hero() {
           </span>
         </Typed>
         <Typed
-          text={TAGLINE}
-          delay={sequenceEnd(HEADLINE.length)}
+          text={heroTagline}
+          delay={sequenceEnd(heroHeadline.length)}
           style={{
             marginTop: 20,
             fontSize: "clamp(19px,1.8vw,25px)",
@@ -106,7 +103,7 @@ function Hero() {
         <a
           href="#work"
           data-after-type
-          style={{ ...pill.hero, marginTop: 42, ...afterTyping(HEADLINE.length, TAGLINE.length) }}
+          style={{ ...pill.hero, marginTop: 42, ...afterTyping(heroHeadline.length, heroTagline.length) }}
         >
           See what I&apos;ve built &rarr;
         </a>
@@ -140,7 +137,7 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <span data-after-type style={afterTyping(HEADLINE.length, TAGLINE.length)}>
+        <span data-after-type style={afterTyping(heroHeadline.length, heroTagline.length)}>
           Scroll &darr;
         </span>
       </div>

@@ -1,9 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { color, font } from "@/lib/tokens";
+import { heroHeadline, heroTagline } from "@/lib/data";
+import { sequenceEnd } from "@/components/Typed";
 
 const ROLL_MS = 1400;
+
+/** How long the home hero takes to type both lines and settle its call to action. */
+const HERO_INTRO_MS = sequenceEnd(heroHeadline.length, heroTagline.length) + 550;
+
+/**
+ * Module scope, so it survives client-side navigation but not a reload: the
+ * count waits for the hero the first time you land, and never again while you
+ * move around the site.
+ */
+let heroIntroSeen = false;
 
 export default function LikeButton() {
   /** The real total. Null until it loads, and while it is null the button hides. */
@@ -12,9 +25,15 @@ export default function LikeButton() {
   const [shown, setShown] = useState<number | null>(null);
   const [pulse, setPulse] = useState(0);
   const roll = useRef(0);
+  const pathname = usePathname();
 
   useEffect(() => {
     let cancelled = false;
+    let timer = 0;
+
+    // Only the home hero has an intro to wait for, and only on the first landing.
+    const waitFor = pathname === "/" && !heroIntroSeen ? HERO_INTRO_MS : 0;
+    heroIntroSeen = true;
 
     fetch("/api/likes")
       .then((res) => res.json())
@@ -24,21 +43,29 @@ export default function LikeButton() {
           return;
         }
         const target = data.count;
-        setCount(target);
 
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-          setShown(target);
-          return;
-        }
+        const reveal = () => {
+          if (cancelled) return;
+          setCount(target);
 
-        const begin = performance.now();
-        const step = (now: number) => {
-          const t = Math.min((now - begin) / ROLL_MS, 1);
-          setShown(Math.round(target * (1 - Math.pow(1 - t, 3))));
-          if (t < 1) roll.current = requestAnimationFrame(step);
+          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            setShown(target);
+            return;
+          }
+
+          const begin = performance.now();
+          const step = (now: number) => {
+            const t = Math.min((now - begin) / ROLL_MS, 1);
+            setShown(Math.round(target * (1 - Math.pow(1 - t, 3))));
+            if (t < 1) roll.current = requestAnimationFrame(step);
+          };
+          setShown(0);
+          roll.current = requestAnimationFrame(step);
         };
-        setShown(0);
-        roll.current = requestAnimationFrame(step);
+
+        // The count is already fetched; only the reveal waits.
+        if (waitFor === 0) reveal();
+        else timer = window.setTimeout(reveal, waitFor);
       })
       .catch(() => {
         if (!cancelled) setCount(null);
@@ -46,9 +73,10 @@ export default function LikeButton() {
 
     return () => {
       cancelled = true;
+      clearTimeout(timer);
       cancelAnimationFrame(roll.current);
     };
-  }, []);
+  }, [pathname]);
 
   function click() {
     if (count === null) return;
