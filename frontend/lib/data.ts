@@ -112,6 +112,7 @@ export const roles: Role[] = [
   {
     title: "Growth & Operations",
     company: "1851 Labs",
+    logo: "/assets/logos/labs1851.png",
     dates: "Apr 2026",
     location: "Toronto",
     tags: ["growth", "ops"],
@@ -124,6 +125,7 @@ export const roles: Role[] = [
   {
     title: "UGC Creator",
     company: "Jobright.ai",
+    logo: "/assets/logos/jobright.png",
     dates: "Feb 2026",
     location: "Remote",
     tags: ["growth"],
@@ -132,6 +134,7 @@ export const roles: Role[] = [
   {
     title: "Founder & Chief Executive Officer",
     company: "The Pink Stairs",
+    logo: "/assets/logos/pinkstairs.png",
     dates: "Jun 2024 - dec 2025",
     location: "Toronto",
     tags: ["growth", "ops"],
