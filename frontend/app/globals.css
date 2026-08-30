@@ -15,6 +15,12 @@ body {
   box-sizing: border-box;
 }
 
+a,
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
 a {
   color: #2635a8;
   text-decoration: none;
@@ -25,6 +31,16 @@ a:hover {
   opacity: 0.62;
 }
 
+a:active {
+  opacity: 0.45;
+}
+
+/* Keyboard-only focus ring; pointer users keep the clean hover treatment. */
+:focus-visible {
+  outline: 2px solid #2635a8;
+  outline-offset: 3px;
+}
+
 img {
   max-width: 100%;
 }
@@ -32,5 +48,9 @@ img {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  a {
+    transition: none;
   }
 }

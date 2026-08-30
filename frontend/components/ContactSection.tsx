@@ -1,5 +1,6 @@
 import Cloud from "@/components/Cloud";
 import { socials } from "@/lib/data";
+import { externalLinkProps } from "@/lib/links";
 import { color, emphasis, font, gradient, pill } from "@/lib/tokens";
 
 export default function ContactSection() {
@@ -63,7 +64,12 @@ export default function ContactSection() {
           }}
         >
           {socials.map(({ label, href }) => (
-            <a key={label} href={href} style={{ color: "#3f6480" }}>
+            <a
+              key={label}
+              href={href}
+              {...externalLinkProps(href)}
+              style={{ color: "#3f6480" }}
+            >
               {label}
             </a>
           ))}

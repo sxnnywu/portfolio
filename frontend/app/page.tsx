@@ -72,7 +72,7 @@ function Hero() {
         }}
       >
         <div style={type.heroDisplay}>
-          Hey, i&apos;m{" "}
+          Hey, I&apos;m{" "}
           <span
             style={{
               fontFamily: font.script,
@@ -95,7 +95,7 @@ function Hero() {
           <span style={emphasis(1.18)}>business</span>
         </div>
         <a href="#work" style={{ ...pill.hero, marginTop: 42 }}>
-          See what i&apos;ve built &rarr;
+          See what I&apos;ve built &rarr;
         </a>
       </div>
 
@@ -157,7 +157,7 @@ function Lede() {
         <em style={blueItalic}>code</em> at a <em style={blueItalic}>hackathon</em> my friends
         dragged me to, and now <em style={blueItalic}>storytelling</em> is the part of{" "}
         <em style={blueItalic}>engineering</em>{" "}
-        i&apos;m best at.
+        I&apos;m best at.
       </div>
 
       <div
