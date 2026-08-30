@@ -3,6 +3,7 @@ import Link from "next/link";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
+import Typed from "@/components/Typed";
 import StatBand from "@/components/StatBand";
 import { education, navRows } from "@/lib/data";
 import {
@@ -72,7 +73,7 @@ function Hero() {
           willChange: "transform, opacity",
         }}
       >
-        <div style={type.heroDisplay}>
+        <Typed length={"Hey, I'm Sunny".length} style={type.heroDisplay}>
           Hey, I&apos;m{" "}
           <span
             style={{
@@ -84,7 +85,7 @@ function Hero() {
           >
             Sunny
           </span>
-        </div>
+        </Typed>
         <div
           style={{
             marginTop: 20,

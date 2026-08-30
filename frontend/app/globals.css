@@ -177,3 +177,26 @@ img {
     animation: none !important;
   }
 }
+
+/* Character-by-character reveal. Clipping rather than appending text keeps the
+   element at its final width, so a centred line does not jitter as it fills. */
+@keyframes oro-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+[data-typed] {
+  animation: oro-type var(--type-duration, 900ms)
+    steps(var(--type-steps, 12), end) var(--type-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-typed] {
+    animation: none !important;
+    clip-path: none !important;
+  }
+}

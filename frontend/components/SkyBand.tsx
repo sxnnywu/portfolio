@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Cloud from "@/components/Cloud";
+import Typed from "@/components/Typed";
 import { color, font, gradient, type } from "@/lib/tokens";
 
 /** The watercolour strip every inner page opens with. */
@@ -51,7 +52,9 @@ export default function SkyBand({
           willChange: "transform, opacity",
         }}
       >
-        <div style={type.pageTitle}>{title}</div>
+        <Typed length={title.length} style={type.pageTitle}>
+          {title}
+        </Typed>
         <div
           style={{
             marginTop: 14,
