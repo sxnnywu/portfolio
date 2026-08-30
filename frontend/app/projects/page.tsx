@@ -31,6 +31,7 @@ export default function Projects() {
       <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "0 6vw 130px" }}>
         {/* A grid, not CSS columns: columns fill top-to-bottom and would scramble the order. */}
         <div
+          data-project-grid
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3,1fr)",

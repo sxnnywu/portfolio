@@ -34,6 +34,7 @@ export default function Header() {
 
   return (
     <div
+      data-site-header
       style={{
         position: "fixed",
         left: 0,

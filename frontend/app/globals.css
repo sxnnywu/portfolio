@@ -62,3 +62,38 @@ img {
     transition: none;
   }
 }
+
+/* The layout is desktop-first and styled inline, so these overrides need
+   !important to outrank the inline styles they correct. */
+@media (max-width: 768px) {
+  /* Brand and links stack; side by side they touch with no gap at phone width. */
+  [data-site-header] {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px;
+    padding-top: 16px !important;
+    padding-bottom: 10px !important;
+  }
+
+  [data-stat-band] {
+    grid-template-columns: repeat(2, 1fr) !important;
+    row-gap: 30px;
+  }
+
+  /* Three columns do not collapse on their own: the cards' min-content width
+     pushes the outer two past the viewport, where overflow-x hides them. */
+  [data-project-grid] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Year becomes a heading above its group rather than a 110px gutter. */
+  [data-award-group] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  [data-role-dates] {
+    margin-left: 0 !important;
+    text-align: left !important;
+  }
+}

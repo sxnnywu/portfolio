@@ -190,6 +190,7 @@ function Lede() {
       </div>
 
       <div
+        data-stat-band
         style={{
           marginTop: 76,
           display: "grid",

@@ -146,6 +146,7 @@ export default function WorkTimeline() {
                   @&nbsp;{role.company}
                 </span>
                 <span
+                  data-role-dates
                   style={{
                     fontFamily: font.serif,
                     fontStyle: "italic",

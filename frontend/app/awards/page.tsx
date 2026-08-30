@@ -16,6 +16,7 @@ export default function Awards() {
         {awards.map(({ year, awards: entries }) => (
           <div
             key={year}
+            data-award-group
             style={{
               display: "grid",
               gridTemplateColumns: "110px 1fr",
