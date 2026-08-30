@@ -29,7 +29,9 @@ function Print({ photo }: { photo: StoryPhoto }) {
 
 export default function StoryPhotos({ row }: { row: StoryPhotoRow }) {
   return (
-    <figure data-print-row {...(row.nowrap ? { "data-nowrap": "" } : null)}>
+    // The reveal goes on the row, not the prints: it animates transform, which
+    // would otherwise replace each print's rotation.
+    <figure data-reveal data-print-row {...(row.nowrap ? { "data-nowrap": "" } : null)}>
       {row.photos.map((photo) => (
         <Print key={photo.src} photo={photo} />
       ))}
