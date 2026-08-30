@@ -130,7 +130,7 @@ export default function WorkTimeline() {
                 <span
                   style={{
                     fontFamily: font.serif,
-                    fontSize: "clamp(26px,2.8vw,34px)",
+                    fontSize: "clamp(22px,2.2vw,28px)",
                     fontWeight: 300,
                     lineHeight: 1.2,
                     color: color.inkDeepSky,
@@ -142,7 +142,7 @@ export default function WorkTimeline() {
                   style={{
                     fontFamily: font.serif,
                     fontStyle: "italic",
-                    fontSize: 23,
+                    fontSize: 19,
                     fontWeight: 300,
                     color: color.skyInkLight,
                   }}
@@ -154,7 +154,7 @@ export default function WorkTimeline() {
                   style={{
                     fontFamily: font.serif,
                     fontStyle: "italic",
-                    fontSize: 16,
+                    fontSize: 14.5,
                     lineHeight: 1.5,
                     color: color.mutedLight,
                     marginLeft: "auto",
@@ -203,7 +203,7 @@ export default function WorkTimeline() {
                     style={{
                       fontFamily: font.serif,
                       fontWeight: 300,
-                      fontSize: 18,
+                      fontSize: 16.5,
                       lineHeight: 1.55,
                       color: color.body,
                     }}

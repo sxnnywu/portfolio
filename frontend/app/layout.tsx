@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Caveat, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -21,9 +22,28 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
+const DESCRIPTION = "An engineer who speaks business. Computer science at Waterloo, business at Laurier, building Oro.";
+
 export const metadata: Metadata = {
-  title: "Sunny Wu",
-  description: "An engineer who speaks business.",
+  // Required for the OG image to resolve to an absolute URL when shared.
+  metadataBase: new URL("https://www.sunny-wu.ca"),
+  title: { default: "Sunny Wu", template: "%s — Sunny Wu" },
+  description: DESCRIPTION,
+  openGraph: {
+    title: "Sunny Wu",
+    description: DESCRIPTION,
+    url: "/",
+    siteName: "Sunny Wu",
+    type: "website",
+    locale: "en_CA",
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Hey, I'm Sunny — an engineer who speaks business" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sunny Wu",
+    description: DESCRIPTION,
+    images: ["/og.jpg"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
         <ParallaxRoot />
         <ScrollReveal />
+        <Analytics />
       </body>
     </html>
   );

@@ -4,7 +4,7 @@ import SkyBand from "@/components/SkyBand";
 import { story, storyAside, storyAsideAfter } from "@/lib/data";
 import { color, emphasis, font, layout } from "@/lib/tokens";
 
-export const metadata = { title: "Story — Sunny Wu" };
+export const metadata = { title: "Story", description: "How a theatre kid ended up writing software." };
 
 export default function Story() {
   return (

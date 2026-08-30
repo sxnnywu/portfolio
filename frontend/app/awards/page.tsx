@@ -3,7 +3,7 @@ import SkyBand from "@/components/SkyBand";
 import { awards } from "@/lib/data";
 import { color, font, layout, rule } from "@/lib/tokens";
 
-export const metadata = { title: "Awards — Sunny Wu" };
+export const metadata = { title: "Awards", description: "Recognition from 2019 to 2026, grouped by year." };
 
 export default function Awards() {
   return (

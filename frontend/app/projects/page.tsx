@@ -4,7 +4,7 @@ import SkyBand from "@/components/SkyBand";
 import { projects } from "@/lib/data";
 import { layout } from "@/lib/tokens";
 
-export const metadata = { title: "Projects — Sunny Wu" };
+export const metadata = { title: "Projects", description: "Hackathon builds and side projects, newest first." };
 
 const PAPER = [
   "#fffdf6",

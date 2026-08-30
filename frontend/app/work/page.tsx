@@ -3,7 +3,7 @@ import SkyBand from "@/components/SkyBand";
 import WorkTimeline from "@/components/WorkTimeline";
 import { emphasis } from "@/lib/tokens";
 
-export const metadata = { title: "Work — Sunny Wu" };
+export const metadata = { title: "Work", description: "Roles across software engineering, product, growth and operations." };
 
 export default function Work() {
   return (
