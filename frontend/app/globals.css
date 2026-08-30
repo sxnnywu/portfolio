@@ -1,12 +1,18 @@
 html {
   scroll-behavior: smooth;
-  /* Clips the off-canvas clouds. Must live on the root: on a wrapper it forces
-     overflow-y to auto, which makes that wrapper swallow every anchor jump. */
+  /* Fallback for browsers without overflow clip; the root only hides the clouds
+     from view, it does not stop the document being wider than the screen. */
   overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  /* Clips the off-canvas clouds. It belongs here rather than on the root, whose
+     overflow propagates to the viewport and so never clips its own children,
+     leaving the document 1166px wide on a phone and pannable. Clip, not hidden:
+     hidden computes overflow-y to auto, making body a scroll container that
+     swallows every anchor jump. */
+  overflow-x: clip;
   background: #fdfaf1;
   color: #1a1a15;
   font-family: var(--font-schibsted), sans-serif;
@@ -66,6 +72,11 @@ img {
 /* The layout is desktop-first and styled inline, so these overrides need
    !important to outrank the inline styles they correct. */
 @media (max-width: 768px) {
+  /* Stacked, the schools no longer sit either side of a divider. */
+  [data-education-divider] {
+    display: none;
+  }
+
   /* Brand and links stack; side by side they touch with no gap at phone width. */
   [data-site-header] {
     flex-direction: column !important;

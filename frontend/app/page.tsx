@@ -183,6 +183,7 @@ function Lede() {
         style={{
           marginTop: 52,
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "center",
           alignItems: "stretch",
           gap: 34,
@@ -194,7 +195,9 @@ function Lede() {
       >
         {education.map(({ program, school, logo }, i) => (
           <Fragment key={program}>
-            {i > 0 && <span style={{ width: 1, background: "rgba(42,42,36,.2)" }} />}
+            {i > 0 && (
+              <span data-education-divider style={{ width: 1, flex: "none", background: "rgba(42,42,36,.2)" }} />
+            )}
             <span style={{ flex: "none", display: "flex", alignItems: "center", gap: 10 }}>
               <Logo src={logo} size={26} />
               <span>
