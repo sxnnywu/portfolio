@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 import { highlightMetrics } from "@/lib/highlight";
 import { color, font, layout, rule, skyTint } from "@/lib/tokens";
-import { disciplines, roles, type Discipline } from "@/lib/data";
+import { disciplines, roleSlug, roles, type Discipline } from "@/lib/data";
 
 const FILTER_BASE = {
   fontFamily: font.sans,
@@ -45,6 +45,16 @@ function FilterButton({
 
 export default function WorkTimeline() {
   const [selected, setSelected] = useState<Set<Discipline>>(new Set());
+
+  // Read once on mount rather than through useSearchParams, which would opt the
+  // whole page out of static rendering. Deferred by a tick so the state change
+  // lands after the effect rather than cascading a render inside it.
+  useEffect(() => {
+    const wanted = new URLSearchParams(window.location.search).get("discipline");
+    if (!wanted || !(disciplines as readonly string[]).includes(wanted)) return;
+    const id = setTimeout(() => setSelected(new Set([wanted as Discipline])), 0);
+    return () => clearTimeout(id);
+  }, []);
 
   const toggle = (tag: Discipline) =>
     setSelected((prev) => {
@@ -109,8 +119,11 @@ export default function WorkTimeline() {
           {visible.map((role, i) => (
             <div
               key={`${role.title}-${role.company}`}
+              id={roleSlug(role.company)}
               style={{
                 position: "relative",
+                // Clears the fixed header when linked to directly.
+                scrollMarginTop: 96,
                 padding: "0 0 46px",
                 borderBottom: i === visible.length - 1 ? `1px solid ${rule.hairline}` : "none",
               }}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { color, rule, type } from "@/lib/tokens";
 import { stats } from "@/lib/data";
 
@@ -34,7 +35,7 @@ function format(current: number, magnitude: number, unit: string) {
 
 const DURATION = 1400;
 
-function Stat({ value, label }: { value: string; label: string }) {
+function Stat({ value, label, href }: { value: string; label: string; href?: string }) {
   const { magnitude, unit } = parse(value);
   // Null renders the design's own string, which is also what the server sends.
   const [running, setRunning] = useState<number | null>(null);
@@ -72,12 +73,30 @@ function Stat({ value, label }: { value: string; label: string }) {
     };
   }, [magnitude]);
 
-  return (
-    <div ref={ref}>
+  const body = (
+    <>
       <div style={type.numeral}>
         {running === null ? value : format(running, magnitude, unit)}
       </div>
-      <div style={{ marginTop: 8, fontSize: 12, color: color.muted }}>{label}</div>
+      {/* The label carries the site's link hairline at rest, so the affordance
+          is visible without hovering and survives on touch. */}
+      <div style={{ marginTop: 8, fontSize: 12, color: color.muted }}>
+        {href ? <span data-stat-label>{label}</span> : label}
+      </div>
+    </>
+  );
+
+  // The ref stays on the wrapper so the count-up watches one stable element
+  // whether or not this stat links anywhere.
+  return (
+    <div ref={ref}>
+      {href ? (
+        <Link href={href} data-stat-link style={{ display: "block", color: "inherit" }}>
+          {body}
+        </Link>
+      ) : (
+        body
+      )}
     </div>
   );
 }
@@ -98,7 +117,7 @@ export default function StatBand() {
       }}
     >
       {stats.map((stat) => (
-        <Stat key={stat.label} value={stat.value} label={stat.label} />
+        <Stat key={stat.label} value={stat.value} label={stat.label} href={stat.href} />
       ))}
     </div>
   );

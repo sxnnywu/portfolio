@@ -21,12 +21,16 @@ export const education = [
   },
 ];
 
-export const stats = [
-  { value: "3", label: "Hackathon wins" },
-  { value: "8M+", label: "Community built" },
-  { value: "1M+", label: "Views for 4 startups" },
+export const stats: { value: string; label: string; href?: string }[] = [
+  { value: "3", label: "Hackathon wins", href: "/projects" },
+  { value: "8M+", label: "Community built", href: "/work#the-pink-stairs" },
+  { value: "1M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
   { value: "13k", label: "Followers" },
 ];
+
+/** Anchor id for a role, so a stat can point at the entry it comes from. */
+export const roleSlug = (company: string) =>
+  company.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
 /** Tints deepen down the stack so the list leans into the contact sky. */
 export const navRows = [

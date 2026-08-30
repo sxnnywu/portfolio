@@ -480,3 +480,39 @@ img {
     transition: none !important;
   }
 }
+
+/* Linked stats. The hairline is the same treatment project card links use, so
+   the band reads as clickable at rest rather than only under a cursor. */
+[data-stat-label] {
+  border-bottom: 1px solid rgba(38, 53, 168, 0.3);
+  padding-bottom: 1px;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+[data-stat-link] {
+  transition: transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-stat-link]:hover {
+    opacity: 1 !important;
+    transform: translateY(-2px);
+  }
+
+  [data-stat-link]:hover [data-stat-label] {
+    color: #2635a8;
+    border-bottom-color: #2635a8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-stat-link] {
+    transition: none !important;
+  }
+
+  [data-stat-link]:hover {
+    transform: none;
+  }
+}
