@@ -79,6 +79,19 @@ export const roles: Role[] = [
     bullets: ["Scaling Notion in Waterloo by hosting events, building templates, and creating content"],
   },
   {
+    title: "Waterloo Lead",
+    company: "Sip & Scale",
+    dates: "Aug 2026 - Present",
+    location: "Waterloo",
+    tags: ["growth", "ops"],
+    bullets: [
+      "Running events for founders and builders in the Waterloo region",
+      "{450+} signups, {$2,200} in sponsorships and {$150} in revenue, all for our launch",
+      "Recruited {8} creators with {34k} combined followers to post for us in exchange for referrals",
+      "Signed {7} VCs and {4} tech companies as partners",
+    ],
+  },
+  {
     title: "Software Engineer Intern",
     company: "Rocket",
     logo: "/assets/logos/rocket.png",
