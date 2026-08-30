@@ -57,7 +57,9 @@ The site implements `~/Downloads/design_handoff_sunny_site/` (a design handoff).
 
 ## Build state
 
-Only **Home (`/`)** is built. The header links to `/work`, `/projects`, `/awards` and `/story`, which **do not exist yet and 404** — those four pages are the next pass, specced in the handoff README.
+**Home (`/`)** and **Work (`/work`)** are built. The header still links to `/projects`, `/awards` and `/story`, which **do not exist yet and 404** — specced in the handoff README.
+
+`SkyBand` and `ContactSection` are shared by every inner page, so the three remaining pages are mostly their own body content. The Work filter is the only real client state on the site: a `Set<Discipline>` in `WorkTimeline`, union semantics, empty set means show all.
 
 The old site (cream/indigo, Caveat + Anonymous Pro, Tailwind, six different routes) is preserved in commit `9fd3f98` if anything needs recovering.
 
