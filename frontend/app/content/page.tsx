@@ -5,7 +5,7 @@ import SkyBand from "@/components/SkyBand";
 import { contentAside, contentIntro, contentPhones } from "@/lib/data";
 import { color, emphasis, font, layout } from "@/lib/tokens";
 
-const SUBLINE = "I post the things i wish someone had told me at 17";
+const SUBLINE = "I post the things I wish someone had told me at 17";
 
 export const metadata = {
   title: "Content",
@@ -20,7 +20,7 @@ export default function Content() {
         sublineText={SUBLINE}
         subline={
           <>
-            I post the things i wish someone had told me at <em style={emphasis(1.14)}>17</em>
+            I post the things I wish someone had told me at <em style={emphasis(1.14)}>17</em>
           </>
         }
       />

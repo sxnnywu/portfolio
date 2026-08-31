@@ -3,8 +3,8 @@ export const heroHeadline = "Hey, I'm Sunny";
 export const heroTagline = "An engineer who speaks business";
 
 export const socials = [
-  { label: "Github", href: "https://github.com/sxnnywu" },
-  { label: "Linkedin", href: "https://www.linkedin.com/in/sunny-wu-dev/" },
+  { label: "GitHub", href: "https://github.com/sxnnywu" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/sunny-wu-dev/" },
   { label: "Email", href: "mailto:w.sunny0618@gmail.com" },
 ];
 
@@ -96,7 +96,7 @@ export const roles: Role[] = [
     location: "Remote",
     tags: ["engineering", "product"],
     bullets: [
-      "Built company-wide ai agent infrastructure - a serverless agent skill registry replacing the legacy marketplace",
+      "Built company-wide AI agent infrastructure - a serverless agent skill registry replacing the legacy marketplace",
       "Migrated production sites and content management systems onto a new design system",
     ],
   },
@@ -203,7 +203,7 @@ export const projects: Project[] = [
   {
     name: "Godseye",
     date: "Mar 2026",
-    award: "Best use of Polymarket @ YHack",
+    award: "Best Use of Polymarket @ YHack",
     description:
       "Multi-agent swarm analysis on Polymarket events. Watch simulated societies, based on real people, debate the evidence, form alliances, and argue over the future of the market.",
     tags: ["AI Agents", "Multi-agent Systems"],
@@ -216,7 +216,7 @@ export const projects: Project[] = [
   {
     name: "Slidefund",
     date: "Mar 2026",
-    award: "Best use of Solana @ Hack Canada",
+    award: "Best Use of Solana @ Hack Canada",
     description:
       "ETFs for prediction markets. Four agentic AI systems finding combinatorial arbitrages across Polymarket, Kalshi and Manifold.",
     tags: ["Agentic AI Development", "React.js"],
@@ -293,7 +293,7 @@ export const awards: { year: string; awards: Award[] }[] = [
       {
         title: "District Award: Spirit of the Festival",
         issuer: "National Theatre School",
-        note: "Co-directed an award-winning play chosen to compete in the regional round of Dramafest, a national theatre competition.",
+        note: "Co-directed an award-winning play chosen to compete in the regional round of DramaFest, a national theatre competition.",
       },
     ],
   },
@@ -344,13 +344,13 @@ export const awards: { year: string; awards: Award[] }[] = [
 
 /** Sunny's own writing; a blank line inside a paragraph renders as a break. */
 export const story = [
-  "I grew up in the performing arts - dance, singing, every asian instrument out there. It was common for me to skip school for shows.",
+  "I grew up in the performing arts - dance, singing, every Asian instrument out there. It was common for me to skip school for shows.",
   "In high school I was throwing and directing plays. Storytelling was my thing. I figured I'd take that into business, use it to craft narratives, understand what makes people care.",
   "Then my best friends dragged me to a hackathon.\n\nI didn't even know how to code. I barely knew what a hackathon was. But something clicked that weekend. I loved that the only limit was how fast you could learn. There's something about building at 3am with people you just met, fueled by nothing but redbull and delusion. I kept going back and forcing myself to learn more each time. I was addicted.",
-  "So when it came time to pick a path for university, I couldn't choose. Cs or business? I decided I wanted both. Waterloo's cs/bba. I locked in and got the offer.",
+  "So when it came time to pick a path for university, I couldn't choose. CS or business? I decided I wanted both. Waterloo's CS/BBA. I locked in and got the offer.",
   "Then I started making content. That led to growth work at 4 startups - I got obsessed with how products spread and why people care.",
-  "Around the same time I started building in public and posting about a side project: an ai stylist. It got so much attention that we turned it into a real company. That's Oro today.",
-  "I recently wrapped up my first swe internship at Rocket. Now I'm growing Oro and hosting events in Waterloo - scaling Notion, and bringing value to the city's founder community through Sip & Scale. All these random threads actually weave together to become my strength.",
+  "Around the same time I started building in public and posting about a side project: an AI stylist. It got so much attention that we turned it into a real company. That's Oro today.",
+  "I recently wrapped up my first SWE internship at Rocket. Now I'm growing Oro and hosting events in Waterloo - scaling Notion, and bringing value to the city's founder community through Sip & Scale. All these random threads actually weave together to become my strength.",
   "To be honest, I don't have much of my career figured out. I'm learning to navigate being a founder, builder, and creator all at once. Some days it feels scattered.",
 ];
 
@@ -420,9 +420,9 @@ export const storyPhotoRows: StoryPhotoRow[] = [
 ];
 
 export const contentIntro =
-  "I started posting to think out loud, and writing it down made me figure out what i believed, so here we are. I believe in two things: connection and mentorship. Posting got me both - mentors who answer my questions, students who now ask me theirs, and a long list of friends i'd never have met otherwise.";
+  "I started posting to think out loud, and writing it down made me figure out what I believed, so here we are. I believe in two things: connection and mentorship. Posting got me both - mentors who answer my questions, students who now ask me theirs, and a long list of friends I'd never have met otherwise.";
 
-export const contentAside = "(i still get nervous before hitting post)";
+export const contentAside = "(I still get nervous before hitting post)";
 
 export interface ContentPhone {
   platform: string;
