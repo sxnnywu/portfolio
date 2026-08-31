@@ -849,3 +849,18 @@ img {
     scroll-behavior: auto;
   }
 }
+
+/* The story closes on a signature; it sits right of the column like a signed letter. */
+[data-story-signature] {
+  width: 208px;
+  height: auto;
+  align-self: flex-end;
+  margin: 14px 6px 0 0;
+  opacity: 0.9;
+}
+
+@media (max-width: 560px) {
+  [data-story-signature] {
+    width: 168px;
+  }
+}

@@ -83,6 +83,15 @@ export default function Story() {
               )}
             </Fragment>
           ))}
+
+          <img
+            data-reveal
+            data-story-signature
+            src="/assets/story/signature.png"
+            alt="Sunny's signature"
+            width={1000}
+            height={464}
+          />
         </div>
       </div>
 
