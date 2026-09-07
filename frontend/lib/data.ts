@@ -24,8 +24,8 @@ export const education = [
 export const stats: { value: string; label: string; href?: string }[] = [
   { value: "3", label: "Hackathon wins", href: "/projects" },
   { value: "8M+", label: "Community built", href: "/work#the-pink-stairs" },
-  { value: "1M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
-  { value: "13k", label: "Followers", href: "/content" },
+  { value: "1.2M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
+  { value: "14k", label: "Followers", href: "/content" },
 ];
 
 /** Anchor id for a role, so a stat can point at the entry it comes from. */
@@ -439,7 +439,7 @@ export interface ContentPhone {
 export const contentPhones: ContentPhone[] = [
   {
     platform: "LinkedIn",
-    count: "10.5k followers",
+    count: "11k followers",
     topics: "student life, productivity, early career",
     video: "/assets/content/linkedin-scroll.mp4",
     poster: "/assets/content/linkedin-poster.jpg",
@@ -448,7 +448,7 @@ export const contentPhones: ContentPhone[] = [
   },
   {
     platform: "Instagram",
-    count: "2.5k followers",
+    count: "3k followers",
     topics: "fashion, gratitude & mindset, early career",
     video: "/assets/content/insta-scroll.mp4",
     poster: "/assets/content/insta-poster.jpg",
