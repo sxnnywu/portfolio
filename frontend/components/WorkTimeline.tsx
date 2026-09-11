@@ -211,9 +211,19 @@ export default function WorkTimeline() {
                 ))}
               </div>
 
-              <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
-                <li>{highlightMetrics(role.summary ?? role.bullets[0])}</li>
-              </ul>
+              <div
+                id={`${roleSlug(role.company)}-preview`}
+                className={role.summary ? "experience-details" : undefined}
+                data-expanded={!role.summary || !expandedRoles.has(role.company)}
+                aria-hidden={!!role.summary && expandedRoles.has(role.company)}
+                inert={!!role.summary && expandedRoles.has(role.company)}
+              >
+                <div className="experience-details-inner">
+                  <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                    <li>{highlightMetrics(role.summary ?? role.bullets[0])}</li>
+                  </ul>
+                </div>
+              </div>
               {role.bullets.length > (role.summary ? 0 : 1) && (
                 <div
                   id={`${roleSlug(role.company)}-bullets`}
@@ -236,8 +246,8 @@ export default function WorkTimeline() {
                   type="button"
                   aria-expanded={expandedRoles.has(role.company)}
                   className="experience-toggle"
-                  aria-controls={`${roleSlug(role.company)}-bullets`}
-                  aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - (role.summary ? 0 : 1)} more`} about ${role.company}`}
+                  aria-controls={`${roleSlug(role.company)}-preview ${roleSlug(role.company)}-bullets`}
+                  aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
                   onClick={() => setExpandedRoles((previous) => {
                     const next = new Set(previous);
                     if (next.has(role.company)) next.delete(role.company);
@@ -256,7 +266,7 @@ export default function WorkTimeline() {
                     textUnderlineOffset: 3,
                   }}
                 >
-                  {expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - (role.summary ? 0 : 1)} more`}
+                  {expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`}
                 </button>
               )}
             </div>

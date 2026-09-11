@@ -53,7 +53,7 @@ export interface Role {
   logo?: string;
   /** Braces mark the metrics and phrases that print in blue ink. */
   bullets: string[];
-  /** Short overview shown above the expandable resume details. */
+  /** Short overview that swaps to the original resume bullets when expanded. */
   summary?: string;
 }
 
