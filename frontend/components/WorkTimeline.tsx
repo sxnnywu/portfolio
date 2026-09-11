@@ -206,12 +206,12 @@ export default function WorkTimeline() {
 
               <ul
                 style={{
-                  margin: "8px 0 0",
-                  padding: 0,
-                  listStyle: "none",
+                  margin: "12px 0 0",
+                  paddingLeft: 18,
+                  listStyle: "disc outside",
                   display: "flex",
                   flexDirection: "column",
-                  gap: 3,
+                  gap: 12,
                   maxWidth: 620,
                 }}
               >
