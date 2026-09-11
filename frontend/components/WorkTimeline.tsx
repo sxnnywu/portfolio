@@ -44,6 +44,7 @@ function FilterButton({
 }
 
 export default function WorkTimeline() {
+  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<Discipline>>(new Set());
 
   // Read once on mount rather than through useSearchParams, which would opt the
@@ -205,6 +206,7 @@ export default function WorkTimeline() {
               </div>
 
               <ul
+                id={`${roleSlug(role.company)}-bullets`}
                 style={{
                   margin: "12px 0 0",
                   paddingLeft: 18,
@@ -215,9 +217,10 @@ export default function WorkTimeline() {
                   maxWidth: 620,
                 }}
               >
-                {role.bullets.map((bullet) => (
+                {role.bullets.map((bullet, index) => (
                   <li
                     key={bullet}
+                    hidden={index > 0 && !expandedRoles.has(role.company)}
                     style={{
                       fontFamily: font.serif,
                       fontWeight: 300,
@@ -230,6 +233,34 @@ export default function WorkTimeline() {
                   </li>
                 ))}
               </ul>
+              {role.bullets.length > 1 && (
+                <button
+                  type="button"
+                  aria-expanded={expandedRoles.has(role.company)}
+                  aria-controls={`${roleSlug(role.company)}-bullets`}
+                  aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
+                  onClick={() => setExpandedRoles((previous) => {
+                    const next = new Set(previous);
+                    if (next.has(role.company)) next.delete(role.company);
+                    else next.add(role.company);
+                    return next;
+                  })}
+                  style={{
+                    marginTop: 10,
+                    padding: "6px 0",
+                    background: "transparent",
+                    border: 0,
+                    fontFamily: font.sans,
+                    fontSize: 12,
+                    color: color.blueInk,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    textUnderlineOffset: 3,
+                  }}
+                >
+                  {expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`}
+                </button>
+              )}
             </div>
           ))}
         </div>
