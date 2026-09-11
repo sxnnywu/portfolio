@@ -44,6 +44,7 @@ function FilterButton({
 }
 
 export default function WorkTimeline() {
+  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<Discipline>>(new Set());
 
   // Read once on mount rather than through useSearchParams, which would opt the
@@ -204,32 +205,54 @@ export default function WorkTimeline() {
                 ))}
               </div>
 
-              <ul
-                style={{
-                  margin: "8px 0 0",
-                  padding: 0,
-                  listStyle: "none",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 3,
-                  maxWidth: 620,
-                }}
-              >
-                {role.bullets.map((bullet) => (
-                  <li
-                    key={bullet}
-                    style={{
-                      fontFamily: font.serif,
-                      fontWeight: 300,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: color.body,
-                    }}
-                  >
-                    {highlightMetrics(bullet)}
-                  </li>
-                ))}
+              <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                <li>{highlightMetrics(role.bullets[0])}</li>
               </ul>
+              {role.bullets.length > 1 && (
+                <div
+                  id={`${roleSlug(role.company)}-bullets`}
+                  className="experience-details"
+                  data-expanded={expandedRoles.has(role.company)}
+                  aria-hidden={!expandedRoles.has(role.company)}
+                  inert={!expandedRoles.has(role.company)}
+                >
+                  <div className="experience-details-inner">
+                    <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                      {role.bullets.slice(1).map((bullet) => (
+                        <li key={bullet}>{highlightMetrics(bullet)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+              {role.bullets.length > 1 && (
+                <button
+                  type="button"
+                  aria-expanded={expandedRoles.has(role.company)}
+                  className="experience-toggle"
+                  aria-controls={`${roleSlug(role.company)}-bullets`}
+                  aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
+                  onClick={() => setExpandedRoles((previous) => {
+                    const next = new Set(previous);
+                    if (next.has(role.company)) next.delete(role.company);
+                    else next.add(role.company);
+                    return next;
+                  })}
+                  style={{
+                    marginTop: 10,
+                    padding: "6px 0",
+                    background: "transparent",
+                    border: 0,
+                    fontFamily: font.sans,
+                    fontSize: 12,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    textUnderlineOffset: 3,
+                  }}
+                >
+                  {expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`}
+                </button>
+              )}
             </div>
           ))}
         </div>

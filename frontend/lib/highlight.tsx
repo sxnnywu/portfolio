@@ -1,7 +1,7 @@
 import { Fragment, type ReactNode } from "react";
 import { color } from "@/lib/tokens";
 
-/** Renders {braced} figures in blue ink, leaving the rest of the line as written. */
+/** Renders {braced} metrics and phrases in blue ink, leaving the rest of the line as written. */
 export function highlightMetrics(text: string): ReactNode {
   return text.split(/(\{[^}]+\})/).map((part, i) =>
     part.startsWith("{") && part.endsWith("}") ? (

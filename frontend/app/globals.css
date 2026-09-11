@@ -864,3 +864,60 @@ img {
     width: 168px;
   }
 }
+
+/* Animate the remaining bullets at their natural height, including wrapped text. */
+.experience-toggle {
+  color: #4a6a82;
+  transition: color 160ms ease;
+}
+
+.experience-toggle:hover,
+.experience-toggle:focus-visible {
+  color: #2635a8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-toggle {
+    transition: none;
+  }
+}
+
+.experience-bullets {
+  margin: 12px 0 0;
+  padding-left: 18px;
+  list-style: disc outside;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 620px;
+  font-weight: 300;
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+.experience-details {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 280ms ease, opacity 200ms ease, visibility 0s 280ms;
+}
+
+.experience-details[data-expanded="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition: grid-template-rows 280ms ease, opacity 200ms ease, visibility 0s;
+}
+
+.experience-details-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-details,
+  .experience-details[data-expanded="true"] {
+    transition: none;
+  }
+}
