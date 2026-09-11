@@ -921,3 +921,30 @@ img {
     transition: none;
   }
 }
+
+/* Keep the Work page's mobile introduction and closing invitation compact. */
+@media (max-width: 768px) {
+  .work-page [data-sky-band] {
+    height: 280px !important;
+    min-height: 280px !important;
+  }
+
+  .work-page .work-filters {
+    padding-top: 46px !important;
+    gap: 14px !important;
+  }
+
+  .work-page .work-timeline {
+    padding-bottom: 42px !important;
+  }
+
+  .work-page [data-contact-content] {
+    padding-top: 86px !important;
+    padding-bottom: 80px !important;
+  }
+
+  .work-page [data-role-dates] {
+    flex-basis: 100%;
+    margin-top: 4px;
+  }
+}

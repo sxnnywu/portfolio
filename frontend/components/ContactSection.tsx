@@ -44,6 +44,7 @@ export default function ContactSection({ subline }: { subline?: ReactNode }) {
       </div>
 
       <div
+        data-contact-content
         data-local="0.16"
         style={{ position: "relative", padding: "150px 6vw 160px", textAlign: "center", willChange: "transform" }}
       >

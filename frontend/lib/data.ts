@@ -53,12 +53,15 @@ export interface Role {
   logo?: string;
   /** Braces mark the metrics and phrases that print in blue ink. */
   bullets: string[];
+  /** Short overview shown above the expandable resume details. */
+  summary?: string;
 }
 
 export const roles: Role[] = [
   {
     title: "Co-Founder",
     company: "Oro",
+    summary: "Launched an {AI fashion stylist} to {2000+ organic downloads} across mobile and SMS.",
     dates: "Jan 2026 - Present",
     location: "Toronto",
     tags: ["engineering", "product", "growth", "ops"],
@@ -93,6 +96,7 @@ export const roles: Role[] = [
   {
     title: "Software Engineer Intern",
     company: "Rocket",
+    summary: "Built an {AI skill registry} for {5,400+ engineers} at {zero infrastructure cost}.",
     dates: "May - Aug 2026",
     location: "Remote",
     tags: ["engineering", "product"],
@@ -107,6 +111,7 @@ export const roles: Role[] = [
   {
     title: "Product Manager",
     company: "UW Blueprint",
+    summary: "Led {10 engineers and designers} to build an {event management platform} for a nonprofit serving {10k+ members}.",
     dates: "Apr - Aug 2026",
     location: "Waterloo",
     tags: ["product", "ops"],
