@@ -63,9 +63,10 @@ export const roles: Role[] = [
     location: "Toronto",
     tags: ["engineering", "product", "growth", "ops"],
     bullets: [
-      "{2,000+} downloads across app store and play store",
-      "Gained {520k+} views across socials",
-      "Featured at Toronto Fashion Week, summer '26",
+      "Launched an AI fashion stylist to {2000+} organic downloads, developing the mobile app alongside a Twilio SMS agent with state-machine orchestration and durable conversation memory in Redis and PostgreSQL",
+      "Improved outfit recommendation quality {15%} by building a computer-vision pipeline for clothing attribute extraction and a hybrid recommender using embeddings, cosine similarity, and co-occurrence reranking",
+      "Improved reliability across {4} production AI surfaces by building an eval harness that blocked unsafe releases in CI and an agent observability console for tracing state, LLM calls, failures, and cost at each step",
+      "Improved deployment reliability and scalability by provisioning production infrastructure in Terraform, with autoscaling AWS ECS services and ephemeral GitHub Actions runners for migrations and deploys",
     ],
   },
   {
@@ -96,8 +97,11 @@ export const roles: Role[] = [
     location: "Remote",
     tags: ["engineering", "product"],
     bullets: [
-      "Built company-wide AI agent infrastructure - a serverless agent skill registry replacing the legacy marketplace",
-      "Migrated production sites and content management systems onto a new design system",
+      "Built and rolled out a company-wide AI skill registry for {5,400+} engineers, replacing a legacy platform at zero infrastructure cost after {3} iterative releases tested with {300+} engineers",
+      "Cut manual QA time by {75%} by building an agentic workflow translating user flows into Playwright tests",
+      "Reduced site latency by {55%} for {600k+} monthly visitors using Next.js and Payload CMS, caching production content while preventing stale updates after content changes",
+      "Migrated {20} React components to a new design system used across {32} downstream applications",
+      "Scoped, designed, and prototyped an internal innovation platform in {6} weeks, enabling engineers to surface promising side projects and internal tools to senior leadership for sponsorship and organizational backing",
     ],
   },
   {
@@ -107,8 +111,9 @@ export const roles: Role[] = [
     location: "Waterloo",
     tags: ["product", "ops"],
     bullets: [
-      "Led a team of {10} devs and designers",
-      "Owned product on pro bono software for a nonprofit serving {10k+} community members",
+      "Led {10} engineers and designers across {7} sprints to build an end-to-end event management platform for a nonprofit serving {10k+} members, centralizing event discovery, creation, registration, administration, and analytics",
+      "Reviewed {84} product screens for technical feasibility before engineering handoff, collaborating in Figma with designers to resolve edge cases, define interactions, and keep implementation aligned with product requirements",
+      "Led client discovery and requirements gathering, translating nonprofit needs into PRDs and engineering specs that defined system behavior, edge cases, and acceptance criteria before development",
     ],
   },
   {
