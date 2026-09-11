@@ -38,6 +38,7 @@ function FilterButton({
         color: active ? "#f6fafd" : color.bodyAlt,
       }}
     >
+      {active && <span aria-hidden="true" style={{ marginRight: 6 }}>✓</span>}
       {label}
     </button>
   );
@@ -73,18 +74,23 @@ export default function WorkTimeline() {
   return (
     <>
       <div
+        className="work-filters"
         style={{
           maxWidth: layout.maxWidth,
           margin: "0 auto",
           padding: "90px 6vw 34px",
           display: "flex",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           gap: 20,
           flexWrap: "wrap",
         }}
       >
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <div id="discipline-label" style={{ fontSize: 13, color: color.inkDeepSky }}>Filter by discipline</div>
+          <div id="discipline-hint" style={{ marginTop: 4, fontSize: 12, color: color.skyInkLight }}>Choose one or more</div>
+        </div>
+        <div role="group" aria-labelledby="discipline-label" aria-describedby="discipline-hint" style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           <FilterButton
             label="All"
             active={selected.size === 0}
@@ -101,7 +107,7 @@ export default function WorkTimeline() {
         </div>
       </div>
 
-      <div style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "0 6vw 120px" }}>
+      <div className="work-timeline" style={{ maxWidth: layout.maxWidth, margin: "0 auto", padding: "0 6vw 120px" }}>
         <div
           data-filter-list
           key={[...selected].sort().join(",") || "all"}
@@ -172,10 +178,10 @@ export default function WorkTimeline() {
                   data-role-dates
                   style={{
                     fontFamily: font.serif,
-                    fontStyle: "italic",
+                    fontStyle: "normal",
                     fontSize: 14.5,
                     lineHeight: 1.5,
-                    color: color.mutedLight,
+                    color: color.skyInkLight,
                     marginLeft: "auto",
                     textAlign: "right",
                   }}
@@ -205,10 +211,20 @@ export default function WorkTimeline() {
                 ))}
               </div>
 
-              <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
-                <li>{highlightMetrics(role.bullets[0])}</li>
-              </ul>
-              {role.bullets.length > 1 && (
+              <div
+                id={`${roleSlug(role.company)}-preview`}
+                className={role.summary ? "experience-details" : undefined}
+                data-expanded={!role.summary || !expandedRoles.has(role.company)}
+                aria-hidden={!!role.summary && expandedRoles.has(role.company)}
+                inert={!!role.summary && expandedRoles.has(role.company)}
+              >
+                <div className="experience-details-inner">
+                  <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                    <li>{highlightMetrics(role.summary ?? role.bullets[0])}</li>
+                  </ul>
+                </div>
+              </div>
+              {role.bullets.length > (role.summary ? 0 : 1) && (
                 <div
                   id={`${roleSlug(role.company)}-bullets`}
                   className="experience-details"
@@ -218,19 +234,19 @@ export default function WorkTimeline() {
                 >
                   <div className="experience-details-inner">
                     <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
-                      {role.bullets.slice(1).map((bullet) => (
+                      {role.bullets.slice(role.summary ? 0 : 1).map((bullet) => (
                         <li key={bullet}>{highlightMetrics(bullet)}</li>
                       ))}
                     </ul>
                   </div>
                 </div>
               )}
-              {role.bullets.length > 1 && (
+              {role.bullets.length > (role.summary ? 0 : 1) && (
                 <button
                   type="button"
                   aria-expanded={expandedRoles.has(role.company)}
                   className="experience-toggle"
-                  aria-controls={`${roleSlug(role.company)}-bullets`}
+                  aria-controls={`${roleSlug(role.company)}-preview ${roleSlug(role.company)}-bullets`}
                   aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
                   onClick={() => setExpandedRoles((previous) => {
                     const next = new Set(previous);

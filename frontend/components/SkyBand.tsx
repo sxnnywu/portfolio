@@ -16,6 +16,7 @@ export default function SkyBand({
 }) {
   return (
     <div
+      data-sky-band
       style={{
         position: "relative",
         height: "42vh",

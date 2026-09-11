@@ -7,7 +7,7 @@ export const metadata = { title: "Work", description: "Roles across software eng
 
 export default function Work() {
   return (
-    <>
+    <div className="work-page">
       <SkyBand
         sublineText={"I've been the technical person in business rooms and the business person in technical ones"}
         title="Work"
@@ -20,6 +20,6 @@ export default function Work() {
       />
       <WorkTimeline />
       <ContactSection />
-    </>
+    </div>
   );
 }
