@@ -205,34 +205,26 @@ export default function WorkTimeline() {
                 ))}
               </div>
 
-              <ul
-                id={`${roleSlug(role.company)}-bullets`}
-                style={{
-                  margin: "12px 0 0",
-                  paddingLeft: 18,
-                  listStyle: "disc outside",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                  maxWidth: 620,
-                }}
-              >
-                {role.bullets.map((bullet, index) => (
-                  <li
-                    key={bullet}
-                    hidden={index > 0 && !expandedRoles.has(role.company)}
-                    style={{
-                      fontFamily: font.serif,
-                      fontWeight: 300,
-                      fontSize: 15.5,
-                      lineHeight: 1.55,
-                      color: color.body,
-                    }}
-                  >
-                    {highlightMetrics(bullet)}
-                  </li>
-                ))}
+              <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                <li>{highlightMetrics(role.bullets[0])}</li>
               </ul>
+              {role.bullets.length > 1 && (
+                <div
+                  id={`${roleSlug(role.company)}-bullets`}
+                  className="experience-details"
+                  data-expanded={expandedRoles.has(role.company)}
+                  aria-hidden={!expandedRoles.has(role.company)}
+                  inert={!expandedRoles.has(role.company)}
+                >
+                  <div className="experience-details-inner">
+                    <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
+                      {role.bullets.slice(1).map((bullet) => (
+                        <li key={bullet}>{highlightMetrics(bullet)}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
               {role.bullets.length > 1 && (
                 <button
                   type="button"
