@@ -229,6 +229,7 @@ export default function WorkTimeline() {
                 <button
                   type="button"
                   aria-expanded={expandedRoles.has(role.company)}
+                  className="experience-toggle"
                   aria-controls={`${roleSlug(role.company)}-bullets`}
                   aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
                   onClick={() => setExpandedRoles((previous) => {
@@ -244,7 +245,6 @@ export default function WorkTimeline() {
                     border: 0,
                     fontFamily: font.sans,
                     fontSize: 12,
-                    color: color.blueInk,
                     cursor: "pointer",
                     textDecoration: "underline",
                     textUnderlineOffset: 3,

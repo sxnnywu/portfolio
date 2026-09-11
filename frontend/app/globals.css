@@ -866,6 +866,22 @@ img {
 }
 
 /* Animate the remaining bullets at their natural height, including wrapped text. */
+.experience-toggle {
+  color: #4a6a82;
+  transition: color 160ms ease;
+}
+
+.experience-toggle:hover,
+.experience-toggle:focus-visible {
+  color: #2635a8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-toggle {
+    transition: none;
+  }
+}
+
 .experience-bullets {
   margin: 12px 0 0;
   padding-left: 18px;
