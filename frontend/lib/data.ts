@@ -24,8 +24,8 @@ export const education = [
 export const stats: { value: string; label: string; href?: string }[] = [
   { value: "3", label: "Hackathon wins", href: "/projects" },
   { value: "8M+", label: "Community built", href: "/work#the-pink-stairs" },
-  { value: "1.2M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
-  { value: "14k", label: "Followers", href: "/content" },
+  { value: "2M+", label: "Views for 4 startups", href: "/work?discipline=growth" },
+  { value: "15k", label: "Followers", href: "/content" },
 ];
 
 /** Anchor id for a role, so a stat can point at the entry it comes from. */
@@ -104,8 +104,8 @@ export const roles: Role[] = [
     dates: "Feb 2026 - Present",
     location: "Remote",
     tags: ["growth"],
-    summary: "Reached {1.2M+ impressions} through {multi-channel distribution} for four startups.",
-    bullets: ["Reached {1.2M+ impressions} by running {multi-channel distribution} on a weekly editorial cadence across LinkedIn, Instagram, TikTok, X, Reddit, and Pinterest, adapting format and voice to each platform", "Ran {UGC} program on GenTube's company account and {ghost-wrote} the founder account as thought leadership", "Drove {130k impressions} on Polarity's top-performing post by repositioning content based on performance data"],
+    summary: "Reached {2M+ impressions} through {multi-channel distribution} for four startups.",
+    bullets: ["Reached {2M+ impressions} by running {multi-channel distribution} on a weekly editorial cadence across LinkedIn, Instagram, TikTok, X, Reddit, and Pinterest, adapting format and voice to each platform", "Ran {UGC} program on GenTube's company account and {ghost-wrote} the founder account as thought leadership", "Drove {130k impressions} on Polarity's top-performing post by repositioning content based on performance data"],
   },
   {
     title: "Software Engineer Intern",
