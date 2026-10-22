@@ -1,0 +1,19 @@
+frontend/lib/data.ts
+  s_e7cc0136fd1ff6::t_e737c8f760ab2a 27-28,107-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f74de708b277777151b6df096b9329f74ce5221e",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
