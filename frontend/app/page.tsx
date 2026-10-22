@@ -173,9 +173,8 @@ function Lede() {
       >
         I grew up in the <em style={blueItalic}>performing arts</em>, learned to{" "}
         <em style={blueItalic}>code</em> at a <em style={blueItalic}>hackathon</em> my friends
-        dragged me to, and now <em style={blueItalic}>storytelling</em> is the part of{" "}
-        <em style={blueItalic}>engineering</em>{" "}
-        I&apos;m best at.
+        dragged me to, and have been finding excuses to{" "}
+        <em style={blueItalic}>build things</em> ever since.
       </div>
 
       <div
