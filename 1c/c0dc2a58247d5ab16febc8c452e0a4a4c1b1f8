@@ -1,0 +1,25 @@
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_99a4ba8e57dbe7 67,69-71,86-91
+  s_e7cc0136fd1ff6::t_13a4c28ac7337b 196-198
+  s_e7cc0136fd1ff6::t_3253219b4fd5d3 68
+frontend/components/HeroRoles.tsx
+  s_e7cc0136fd1ff6::t_13a4c28ac7337b 72
+frontend/components/ScrollStoryPreview.module.css
+  s_e7cc0136fd1ff6::t_13a4c28ac7337b 252-256,262-263
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1cc0dc2a58247d5ab16febc8c452e0a4a4c1b1f8",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
