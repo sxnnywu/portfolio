@@ -2,17 +2,27 @@
 export const heroHeadline = "Hey, I'm Sunny";
 export const heroTagline = "a theatre kid with a GitHub";
 
+export const introBackground = [
+  "{2M+} views @ notion, stan, polarity, 1851 labs",
+  "built software for {5400+} engineers @ rocket",
+  "won {3} hackathons",
+  "hosted events for {500+} people",
+] as const;
+
 export const heroRoles = [
   "a content creator",
   "a full-stack engineer",
+  "a growth hacker",
   "a double degree student",
-  "an AI agent wrangler",
+  "a product manager",
   "a storyteller",
   "an entrepreneur",
-  "hackathon obsessed",
   "an event host",
   "a video editor",
-  "probably debugging",
+  "an operator",
+  "AI pilled",
+  "SUPER HYPE (+ FUN)",
+  "a visionary (or delusional?)",
 ] as const;
 
 export const socials = [

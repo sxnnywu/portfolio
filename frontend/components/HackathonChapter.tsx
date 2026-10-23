@@ -18,7 +18,7 @@ const projects = [
     image: godseye,
     alt: "GodsEye prediction market analysis interface",
     description: "AI agents that debate prediction markets",
-    award: "YHack · Best Use of Polymarket",
+    award: "winner @ YHack",
     href: "https://devpost.com/software/godseye-uwma5h",
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     image: slicefund,
     alt: "Slicefund prediction market interface",
     description: "ETFs for prediction markets",
-    award: "Hack Canada · Best Use of Solana",
+    award: "winner @ Hack Canada",
     href: "https://devpost.com/software/slicefund",
   },
   {
@@ -36,7 +36,7 @@ const projects = [
     image: postIt,
     alt: "Post-It augmented reality sticky notes in a real-world setting",
     description: "AR sticky notes anchored to real places",
-    award: "Hack the North · Top 32",
+    award: "top 32 @ Hack the North",
     href: "https://devpost.com/software/post-it-jrswqx",
   },
 ] as const;

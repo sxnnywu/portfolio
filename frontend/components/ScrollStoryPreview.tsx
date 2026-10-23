@@ -21,7 +21,8 @@ import BlueprintChapter from "@/components/BlueprintChapter";
 import EventHostingChapter from "@/components/EventHostingChapter";
 import LaunchpadChapter from "@/components/LaunchpadChapter";
 import JourneyIndex from "@/components/JourneyIndex";
-import { education, heroHeadline, heroTagline } from "@/lib/data";
+import WatercolourWash from "@/components/WatercolourWash";
+import { education, heroHeadline, heroTagline, introBackground } from "@/lib/data";
 import styles from "./ScrollStoryPreview.module.css";
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
@@ -42,7 +43,8 @@ function Accent({ index, children }: { index: number; children: ReactNode }) {
 }
 
 /** One native scroll position advances the entire pinned composition. */
-export default function ScrollStoryPreview({ home = false }: { home?: boolean }) {
+export default function ScrollStoryPreview({ home = false, children }: { home?: boolean; children?: ReactNode }) {
+  const hasContact = home && Boolean(children);
   const pageRef = useRef<HTMLElement>(null);
   const runwayRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -74,6 +76,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
   const launchpadChapterRef = useRef<HTMLElement>(null);
   const launchpadGalleryRef = useRef<HTMLDivElement>(null);
   const indexChapterRef = useRef<HTMLElement>(null);
+  const contactStageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const page = pageRef.current;
@@ -107,6 +110,8 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     const launchpadChapter = launchpadChapterRef.current;
     const launchpadGallery = launchpadGalleryRef.current;
     const indexChapter = indexChapterRef.current;
+    const contactStage = contactStageRef.current;
+    const contactContent = contactStage?.querySelector<HTMLElement>("[data-contact-content]");
     if (!page || !runway || !stage || !photo || !intro || !hero || !sun || !journey || !chapter || !gallery || !pinkChapter || !pinkGallery || !hackathonChapter || !hackathonGallery || !universityChapter || !universityGallery || !creatorChapter || !creatorGallery || !growthChapter || !growthGallery || !oroProjectChapter || !oroProjectGallery || !rocketChapter || !rocketGallery || !blueprintChapter || !blueprintGallery || !eventHostingChapter || !eventHostingGallery || !launchpadChapter || !launchpadGallery) return;
 
     const linear = window.matchMedia("(prefers-reduced-motion: reduce), (max-height: 540px)");
@@ -115,7 +120,9 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     let travel = 1;
     let height = 1;
     let width = 1;
+    let contactCloudHeight = 550;
     let photoCenter = 0;
+    let introOverflow = 0;
     let sunEndX = 0;
     let sunEndY = 0;
     let chapterX = 1430;
@@ -177,6 +184,8 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       const launchpadProgress = still ? 1 : clamp((distance - height * 39.2) / (height * 3.6));
       const indexProgress = home && indexChapter ? clamp((distance - height * 42.8) / (height * 3.2)) : 0;
       const indexOpen = still ? 1 : ease(indexProgress, 0.32, 0.86);
+      const contactProgress = hasContact && !still ? clamp((distance - height * 46) / (height * 2.2)) : 0;
+      const washDrift = still ? 0 : ease(contactProgress, 0.08, 0.72);
       const camera = still ? { x: 0, y: 0, z: 1, r: 0 }
         : indexProgress > 0 ? cameraAt(indexProgress, indexFrames)
         : launchpadProgress > 0 ? cameraAt(launchpadProgress, launchpadFrames)
@@ -189,6 +198,10 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         : universityProgress > 0 ? cameraAt(universityProgress, universityFrames)
         : hackathonProgress > 0 ? cameraAt(hackathonProgress, hackathonFrames)
         : pinkProgress > 0 ? cameraAt(pinkProgress, pinkFrames) : cameraAt(q);
+      // Hold the settled index camera, then let its composition float away
+      // while the pigment expands in screen space beneath it.
+      camera.y += washDrift * height * 0.16 / camera.z;
+      camera.z *= 1 - washDrift * 0.03;
       const leave = still ? 0 : ease(p, 0.015, 0.25);
       // One diagonal path and speed curve, with no handoff between cloud phases.
       const cloudTravel = still ? 0 : ease(p, 0, 0.4);
@@ -199,7 +212,8 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       const placement = still ? 1 : ease(p, 0.36, 0.57);
       const sunlight = still ? 0 : ease(p, 0.04, 0.6);
       const story = still ? 1 : ease(p, 0.44, 0.73);
-      const education = still ? 1 : ease(p, 0.71, 0.83);
+      const introReadY = still ? 0 : introOverflow * (0.5 - ease(p, 0.64, 0.96));
+      const educationReveal = still ? 1 : ease(p, 0.71, 0.83);
       const values: Record<string, string | number> = {
         "--progress": clamp(distance / travel),
         "--journey-x": `${-camera.x}px`,
@@ -215,6 +229,17 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         "--index-heading": still ? 1 : ease(indexProgress, 0.3, 0.56),
         "--index-arrival": still ? 1 : ease(indexProgress, 0.08, 0.32),
         "--index-departure": still ? 0 : ease(indexProgress, 0.36, 0.7),
+        "--index-wash": washDrift,
+        "--wash-scale": 0.014 + ease(contactProgress, 0.02, 0.76) * 0.986,
+        "--wash-pigment": ease(contactProgress, 0.015, 0.16),
+        "--wash-flow": washDrift,
+        "--wash-fill": ease(contactProgress, 0.64, 0.84),
+        "--contact-cloud-travel": `${still ? 0 : contactCloudHeight * ease(contactProgress, 0.42, 1)}px`,
+        "--contact-clouds": still ? 0.5 : ease(contactProgress, 0.5, 0.86),
+        "--contact-heading": still ? 1 : ease(contactProgress, 0.57, 0.78),
+        "--contact-subline": still ? 1 : ease(contactProgress, 0.64, 0.83),
+        "--contact-button": still ? 1 : ease(contactProgress, 0.72, 0.9),
+        "--contact-socials": still ? 1 : ease(contactProgress, 0.77, 0.95),
         "--sky-opacity": still ? 1 : 1 - ease(p, 0.12, 0.55),
         "--hero-y": `${-leave * height * 0.32}px`,
         "--hero-scale": 1 - leave * 0.07,
@@ -229,7 +254,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         "--near-x": `${-nearTravel * 0.18}px`,
         "--near-y": `${90 - nearTravel}px`,
         "--sun-x": `${sunlight * sunEndX + Math.sin(sunlight * Math.PI) * width * 0.19}px`,
-        "--sun-y": `${sunlight * sunEndY - Math.sin(sunlight * Math.PI) * height * 0.05}px`,
+        "--sun-y": `${sunlight * (sunEndY + introReadY) - Math.sin(sunlight * Math.PI) * height * 0.05}px`,
         "--sun-turn": `${sunlight * 115}deg`,
         "--sun-scale": 1 - sunlight * 0.74,
         "--sun-opacity": still ? 1 : 1 - ease(q, 0, 0.22),
@@ -239,8 +264,9 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         "--photo-opacity": arrival,
         "--photo-shadow": 0.35 + placement * 0.65,
         "--story-y": `${(1 - story) * 70}px`,
-        "--education-opacity": education,
-        "--education-y": `${(1 - education) * 35}px`,
+        "--intro-read-y": `${introReadY}px`,
+        "--education-opacity": educationReveal,
+        "--education-y": `${(1 - educationReveal) * 35}px`,
       };
       for (let i = 0; i < 3; i++) {
         values[`--clause-${i}`] = still ? 1 : ease(p, 0.48 + i * 0.065, 0.59 + i * 0.065);
@@ -253,8 +279,12 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         values[`--draw-${i}`] = still ? 1 : ease(p, 0.55 + i * 0.05, 0.64 + i * 0.05);
         values[`--index-label-${i}`] = still ? 1 : ease(indexProgress, 0.5 + i * 0.05, 0.64 + i * 0.05);
       }
+      for (let i = 0; i < introBackground.length; i++) {
+        values[`--background-item-${i}`] = still ? 1 : ease(p, 0.71 + i * 0.042, 0.78 + i * 0.042);
+      }
       for (const [key, value] of Object.entries(values)) page.style.setProperty(key, String(value));
       journey.style.transform = `translate(${width / 2}px,${height / 2 + 25}px) scale(${camera.z}) rotate(${camera.r}deg) translate(${-camera.x}px,${-camera.y}px)`;
+      journey.style.opacity = String(still ? 1 : 1 - ease(contactProgress, 0.12, 0.64));
       journey.style.visibility = still || distance > height * 3.9 ? "visible" : "hidden";
       // Hidden hero controls leave the keyboard order as the story takes over.
       hero.inert = !still && p > 0.245;
@@ -274,7 +304,15 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       blueprintChapter.setAttribute("aria-hidden", String(!still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3)));
       eventHostingChapter.setAttribute("aria-hidden", String(!still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3)));
       launchpadChapter.setAttribute("aria-hidden", String(!still && (launchpadProgress < 0.14 || indexProgress > 0.6)));
-      if (indexChapter) indexChapter.setAttribute("aria-hidden", String(!still && indexProgress < 0.3));
+      if (indexChapter) {
+        indexChapter.setAttribute("aria-hidden", String(!still && (indexProgress < 0.3 || contactProgress > 0.6)));
+        indexChapter.inert = !still && contactProgress > 0.6;
+      }
+      if (contactStage) {
+        contactStage.dataset.contactVisible = String(still || contactProgress > 0.5);
+        contactStage.dataset.contactActive = String(still || contactProgress > 0.84);
+        contactStage.setAttribute("aria-hidden", String(!still && contactProgress < 0.57));
+      }
     };
     const schedule = () => { if (frame === null) frame = window.requestAnimationFrame(paint); };
     const focusProject = (event: FocusEvent) => {
@@ -313,20 +351,49 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         paint();
       } else schedule();
     };
+    const visitContact = (behavior: ScrollBehavior = "instant") => {
+      if (!hasContact || !contactStage || linear.matches) return;
+      window.scrollTo({ top: start + height * (46 + 2.2 * 0.98), behavior });
+      if (behavior === "instant") {
+        if (frame !== null) window.cancelAnimationFrame(frame);
+        paint();
+      } else schedule();
+    };
     const focusIndex = (event: FocusEvent) => {
       if (event.target instanceof Element && event.target.matches("a:focus-visible")) visitIndex();
     };
-    const jumpToIndex = (event: MouseEvent) => {
+    const focusContact = (event: FocusEvent) => {
+      if (event.target instanceof Element && event.target.matches("a:focus-visible")) visitContact();
+    };
+    const bridgeContactFocus = (event: KeyboardEvent) => {
+      if (!hasContact || !indexChapter || !contactStage || linear.matches || event.key !== "Tab") return;
+      const lastIndexLink = indexChapter.querySelector("[data-index-rows]")?.lastElementChild?.querySelector("a");
+      const firstContactLink = contactStage.querySelector("a");
+      if (!event.shiftKey && event.target === lastIndexLink) {
+        event.preventDefault();
+        visitContact();
+        firstContactLink?.focus({ preventScroll: true });
+      } else if (event.shiftKey && event.target === firstContactLink) {
+        event.preventDefault();
+        visitIndex();
+        lastIndexLink?.focus({ preventScroll: true });
+      }
+    };
+    const jumpToChapter = (event: MouseEvent) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || linear.matches) return;
-      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href="#work"]') : null;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href="#work"], a[href="#contact"]') : null;
       if (!home || !indexChapter || !link) return;
+      const isContact = link.hash === "#contact";
+      if (isContact && !hasContact) return;
       event.preventDefault();
-      window.history.pushState(null, "", "#work");
+      window.history.pushState(null, "", link.hash);
       // Native smooth scrolling still drives every intermediate camera position.
-      visitIndex("smooth");
+      if (isContact) visitContact("smooth");
+      else visitIndex("smooth");
     };
     const followHash = () => {
       if (window.location.hash === "#work") visitIndex();
+      else if (window.location.hash === "#contact") visitContact();
     };
     const measure = () => {
       start = runway.getBoundingClientRect().top + window.scrollY;
@@ -336,7 +403,10 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       // Layout offsets stay independent of the camera transform when resizing.
       const inner = intro.firstElementChild as HTMLElement;
       const photoTop = inner.offsetTop + photo.offsetTop;
-      photoCenter = photoTop + photo.offsetHeight / 2;
+      const introStyle = window.getComputedStyle(intro);
+      const introRoom = height - parseFloat(introStyle.paddingTop) - parseFloat(introStyle.paddingBottom);
+      introOverflow = linear.matches ? 0 : Math.max(0, inner.offsetHeight - introRoom);
+      photoCenter = photoTop + photo.offsetHeight / 2 + introOverflow / 2;
       sunEndX = inner.offsetLeft + photo.offsetLeft + photo.offsetWidth - width / 2 + 4;
       sunEndY = photoTop + 16 - sun.offsetTop - 58;
       chapterX = width > 850 ? 1430 : 800;
@@ -592,7 +662,25 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
             // Offsets ignore transforms, so resizing never measures a half-open stack.
             card.style.setProperty("--stack-y", `${rows.offsetHeight / 2 - card.offsetTop - card.offsetHeight / 2 + index * 4}px`);
           }
+          const lastCard = rows.lastElementChild as HTMLElement | null;
+          if (hasContact && lastCard) {
+            // Derive the origin from the settled camera and layout offsets.
+            // A resize during an earlier chapter must not move the ink's source.
+            const x = width / 2 + (-indexWidth / 2 + rows.offsetLeft + lastCard.offsetLeft + lastCard.offsetWidth * 0.68) * indexFit;
+            const y = height / 2 + 25 + (-indexHeight / 2 + rows.offsetTop + lastCard.offsetTop + lastCard.offsetHeight * 0.8) * indexFit;
+            const radius = Math.hypot(Math.max(x, width - x), Math.max(y, height - y));
+            page.style.setProperty("--wash-x", `${x}px`);
+            page.style.setProperty("--wash-y", `${y}px`);
+            page.style.setProperty("--wash-size", `${radius * 3.6}px`);
+          }
         }
+      }
+      if (contactContent) {
+        const style = window.getComputedStyle(contactContent);
+        // Preserve the old section's cloud canvas and vertical parallax, rather
+        // than redistributing the artwork around the full-screen wash stage.
+        contactCloudHeight = contactContent.offsetHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) + 310;
+        page.style.setProperty("--contact-cloud-height", `${contactCloudHeight}px`);
       }
       schedule();
     };
@@ -611,6 +699,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     resize.observe(eventHostingChapter);
     resize.observe(launchpadChapter);
     if (indexChapter) resize.observe(indexChapter);
+    if (contactContent) resize.observe(contactContent);
     if (intro.firstElementChild) resize.observe(intro.firstElementChild);
     measure();
     followHash();
@@ -619,7 +708,10 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     creatorGallery.addEventListener("focusin", focusCreatorProfile);
     oroProjectChapter.addEventListener("focusin", focusOroProject);
     indexChapter?.addEventListener("focusin", focusIndex);
-    page.addEventListener("click", jumpToIndex);
+    contactStage?.addEventListener("focusin", focusContact);
+    indexChapter?.addEventListener("keydown", bridgeContactFocus);
+    contactStage?.addEventListener("keydown", bridgeContactFocus);
+    document.addEventListener("click", jumpToChapter);
     window.addEventListener("hashchange", followHash);
     window.addEventListener("resize", measure);
     linear.addEventListener("change", measure);
@@ -629,17 +721,30 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       creatorGallery.removeEventListener("focusin", focusCreatorProfile);
       oroProjectChapter.removeEventListener("focusin", focusOroProject);
       indexChapter?.removeEventListener("focusin", focusIndex);
-      page.removeEventListener("click", jumpToIndex);
+      contactStage?.removeEventListener("focusin", focusContact);
+      indexChapter?.removeEventListener("keydown", bridgeContactFocus);
+      contactStage?.removeEventListener("keydown", bridgeContactFocus);
+      document.removeEventListener("click", jumpToChapter);
       window.removeEventListener("hashchange", followHash);
       window.removeEventListener("resize", measure);
       linear.removeEventListener("change", measure);
       resize.disconnect();
       if (frame !== null) window.cancelAnimationFrame(frame);
     };
-  }, [home]);
+  }, [home, hasContact]);
 
   return (
-    <section ref={pageRef} className={`${styles.page} ${home ? styles.homepage : ""}`} data-scroll-story>
+    <section ref={pageRef} className={`${styles.page} ${home ? styles.homepage : ""} ${hasContact ? styles.withContact : ""}`} data-scroll-story>
+      {hasContact && <noscript>
+        <style>{`
+          .${styles.withContact} .${styles.runway} { height: auto; }
+          .${styles.withContact} .${styles.stage} { position: relative; height: auto; padding-top: 100svh; }
+          .${styles.contactStage} { position: relative; inset: auto; visibility: visible; pointer-events: auto; }
+          .${styles.contactStage} #contact { height: auto; background: linear-gradient(179deg, #fdfaf1, #cfe0ee); }
+          .${styles.contactStage} [data-contact-part] { opacity: 1; transform: none; }
+          .${styles.contactStage} [data-contact-clouds] { opacity: .5; transform: none; }
+        `}</style>
+      </noscript>}
       <SunFilterDefs />
       {!home && <header className={styles.labBar}>
         <Link href="/" className={styles.backLink}>← Portfolio</Link>
@@ -704,6 +809,15 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
                   </Fragment>
                 ))}
               </div>
+              <ul className={styles.backgroundSummary}>
+                {introBackground.map((line, index) => (
+                  <li key={line} style={{ "--background-item": `var(--background-item-${index}, 1)` } as CSSProperties}>
+                    {line.split(/(\{[^}]+\})/g).map((part, partIndex) => (
+                      part.startsWith("{") ? <em key={partIndex}>{part.slice(1, -1)}</em> : part
+                    ))}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
           <div ref={journeyRef} className={styles.journeyWorld}>
@@ -720,6 +834,12 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
             <LaunchpadChapter chapterRef={launchpadChapterRef} galleryRef={launchpadGalleryRef} />
             {home && <JourneyIndex chapterRef={indexChapterRef} />}
           </div>
+          {hasContact && <>
+            <WatercolourWash />
+            <div ref={contactStageRef} className={styles.contactStage} data-contact-stage>
+              {children}
+            </div>
+          </>}
           <div className={styles.nearClouds} aria-hidden="true">
             <div className={styles.cloudLeft}>
               <Cloud masked height={224} opacity={0.96} style={{ left: -200, bottom: -10 }} />

@@ -33,6 +33,7 @@
       calc(var(--index-closed, 0) * var(--stack-y, 0px)),
       0
     )
+    translateY(calc(var(--index-wash, 0) * -32px))
     rotate(calc(var(--index-closed, 0) * var(--stack-turn, 0deg)))
     scale(calc(.94 + var(--index-open, 1) * .06));
   transform-origin: center;
