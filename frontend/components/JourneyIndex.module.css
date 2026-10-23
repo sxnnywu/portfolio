@@ -1,0 +1,135 @@
+.chapter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 940px;
+  transform: translate(-50%, -50%);
+  opacity: var(--index-arrival, 1);
+}
+
+.heading {
+  margin: 0 0 24px;
+  font-size: 16.5px;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: var(--index-heading, 1);
+  transform: translateY(calc((1 - var(--index-heading, 1)) * 18px));
+  will-change: transform, opacity;
+}
+
+.rows {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rowSlot {
+  position: relative;
+  border-radius: 16px;
+  transform:
+    translate3d(
+      calc(var(--index-closed, 0) * var(--stack-x, 0px)),
+      calc(var(--index-closed, 0) * var(--stack-y, 0px)),
+      0
+    )
+    translateY(calc(var(--index-wash, 0) * -32px))
+    rotate(calc(var(--index-closed, 0) * var(--stack-turn, 0deg)))
+    scale(calc(.94 + var(--index-open, 1) * .06));
+  transform-origin: center;
+  will-change: transform;
+}
+
+.row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  padding: 30px 34px;
+  border-radius: 16px;
+  isolation: isolate;
+}
+
+.rowSlot::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: inherit;
+  background: #fdfaf1;
+}
+
+.label,
+.blurb {
+  position: relative;
+  opacity: var(--label-progress, 1);
+}
+
+.blurb {
+  font-size: 12.5px;
+  text-align: right;
+}
+
+.row:focus-visible {
+  outline: 2px solid #2635a8;
+  outline-offset: 5px;
+}
+
+@media (max-width: 850px) {
+  .chapter {
+    width: 440px;
+    --index-title-size: 34px;
+  }
+
+  .heading {
+    font-size: 20.5px;
+  }
+
+  .row {
+    padding: 27px 24px;
+    gap: 22px;
+  }
+
+  .label {
+    flex-shrink: 0;
+  }
+
+  .blurb {
+    max-width: 175px;
+    font-size: 15.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (max-height: 540px) {
+  .chapter {
+    position: relative;
+    top: auto !important;
+    left: auto !important;
+    width: 100%;
+    max-width: 940px;
+    margin: 120px auto 0;
+    transform: none;
+    opacity: 1;
+    scroll-margin-top: 100px;
+    --index-title-size: clamp(26px, 3vw, 38px);
+  }
+
+  .heading,
+  .rowSlot,
+  .label,
+  .blurb {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  .heading {
+    font-size: 16.5px;
+  }
+
+  .blurb {
+    font-size: 12.5px;
+  }
+}

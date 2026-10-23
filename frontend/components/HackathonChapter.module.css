@@ -1,0 +1,335 @@
+.chapter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: 560px 470px;
+  gap: 70px;
+  align-items: center;
+  width: 1100px;
+  transform: translate(-50%, -50%);
+  font-family: var(--hack-serif);
+  font-weight: 300;
+  color: var(--hack-body);
+}
+
+.number {
+  position: absolute;
+  left: -29px;
+  top: 0;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--hack-muted);
+}
+
+.gallery {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  height: 660px;
+}
+
+.project {
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--hack-rule);
+  border-radius: 8px;
+  background: #fffdf6;
+  color: var(--hack-body);
+  box-shadow: 0 17px 35px -18px rgba(62, 57, 37, .23);
+  transform-origin: center;
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.project[data-hackathon-project="godseye"] {
+  z-index: 1;
+  left: 70px;
+  top: 8px;
+  width: 420px;
+  transform: rotate(-3deg);
+}
+
+.project[data-hackathon-project="slicefund"] {
+  z-index: 2;
+  left: 0;
+  top: 355px;
+  width: 264px;
+  transform: rotate(-4deg);
+}
+
+.project[data-hackathon-project="post-it"] {
+  z-index: 3;
+  left: 292px;
+  top: 355px;
+  width: 264px;
+  transform: rotate(4deg);
+}
+
+.project:hover,
+.project:active,
+.project:focus-visible {
+  opacity: 1;
+}
+
+.project:focus-visible {
+  z-index: 5;
+  outline: 2px solid var(--hack-blue);
+  outline-offset: 5px;
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 34px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--hack-rule);
+  line-height: 1;
+}
+
+.dots {
+  display: flex;
+  flex: none;
+  gap: 4px;
+}
+
+.dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(138, 131, 117, .4);
+}
+
+.projectName {
+  font-size: 20px;
+  color: var(--hack-title);
+}
+
+.externalArrow {
+  margin-left: auto;
+  font-size: 18px;
+  color: var(--hack-blue);
+}
+
+.screenshot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #fffdf6;
+}
+
+.projectDetails {
+  padding: 12px 14px 14px;
+}
+
+.projectDetails p {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.award {
+  display: block;
+  margin-top: 8px;
+  font-size: 17px;
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--hack-gold);
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  grid-column: 2;
+  grid-row: 1;
+  padding: 15px 0;
+  background: var(--hack-paper);
+}
+
+.copy h2 {
+  margin: 0 0 24px;
+  font-family: var(--hack-serif);
+  font-size: 56px;
+  font-weight: 300;
+  line-height: 1.04;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+  color: var(--hack-title);
+}
+
+.copy p {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.45;
+}
+
+.copy em {
+  font-weight: inherit;
+  color: var(--hack-blue);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery .project:hover {
+    z-index: 5;
+    transform: rotate(0deg) translateY(-5px);
+    box-shadow: 0 21px 39px -17px rgba(62, 57, 37, .28);
+  }
+}
+
+.gallery .project:focus-visible {
+  transform: rotate(0deg) translateY(-5px);
+}
+
+@media (max-width: 850px) {
+  .chapter {
+    width: 440px;
+    grid-template-columns: 440px;
+    gap: 28px;
+  }
+
+  .number {
+    left: 0;
+    top: -20px;
+  }
+
+  .gallery {
+    grid-column: 1;
+    grid-row: 1;
+    height: 585px;
+  }
+
+  .project[data-hackathon-project="godseye"] {
+    left: 50px;
+    top: 4px;
+    width: 340px;
+  }
+
+  .project[data-hackathon-project="slicefund"] {
+    left: 1px;
+    top: 315px;
+    width: 205px;
+    transform: rotate(-3deg);
+  }
+
+  .project[data-hackathon-project="post-it"] {
+    left: 233px;
+    top: 315px;
+    width: 205px;
+    transform: rotate(3deg);
+  }
+
+  .chrome {
+    gap: 8px;
+    min-height: 31px;
+    padding: 6px 9px;
+  }
+
+  .projectName {
+    font-size: 19px;
+  }
+
+  .projectDetails {
+    padding: 10px 11px 12px;
+  }
+
+  .projectDetails p {
+    font-size: 19px;
+    line-height: 1.2;
+  }
+
+  .award {
+    margin-top: 7px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .copy {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 0 5px;
+    text-align: center;
+  }
+
+  .copy h2 {
+    margin-bottom: 20px;
+    font-size: 50px;
+  }
+
+  .copy p {
+    font-size: 26px;
+    line-height: 1.4;
+  }
+}
+
+/* A complete project list replaces the camera composition in reading mode. */
+@media (prefers-reduced-motion: reduce), (max-height: 540px) {
+  .chapter {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    width: min(100%, 1100px);
+    margin: 140px auto 0;
+    grid-template-columns: minmax(0, 560fr) minmax(0, 470fr);
+    align-items: start;
+    transform: none !important;
+  }
+
+  .gallery {
+    display: grid;
+    gap: 28px;
+    height: auto;
+  }
+
+  .project[data-hackathon-project] {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    transform: none;
+    transition: none;
+  }
+
+  .gallery .project:hover,
+  .gallery .project:focus-visible {
+    transform: none;
+  }
+
+  .copy h2 {
+    font-size: clamp(34px, 5vw, 56px);
+  }
+
+  .copy p {
+    font-size: clamp(20px, 2.3vw, 25px);
+  }
+}
+
+@media (max-width: 850px) and (prefers-reduced-motion: reduce), (max-width: 850px) and (max-height: 540px) {
+  .chapter {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 34px;
+  }
+
+  .gallery {
+    grid-column: 1;
+    grid-row: 2;
+    width: min(100%, 440px);
+    margin: 0 auto;
+  }
+
+  .copy {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .projectDetails p,
+  .projectName {
+    font-size: 20px;
+  }
+
+  .award {
+    font-size: 18px;
+  }
+}

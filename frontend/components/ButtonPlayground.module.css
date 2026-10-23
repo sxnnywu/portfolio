@@ -1,0 +1,374 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  font-family: var(--demo-font-sans);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 226px;
+  padding: 22px 22px 18px;
+  border: 1px solid rgba(43, 81, 112, 0.12);
+  border-radius: 18px;
+  background: rgba(253, 250, 241, 0.58);
+}
+
+.number {
+  display: block;
+  color: var(--demo-gold);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+
+.title {
+  margin: 6px 0 0;
+  color: var(--demo-ink);
+  font-family: var(--demo-font-serif);
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1.12;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 18px 0;
+}
+
+.button {
+  --pull-x: 0px;
+  --pull-y: 0px;
+  --pull-tilt: 0deg;
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  isolation: isolate;
+  border: 0;
+  background: transparent;
+  color: var(--demo-ink);
+  font-family: var(--demo-font-sans);
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--demo-pill-background);
+  box-shadow: var(--demo-pill-shadow);
+  transition: transform 460ms cubic-bezier(0.2, 1.65, 0.4, 1), background 250ms ease;
+  pointer-events: none;
+}
+
+.label {
+  position: relative;
+  z-index: 2;
+  display: inline-block;
+  transition: transform 460ms cubic-bezier(0.2, 1.65, 0.4, 1);
+  pointer-events: none;
+}
+
+.built {
+  position: relative;
+  display: inline-block;
+}
+
+.arrowSlot {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+  vertical-align: -2px;
+}
+
+.arrow {
+  display: block;
+  transform-origin: 45% 55%;
+  transition: opacity 180ms ease, transform 500ms cubic-bezier(0.2, 1.65, 0.4, 1);
+}
+
+.footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.description {
+  max-width: 190px;
+  margin: 0;
+  color: var(--demo-muted);
+  font-family: var(--demo-font-serif);
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1.35;
+}
+
+.replay {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 5px;
+  min-height: 28px;
+  margin: 0 -4px -4px 0;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--demo-sky);
+  font-family: var(--demo-font-sans);
+  font-size: 10px;
+  transition: color 180ms ease;
+}
+
+/* The hit area stays still while the soft surface follows the pointer. */
+.button[data-variant="squishy"][data-playing="true"] .surface {
+  transform: translate(var(--pull-x), var(--pull-y)) rotate(var(--pull-tilt)) scale(1.065, 0.965);
+}
+
+.button[data-variant="squishy"][data-playing="true"] .label {
+  transform: translate(calc(var(--pull-x) * 0.34), calc(var(--pull-y) * 0.34));
+}
+
+.button[data-variant="squishy"]:active .surface {
+  transform: translateY(3px) scale(1.11, 0.8);
+  transition-duration: 90ms;
+}
+
+.button[data-variant="squishy"]:active .label {
+  transform: translateY(2px) scale(0.98);
+}
+
+.button[data-variant="squishy"][data-replaying="true"] .surface {
+  animation: squishyPreview 1350ms both;
+}
+
+@keyframes squishyPreview {
+  0% { transform: none; }
+  24% { transform: translate(8px, -1px) rotate(1deg) scale(1.075, 0.95); }
+  42% { transform: translateY(3px) scale(1.11, 0.8); }
+  65% { transform: translateY(-2px) scale(0.97, 1.08); }
+  83% { transform: scale(1.025, 0.985); }
+  100% { transform: none; }
+}
+
+/* Three little gold pencil marks bloom beyond the arrow. */
+.sparks {
+  position: absolute;
+  z-index: 1;
+  right: -28px;
+  top: -6px;
+  overflow: visible;
+  color: var(--demo-gold);
+  pointer-events: none;
+}
+
+.sparks path {
+  opacity: 0;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transform-origin: 12px 30px;
+  transition: opacity 180ms ease;
+}
+
+.button[data-variant="sparks"][data-playing="true"] .arrow {
+  animation: arrowFlick 650ms cubic-bezier(0.2, 1.3, 0.4, 1) both;
+}
+
+.button[data-playing="true"] .sparks path {
+  animation: sparkDraw 1450ms ease both;
+}
+
+.button[data-playing="true"] .sparkTwo { animation-delay: 80ms; }
+.button[data-playing="true"] .sparkThree { animation-delay: 150ms; }
+
+@keyframes arrowFlick {
+  0% { transform: none; }
+  32% { transform: translateX(6px) rotate(-16deg); }
+  62% { transform: translateX(2px) rotate(5deg); }
+  100% { transform: translateX(3px); }
+}
+
+@keyframes sparkDraw {
+  0% { opacity: 0; stroke-dashoffset: 1; transform: scale(0.6); }
+  18% { opacity: 1; stroke-dashoffset: 0; transform: scale(1.05); }
+  74% { opacity: 1; stroke-dashoffset: 0; transform: scale(1); }
+  100% { opacity: 0; stroke-dashoffset: 0; transform: scale(1.15); }
+}
+
+/* Only this pill clips its passing cloud; the texture mask stays on the img. */
+.cloudWindow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.passingCloud {
+  position: absolute;
+  left: -150px;
+  top: -20px;
+  width: 220px;
+  height: 90px;
+  opacity: 0;
+}
+
+.button[data-variant="cloud"][data-playing="true"] .passingCloud {
+  animation: cloudPass 1500ms cubic-bezier(0.25, 0.1, 0.4, 1) both;
+}
+
+@keyframes cloudPass {
+  0% { opacity: 0; transform: translateX(-30px) rotate(-3deg); }
+  16% { opacity: 0.85; }
+  72% { opacity: 0.95; }
+  100% { opacity: 0; transform: translateX(390px) rotate(3deg); }
+}
+
+/* A double-pass scribble under the word, never through the letterforms. */
+.flourish {
+  position: absolute;
+  left: -6px;
+  bottom: -7px;
+  overflow: visible;
+  color: var(--demo-blue);
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+
+.flourish path {
+  stroke: currentColor;
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 300ms ease, opacity 200ms ease;
+}
+
+.button[data-variant="flourish"][data-playing="true"] .flourish {
+  opacity: 1;
+}
+
+.button[data-variant="flourish"][data-playing="true"] .flourish path {
+  animation: flourishDraw 650ms cubic-bezier(0.35, 0, 0.25, 1) both;
+}
+
+@keyframes flourishDraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* The regular arrow becomes a longer, springy hand-drawn one. */
+.doodleArrow {
+  position: absolute;
+  left: -2px;
+  top: -5px;
+  overflow: visible;
+  opacity: 0;
+  color: var(--demo-blue);
+  transition: opacity 180ms ease;
+  pointer-events: none;
+}
+
+.doodleArrow path {
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.button[data-variant="doodle"][data-playing="true"] .arrow {
+  opacity: 0;
+}
+
+.button[data-variant="doodle"][data-playing="true"] .doodleArrow {
+  opacity: 1;
+  animation: doodleSpring 850ms both;
+}
+
+.button[data-variant="doodle"][data-playing="true"] .doodleStem {
+  animation: doodleDraw 500ms ease both;
+}
+
+.button[data-variant="doodle"][data-playing="true"] .doodleTip {
+  animation: doodleDraw 250ms 300ms ease both;
+}
+
+@keyframes doodleDraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes doodleSpring {
+  0% { transform: translateX(-3px) scaleX(0.86); }
+  52% { transform: translateX(4px) scaleX(1.12); }
+  76% { transform: translateX(1px) scaleX(0.97); }
+  100% { transform: translateX(2px) scaleX(1); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .replay:hover {
+    color: var(--demo-blue);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+  .card { min-height: 218px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button *,
+  .replay {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .button .surface,
+  .button .label,
+  .button .arrow {
+    transform: none !important;
+  }
+
+  .button[data-playing="true"] .surface {
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .button[data-playing="true"] .flourish path,
+  .button[data-playing="true"] .doodleArrow path {
+    stroke-dashoffset: 0;
+  }
+
+  .button[data-playing="true"] .sparks path {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .button[data-playing="true"] .passingCloud {
+    opacity: 0.65;
+    transform: translateX(170px);
+  }
+}

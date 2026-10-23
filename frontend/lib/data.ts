@@ -2,17 +2,27 @@
 export const heroHeadline = "Hey, I'm Sunny";
 export const heroTagline = "a theatre kid with a GitHub";
 
+export const introBackground = [
+  "{2M+} views @ notion, stan, polarity, 1851 labs",
+  "built software for {5400+} engineers @ rocket",
+  "won {3} hackathons",
+  "hosted events for {500+} people",
+] as const;
+
 export const heroRoles = [
   "a content creator",
   "a full-stack engineer",
+  "a growth hacker",
   "a double degree student",
-  "an AI agent wrangler",
+  "a product manager",
   "a storyteller",
   "an entrepreneur",
-  "hackathon obsessed",
   "an event host",
   "a video editor",
-  "probably debugging",
+  "an operator",
+  "AI pilled",
+  "SUPER HYPE (+ FUN)",
+  "a visionary (or delusional?)",
 ] as const;
 
 export const socials = [
@@ -442,8 +452,7 @@ export interface ContentPhone {
   platform: string;
   count: string;
   topics: string;
-  video: string;
-  poster: string;
+  screenshot: { src: string; width: number; height: number };
   /** Resting tilt in degrees; the pair lean away from each other. */
   rotate: number;
   /** Omitted until the real profile URL is known. */
@@ -455,8 +464,7 @@ export const contentPhones: ContentPhone[] = [
     platform: "LinkedIn",
     count: "11k followers",
     topics: "student life, productivity, early career",
-    video: "/assets/content/linkedin-scroll.mp4",
-    poster: "/assets/content/linkedin-poster.jpg",
+    screenshot: { src: "/assets/content/linkedin-screenshot.png", width: 1170, height: 2532 },
     rotate: -2,
     profile: "https://www.linkedin.com/in/sunny-wu-dev/",
   },
@@ -464,8 +472,7 @@ export const contentPhones: ContentPhone[] = [
     platform: "Instagram",
     count: "3k followers",
     topics: "fashion, gratitude & mindset, early career",
-    video: "/assets/content/insta-scroll.mp4",
-    poster: "/assets/content/insta-poster.jpg",
+    screenshot: { src: "/assets/content/instagram-screenshot.png", width: 1170, height: 2532 },
     rotate: 2.4,
     profile: "https://www.instagram.com/imsunnywu/",
   },
