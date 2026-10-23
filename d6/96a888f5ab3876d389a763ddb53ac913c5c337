@@ -1,0 +1,37 @@
+frontend/lib/data.ts
+  s_e7cc0136fd1ff6::t_ab9bb8796fde1a 3-16
+frontend/components/HeroCTA.tsx
+  s_e7cc0136fd1ff6::t_de28fc7ebd8986 1-219
+frontend/lib/tokens.ts
+  s_e7cc0136fd1ff6::t_5356b51018d9d1 51
+frontend/components/HeroCTA.module.css
+  s_e7cc0136fd1ff6::t_de28fc7ebd8986 1-179
+frontend/app/globals.css
+  s_e7cc0136fd1ff6::t_91042bd4a447f7 271
+  s_e7cc0136fd1ff6::t_d247a754da7f18 274-280,282-284,287,289-290,293-296
+  s_e7cc0136fd1ff6::t_ab9bb8796fde1a 272-273,281,285-286,288,291-292,297-298,303-306
+frontend/components/HeroRoles.tsx
+  s_e7cc0136fd1ff6::t_15d9f2e199eaa4 65-66,74,76,78-81,83-85
+  s_e7cc0136fd1ff6::t_a9aa8e7857e14a 75,77,82
+  s_e7cc0136fd1ff6::t_2cac1241d583a8 3,56
+  s_e7cc0136fd1ff6::t_91042bd4a447f7 62,64,69-70,72
+  s_e7cc0136fd1ff6::t_c0185026d8e367 67-68,71,73
+  s_e7cc0136fd1ff6::t_d247a754da7f18 5,11-14,23,29,44,52-55,60-61,86
+  s_e7cc0136fd1ff6::t_ab9bb8796fde1a 1-2,4,6-10,15-22,24-28,30-43,45-51,57-59,63,87-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d696a888f5ab3876d389a763ddb53ac913c5c337",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
