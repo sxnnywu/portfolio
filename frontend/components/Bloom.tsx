@@ -18,8 +18,11 @@ export default function Bloom({ color }: { color: string }) {
 
     const track = (event: MouseEvent) => {
       const box = card.getBoundingClientRect();
-      el.style.setProperty("--bx", `${event.clientX - box.left}px`);
-      el.style.setProperty("--by", `${event.clientY - box.top}px`);
+      // Journey rows can sit inside a scaled camera; CSS uses local pixels.
+      const x = (event.clientX - box.left) * card.offsetWidth / Math.max(1, box.width);
+      const y = (event.clientY - box.top) * card.offsetHeight / Math.max(1, box.height);
+      el.style.setProperty("--bx", `${x}px`);
+      el.style.setProperty("--by", `${y}px`);
     };
 
     card.addEventListener("mouseenter", track);

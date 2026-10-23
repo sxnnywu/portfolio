@@ -46,6 +46,10 @@
   height: 4380svh;
 }
 
+.homepage .runway {
+  height: 4700svh;
+}
+
 .stage {
   position: sticky;
   top: 0;
@@ -555,7 +559,8 @@
 }
 
 @media (prefers-reduced-motion: reduce), (max-height: 540px) {
-  .runway {
+  .runway,
+  .homepage .runway {
     height: auto;
   }
 

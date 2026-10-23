@@ -20,6 +20,7 @@ import RocketChapter from "@/components/RocketChapter";
 import BlueprintChapter from "@/components/BlueprintChapter";
 import EventHostingChapter from "@/components/EventHostingChapter";
 import LaunchpadChapter from "@/components/LaunchpadChapter";
+import JourneyIndex from "@/components/JourneyIndex";
 import { education, heroHeadline, heroTagline } from "@/lib/data";
 import styles from "./ScrollStoryPreview.module.css";
 
@@ -72,6 +73,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
   const eventHostingGalleryRef = useRef<HTMLDivElement>(null);
   const launchpadChapterRef = useRef<HTMLElement>(null);
   const launchpadGalleryRef = useRef<HTMLDivElement>(null);
+  const indexChapterRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const page = pageRef.current;
@@ -104,6 +106,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     const eventHostingGallery = eventHostingGalleryRef.current;
     const launchpadChapter = launchpadChapterRef.current;
     const launchpadGallery = launchpadGalleryRef.current;
+    const indexChapter = indexChapterRef.current;
     if (!page || !runway || !stage || !photo || !intro || !hero || !sun || !journey || !chapter || !gallery || !pinkChapter || !pinkGallery || !hackathonChapter || !hackathonGallery || !universityChapter || !universityGallery || !creatorChapter || !creatorGallery || !growthChapter || !growthGallery || !oroProjectChapter || !oroProjectGallery || !rocketChapter || !rocketGallery || !blueprintChapter || !blueprintGallery || !eventHostingChapter || !eventHostingGallery || !launchpadChapter || !launchpadGallery) return;
 
     const linear = window.matchMedia("(prefers-reduced-motion: reduce), (max-height: 540px)");
@@ -127,6 +130,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     let blueprintFrames: typeof cameraFrames = [];
     let eventHostingFrames: typeof cameraFrames = [];
     let launchpadFrames: typeof cameraFrames = [];
+    let indexFrames: typeof cameraFrames = [];
 
     // Monotone cubic interpolation keeps the camera reversible, with no overshoot
     // or rotation during the reading segment.
@@ -171,7 +175,10 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       const blueprintProgress = still ? 1 : clamp((distance - height * 32) / (height * 3.6));
       const eventHostingProgress = still ? 1 : clamp((distance - height * 35.6) / (height * 3.6));
       const launchpadProgress = still ? 1 : clamp((distance - height * 39.2) / (height * 3.6));
+      const indexProgress = home && indexChapter ? clamp((distance - height * 42.8) / (height * 3.2)) : 0;
+      const indexOpen = still ? 1 : ease(indexProgress, 0.32, 0.86);
       const camera = still ? { x: 0, y: 0, z: 1, r: 0 }
+        : indexProgress > 0 ? cameraAt(indexProgress, indexFrames)
         : launchpadProgress > 0 ? cameraAt(launchpadProgress, launchpadFrames)
         : eventHostingProgress > 0 ? cameraAt(eventHostingProgress, eventHostingFrames)
         : blueprintProgress > 0 ? cameraAt(blueprintProgress, blueprintFrames)
@@ -203,6 +210,11 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         "--event-photo-spread": still ? 1 : ease(eventHostingProgress, 0.08, 0.42),
         "--launchpad-photo-spread": still ? 1 : ease(launchpadProgress, 0.08, 0.42),
         "--launchpad-revenue": still ? 1 : ease(launchpadProgress, 0.76, 0.9),
+        "--index-open": indexOpen,
+        "--index-closed": 1 - indexOpen,
+        "--index-heading": still ? 1 : ease(indexProgress, 0.3, 0.56),
+        "--index-arrival": still ? 1 : ease(indexProgress, 0.08, 0.32),
+        "--index-departure": still ? 0 : ease(indexProgress, 0.36, 0.7),
         "--sky-opacity": still ? 1 : 1 - ease(p, 0.12, 0.55),
         "--hero-y": `${-leave * height * 0.32}px`,
         "--hero-scale": 1 - leave * 0.07,
@@ -239,6 +251,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       }
       for (let i = 0; i < 4; i++) {
         values[`--draw-${i}`] = still ? 1 : ease(p, 0.55 + i * 0.05, 0.64 + i * 0.05);
+        values[`--index-label-${i}`] = still ? 1 : ease(indexProgress, 0.5 + i * 0.05, 0.64 + i * 0.05);
       }
       for (const [key, value] of Object.entries(values)) page.style.setProperty(key, String(value));
       journey.style.transform = `translate(${width / 2}px,${height / 2 + 25}px) scale(${camera.z}) rotate(${camera.r}deg) translate(${-camera.x}px,${-camera.y}px)`;
@@ -260,7 +273,8 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       rocketChapter.setAttribute("aria-hidden", String(!still && (rocketProgress < 0.14 || blueprintProgress > 0.3)));
       blueprintChapter.setAttribute("aria-hidden", String(!still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3)));
       eventHostingChapter.setAttribute("aria-hidden", String(!still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3)));
-      launchpadChapter.setAttribute("aria-hidden", String(!still && launchpadProgress < 0.14));
+      launchpadChapter.setAttribute("aria-hidden", String(!still && (launchpadProgress < 0.14 || indexProgress > 0.6)));
+      if (indexChapter) indexChapter.setAttribute("aria-hidden", String(!still && indexProgress < 0.3));
     };
     const schedule = () => { if (frame === null) frame = window.requestAnimationFrame(paint); };
     const focusProject = (event: FocusEvent) => {
@@ -289,6 +303,30 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       if (!link || linear.matches || !link.matches(":focus-visible")) return;
       window.scrollTo({ top: start + height * (24.8 + 4 * 0.94), behavior: "instant" });
       schedule();
+    };
+    const visitIndex = (behavior: ScrollBehavior = "instant") => {
+      if (!home || !indexChapter || linear.matches) return;
+      window.scrollTo({ top: start + height * (42.8 + 3.2 * 0.93), behavior });
+      // Settle the camera before the focused link is painted.
+      if (behavior === "instant") {
+        if (frame !== null) window.cancelAnimationFrame(frame);
+        paint();
+      } else schedule();
+    };
+    const focusIndex = (event: FocusEvent) => {
+      if (event.target instanceof Element && event.target.matches("a:focus-visible")) visitIndex();
+    };
+    const jumpToIndex = (event: MouseEvent) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || linear.matches) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href="#work"]') : null;
+      if (!home || !indexChapter || !link) return;
+      event.preventDefault();
+      window.history.pushState(null, "", "#work");
+      // Native smooth scrolling still drives every intermediate camera position.
+      visitIndex("smooth");
+    };
+    const followHash = () => {
+      if (window.location.hash === "#work") visitIndex();
     };
     const measure = () => {
       start = runway.getBoundingClientRect().top + window.scrollY;
@@ -532,6 +570,30 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
         { p: 0.94, x: launchpadX + 8, y: launchpadY + launchpadOverflow / 2, z: launchpadReadingFit, r: 0 },
         { p: 1, x: launchpadX + 12, y: launchpadY + launchpadOverflow / 2 + 5, z: launchpadReadingFit, r: 0 },
       ];
+      if (home && indexChapter) {
+        const exit = launchpadFrames[launchpadFrames.length - 1];
+        const indexX = launchpadX + (width > 850 ? 1120 : 780);
+        const indexY = exit.y + (width > 850 ? 360 : 200);
+        indexChapter.style.left = linear.matches ? "" : `${indexX}px`;
+        indexChapter.style.top = linear.matches ? "" : `${indexY}px`;
+        const indexWidth = indexChapter.offsetWidth;
+        const indexHeight = indexChapter.offsetHeight;
+        const indexFit = Math.min(width / (indexWidth + (width > 850 ? 130 : 46)), room / (indexHeight + 40), 1);
+        indexFrames = [
+          { ...exit, p: 0 },
+          { p: 0.23, x: exit.x + 140, y: exit.y + 60, z: Math.min(exit.z, indexFit) * 0.76, r: -1 },
+          { p: 0.58, x: indexX - 80, y: indexY - 30, z: indexFit * 0.9, r: 1 },
+          { p: 0.88, x: indexX, y: indexY, z: indexFit, r: 0 },
+          { p: 1, x: indexX, y: indexY, z: indexFit, r: 0 },
+        ];
+        const rows = indexChapter.querySelector<HTMLElement>("[data-index-rows]");
+        if (rows) {
+          for (const [index, card] of [...rows.querySelectorAll<HTMLElement>("[data-index-card]")].entries()) {
+            // Offsets ignore transforms, so resizing never measures a half-open stack.
+            card.style.setProperty("--stack-y", `${rows.offsetHeight / 2 - card.offsetTop - card.offsetHeight / 2 + index * 4}px`);
+          }
+        }
+      }
       schedule();
     };
     const resize = new ResizeObserver(measure);
@@ -548,12 +610,17 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
     resize.observe(blueprintChapter);
     resize.observe(eventHostingChapter);
     resize.observe(launchpadChapter);
+    if (indexChapter) resize.observe(indexChapter);
     if (intro.firstElementChild) resize.observe(intro.firstElementChild);
     measure();
+    followHash();
     window.addEventListener("scroll", schedule, { passive: true });
     hackathonGallery.addEventListener("focusin", focusProject);
     creatorGallery.addEventListener("focusin", focusCreatorProfile);
     oroProjectChapter.addEventListener("focusin", focusOroProject);
+    indexChapter?.addEventListener("focusin", focusIndex);
+    page.addEventListener("click", jumpToIndex);
+    window.addEventListener("hashchange", followHash);
     window.addEventListener("resize", measure);
     linear.addEventListener("change", measure);
     return () => {
@@ -561,6 +628,9 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
       hackathonGallery.removeEventListener("focusin", focusProject);
       creatorGallery.removeEventListener("focusin", focusCreatorProfile);
       oroProjectChapter.removeEventListener("focusin", focusOroProject);
+      indexChapter?.removeEventListener("focusin", focusIndex);
+      page.removeEventListener("click", jumpToIndex);
+      window.removeEventListener("hashchange", followHash);
       window.removeEventListener("resize", measure);
       linear.removeEventListener("change", measure);
       resize.disconnect();
@@ -648,6 +718,7 @@ export default function ScrollStoryPreview({ home = false }: { home?: boolean })
             <BlueprintChapter chapterRef={blueprintChapterRef} galleryRef={blueprintGalleryRef} />
             <EventHostingChapter chapterRef={eventHostingChapterRef} galleryRef={eventHostingGalleryRef} />
             <LaunchpadChapter chapterRef={launchpadChapterRef} galleryRef={launchpadGalleryRef} />
+            {home && <JourneyIndex chapterRef={indexChapterRef} />}
           </div>
           <div className={styles.nearClouds} aria-hidden="true">
             <div className={styles.cloudLeft}>

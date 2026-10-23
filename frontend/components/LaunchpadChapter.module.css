@@ -11,6 +11,7 @@
   font-family: var(--launchpad-serif);
   font-weight: 300;
   color: var(--launchpad-body);
+  opacity: calc(1 - var(--index-departure, 0));
 }
 
 .number {
@@ -197,6 +198,7 @@
 /* All four complete photographs and the revenue remain in the static story. */
 @media (prefers-reduced-motion: reduce), (max-height: 540px) {
   .chapter {
+    opacity: 1;
     position: relative;
     left: auto !important;
     top: auto !important;
