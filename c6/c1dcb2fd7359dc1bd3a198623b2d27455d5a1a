@@ -1,0 +1,160 @@
+frontend/components/ButtonPlayground.module.css
+  s_e7cc0136fd1ff6::t_7ff228d584199f 185,251,286
+  s_e7cc0136fd1ff6::t_e4bccadf5b55e6 1-184,186-250,252-285,287-374
+frontend/components/PinkStairsChapter.module.css
+  s_e7cc0136fd1ff6::t_2aa9c264ab3236 1-123,126-128,132-135,141-228,230-287,289-331
+  s_e7cc0136fd1ff6::t_2a3004b397ebe7 124-125,129-131,136-140,229,288
+frontend/components/CreatorChapter.tsx
+  s_e7cc0136fd1ff6::t_13e93aa4ce3aaa 31
+  s_e7cc0136fd1ff6::t_4508182ebe0cca 1,3-30,32-47,55-64
+  s_e7cc0136fd1ff6::t_61e4f40a2a8254 2,48-54
+frontend/components/ButtonPlayground.tsx
+  s_e7cc0136fd1ff6::t_e4bccadf5b55e6 1-4,6-166,198-214,216-218
+  s_e7cc0136fd1ff6::t_7321464db69a0a 5,167-197,215
+frontend/app/button-playground/page.module.css
+  s_e7cc0136fd1ff6::t_acbf371187292e 1-62
+frontend/components/EventHostingChapter.module.css
+  s_e7cc0136fd1ff6::t_5418d6ca31a80f 146,150-153,195-197,200
+  s_e7cc0136fd1ff6::t_a6a96c4752455b 259-264
+  s_e7cc0136fd1ff6::t_430f91bd481170 120,127,148,178,183,198
+  s_e7cc0136fd1ff6::t_16d19523dc0de8 103,121,128,134-135,141-142,173,179,184,189,193-194
+  s_e7cc0136fd1ff6::t_ec871cfb211055 119,126,133,140,147,149,199
+  s_e7cc0136fd1ff6::t_29cebfe0ece3df 1-100,102,107-110,116-117,123-124,130-131,137-138,144-145,154-171,175-176,180-181,185-186,190-191,201-229,231-244,248-250,252-258,265-299,308-309
+  s_e7cc0136fd1ff6::t_a454756eb8d97c 101,104-106,111-115,118,122,125,129,132,136,139,143,172,174,177,182,187-188,192,230,245-247,251,300-307
+frontend/components/LaunchpadChapter.tsx
+  s_e7cc0136fd1ff6::t_a2ddab9cec0628 1-43,47-54
+  s_e7cc0136fd1ff6::t_db63964a88ca12 44-46
+frontend/app/globals.css
+  s_e7cc0136fd1ff6::t_d48d9ec988b14d 720-721
+frontend/components/GrowthChapter.module.css
+  s_e7cc0136fd1ff6::t_43ff46dbc666f4 1-226
+frontend/components/OroProjectChapter.tsx
+  s_e7cc0136fd1ff6::t_9c0a111df6aaf2 1-28,31-36,38-39,41,46-52,57-65
+  s_e7cc0136fd1ff6::t_08ab7a9f0f9182 29
+  s_e7cc0136fd1ff6::t_c95bda6cb41f04 30,37,43,54
+  s_e7cc0136fd1ff6::t_e735f669b9d166 40,42,44-45,53,55-56
+frontend/components/OroProjectChapter.module.css
+  s_e7cc0136fd1ff6::t_e735f669b9d166 140
+  s_e7cc0136fd1ff6::t_3adbf11bcdf53f 90-91,94-105,115-116,228-233
+  s_e7cc0136fd1ff6::t_9c0a111df6aaf2 1-55,73-89,92-93,106-114,117-139,141-227,234-307
+  s_e7cc0136fd1ff6::t_c95bda6cb41f04 56-72
+frontend/components/HackathonChapter.module.css
+  s_e7cc0136fd1ff6::t_4a8191cdee5500 1-174,176-181,183-294,297-335
+  s_e7cc0136fd1ff6::t_bd224f5a2a248f 175,182,295-296
+frontend/components/GrowthChapter.tsx
+  s_e7cc0136fd1ff6::t_4271c69e041a6c 32
+  s_e7cc0136fd1ff6::t_43ff46dbc666f4 1-31,33-56
+frontend/components/ScrollStoryPreview.module.css
+  s_e7cc0136fd1ff6::t_21eb0da92a8943 1-2,234-235,239,245-252,596-605
+  s_e7cc0136fd1ff6::t_998e1dea814b20 233
+  s_e7cc0136fd1ff6::t_bdc118bba51aef 470-474
+  s_e7cc0136fd1ff6::t_13d6d5506716ac 633
+  s_e7cc0136fd1ff6::t_bc75e449d53c0c 46
+  s_e7cc0136fd1ff6::t_325d6bf54d11d0 638-639
+  s_e7cc0136fd1ff6::t_4c4aca8d24b450 253-254
+frontend/components/TheatreChapter.tsx
+  s_e7cc0136fd1ff6::t_13e93aa4ce3aaa 44-45
+  s_e7cc0136fd1ff6::t_d701d573c21484 1-43,46-49
+frontend/components/UniversityChapter.module.css
+  s_e7cc0136fd1ff6::t_7fca1de4e41bf6 1-358
+frontend/components/TheatreChapter.module.css
+  s_e7cc0136fd1ff6::t_d701d573c21484 1-32,34-173,175-244
+  s_e7cc0136fd1ff6::t_998e1dea814b20 33,174
+frontend/components/HackathonChapter.tsx
+  s_e7cc0136fd1ff6::t_f4f2dd017ead61 29
+  s_e7cc0136fd1ff6::t_846b6d08c9dffe 17,19,35,37
+  s_e7cc0136fd1ff6::t_bd224f5a2a248f 77,92-93
+  s_e7cc0136fd1ff6::t_4a8191cdee5500 1-2,6-16,20-26,28,30-34,38-64,66-76,78-91,94-100
+  s_e7cc0136fd1ff6::t_325d6bf54d11d0 3-5,18,27,36
+  s_e7cc0136fd1ff6::t_13e93aa4ce3aaa 65
+frontend/components/CreatorChapter.module.css
+  s_e7cc0136fd1ff6::t_4508182ebe0cca 1-86,88-286
+  s_e7cc0136fd1ff6::t_61e4f40a2a8254 87
+frontend/components/PinkStairsChapter.tsx
+  s_e7cc0136fd1ff6::t_2aa9c264ab3236 1-5,7-36,38-44,46-52,54-57,60-69
+  s_e7cc0136fd1ff6::t_8908b532610656 37,45,53
+  s_e7cc0136fd1ff6::t_13e93aa4ce3aaa 59
+  s_e7cc0136fd1ff6::t_2a3004b397ebe7 6,58
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_998e1dea814b20 198-199,305
+  s_e7cc0136fd1ff6::t_c95bda6cb41f04 286-292,556,563
+  s_e7cc0136fd1ff6::t_ce69ab2c77978c 13,55-56,87-88,120,133,135,137-139,142-145,164,235,250,319-327,333-335,339,541,641
+  s_e7cc0136fd1ff6::t_324bd0dedb38aa 19,67-68,99-100,126,170-171,178,237,258-260,451-473,487,547,647
+  s_e7cc0136fd1ff6::t_94f9d0517906a9 12,44,52-54,84-86,118-119,131-132,134,136,140-141,146-155,160-163,197,200-201,223,244-245,249,298-304,306-318,540,569,572,574,577,611,639-640,670,675,677
+  s_e7cc0136fd1ff6::t_c5f2bddcf1f177 15,59-60,91-92,122,166,182,252-253,365-382,408,543,643
+  s_e7cc0136fd1ff6::t_d48d9ec988b14d 17,63-64,95-96,124,168,180,255-256,409-427,545,645
+  s_e7cc0136fd1ff6::t_ad00f76cb0bb35 20,69-70,101-102,127,177,474-486,488-492,548,648
+  s_e7cc0136fd1ff6::t_36609cbddcbbef 21,71-72,103-104,128,172,176,238,261,493-513,549,649
+  s_e7cc0136fd1ff6::t_bc75e449d53c0c 22,73-74,105-107,129,173,175,204-205,262-263,514-534,550,650
+  s_e7cc0136fd1ff6::t_267c2c448c66e0 328-332,336-338
+  s_e7cc0136fd1ff6::t_f508d23ae387b1 203
+  s_e7cc0136fd1ff6::t_3adbf11bcdf53f 202,236
+  s_e7cc0136fd1ff6::t_737041636363ff 16,61-62,93-94,123,167,181,254,275-283,383-407,544,555,562,644
+  s_e7cc0136fd1ff6::t_83c58daa079808 14,57-58,89-90,121,165,174,183-184,251,340-364,542,642
+  s_e7cc0136fd1ff6::t_e735f669b9d166 18,65-66,97-98,125,169,179,257,428-450,546,646
+  s_e7cc0136fd1ff6::t_d30893d231e05f 266-274,284-285,554,561
+  s_e7cc0136fd1ff6::t_17f2c8e6388d2e 130
+  s_e7cc0136fd1ff6::t_17e963463ce0e2 651
+frontend/app/button-playground/page.tsx
+  s_e7cc0136fd1ff6::t_7321464db69a0a 29
+  s_e7cc0136fd1ff6::t_acbf371187292e 1-28,30-39
+frontend/lib/data.ts
+  s_e7cc0136fd1ff6::t_48b60aa223cb81 465
+  s_e7cc0136fd1ff6::t_61e4f40a2a8254 445,457
+frontend/components/PhoneReel.tsx
+  s_e7cc0136fd1ff6::t_61e4f40a2a8254 1,6,13-18
+frontend/components/UniversityChapter.tsx
+  s_e7cc0136fd1ff6::t_fc1cab3d0e763c 33
+  s_e7cc0136fd1ff6::t_7fca1de4e41bf6 1-32,34-57
+frontend/components/BlueprintChapter.module.css
+  s_e7cc0136fd1ff6::t_82211c97fbebe9 1-89,91-92,94-95,97-98,100-101,103,107-108,115-131,133-134,137-138,143-176,178-190,195-197,199-242,253
+  s_e7cc0136fd1ff6::t_430f91bd481170 90,111-112,132,140-141,177,192
+  s_e7cc0136fd1ff6::t_d41c8109b05cdc 93,96,99,102,104-106,109-110,113-114,135-136,139,142,191,193-194,198,243-252
+frontend/components/RocketChapter.tsx
+  s_e7cc0136fd1ff6::t_fc857ae23a4f9c 33,35
+  s_e7cc0136fd1ff6::t_b7dda0efeeff56 1-32,34,36-45
+frontend/components/MotionPlayground.tsx
+  s_e7cc0136fd1ff6::t_e5c30240676033 1-82,85-230,232-235
+  s_e7cc0136fd1ff6::t_0dbaed017c992c 83-84
+  s_e7cc0136fd1ff6::t_d32945c80f41d8 231
+frontend/components/EventHostingChapter.tsx
+  s_e7cc0136fd1ff6::t_29cebfe0ece3df 1,9-42,59-62
+  s_e7cc0136fd1ff6::t_f508d23ae387b1 2-6,8,43-44,46-47,49-50,52-53,58
+  s_e7cc0136fd1ff6::t_16d19523dc0de8 45,48,51,54
+  s_e7cc0136fd1ff6::t_5418d6ca31a80f 7,55-57
+frontend/components/LaunchpadChapter.module.css
+  s_e7cc0136fd1ff6::t_db63964a88ca12 111-119
+  s_e7cc0136fd1ff6::t_a2ddab9cec0628 1-110,120-272
+frontend/app/page.tsx
+  s_e7cc0136fd1ff6::t_db63964a88ca12 3-6,56-57,60
+  s_e7cc0136fd1ff6::t_7b56cca88f8f41 21
+frontend/components/RocketChapter.module.css
+  s_e7cc0136fd1ff6::t_b7dda0efeeff56 1-218
+frontend/components/MotionPlayground.module.css
+  s_e7cc0136fd1ff6::t_f1eb0868337f18 122,125,128-129,137,162-164,168-169,171,175-176,181,185,189,257,288,297-298,300,315,416-419,434,436,525-532,590,609
+  s_e7cc0136fd1ff6::t_d343d175c5648b 136,287,382
+  s_e7cc0136fd1ff6::t_a2c17f8b8dff49 318-328
+  s_e7cc0136fd1ff6::t_d9abc7d7955eb7 1-121,123-124,126-127,130-135,138-161,165-167,170,172-174,177-180,182-184,186-188,190-256,258-286,289-296,299,301-314,316-317,329-381,383-415,420-433,435,437-524,533-589,591-608,610-698
+frontend/components/BlueprintChapter.tsx
+  s_e7cc0136fd1ff6::t_c61dce3c74a412 31
+  s_e7cc0136fd1ff6::t_7f6dcba791aade 30
+  s_e7cc0136fd1ff6::t_82211c97fbebe9 1,4-27,29,32-33,37-40,43-47
+  s_e7cc0136fd1ff6::t_324bd0dedb38aa 28
+  s_e7cc0136fd1ff6::t_d41c8109b05cdc 2-3,34-36,41-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c6c1dcb2fd7359dc1bd3a198623b2d27455d5a1a",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
