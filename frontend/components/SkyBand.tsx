@@ -10,9 +10,9 @@ export default function SkyBand({
   sublineText,
 }: {
   title: string;
-  subline: ReactNode;
+  subline?: ReactNode;
   /** Plain-text copy of the subline; drives the timing and the accessible name. */
-  sublineText: string;
+  sublineText?: string;
 }) {
   return (
     <div
@@ -60,7 +60,7 @@ export default function SkyBand({
         <Typed text={title} style={type.pageTitle}>
           {title}
         </Typed>
-        <Typed
+        {sublineText && <Typed
           text={sublineText}
           delay={sequenceEnd(title.length)}
           style={{
@@ -70,8 +70,8 @@ export default function SkyBand({
             color: color.skyInk,
           }}
         >
-          {subline}
-        </Typed>
+          {subline ?? sublineText}
+        </Typed>}
       </div>
     </div>
   );

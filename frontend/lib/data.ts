@@ -60,7 +60,6 @@ export const navRows = [
   { href: "/work", title: "Work", blurb: "My lanyard collection", tint: 0.1, bloom: "rgba(150,190,225,.62)" },
   { href: "/projects", title: "Projects", blurb: "Silly little things I made", tint: 0.16, bloom: "rgba(238,224,190,.72)" },
   { href: "/awards", title: "Awards", blurb: "My mom's favourite page", tint: 0.22, bloom: "rgba(196,157,58,.34)" },
-  { href: "/story", title: "Story", blurb: "Theatre kid who learned to build", tint: 0.28, bloom: "rgba(206,160,175,.46)" },
 ];
 
 export const disciplines = ["engineering", "product", "growth", "ops"] as const;
@@ -74,6 +73,8 @@ export interface Role {
   tags: Discipline[];
   /** Optional: entries without one simply show the company name. */
   logo?: string;
+  /** Overlapping marks for roles spanning multiple companies. */
+  logos?: string[];
   /** Braces mark the metrics and phrases that print in blue ink. */
   bullets: string[];
   /** Short overview that swaps to the original resume bullets when expanded. */
@@ -84,32 +85,31 @@ export const roles: Role[] = [
   {
     title: "Co-Founder",
     company: "Oro",
-    summary: "Launched an {AI fashion stylist} to {2000+ organic downloads} across mobile and SMS.",
+    logo: "/assets/logos/oro.png",
+    summary: "Launched an {AI fashion stylist} to {4,300+ downloads} across mobile and iMessage.",
     dates: "Jan 2026 - Present",
     location: "Toronto",
     tags: ["engineering", "product", "growth", "ops"],
     bullets: [
-      "Launched an AI fashion stylist to {2000+ organic downloads}, developing the mobile app alongside a {Twilio SMS agent} with state-machine orchestration and durable conversation memory in Redis and PostgreSQL",
+      "Launched an AI fashion stylist to {4,300+ downloads}, developing the mobile app alongside an {iMessage agent} with state-machine orchestration and durable conversation memory in Redis and PostgreSQL",
       "Improved outfit recommendation quality {15%} by building a {computer-vision pipeline} for clothing attribute extraction and a {hybrid recommender} using embeddings, cosine similarity, and co-occurrence reranking",
       "Improved reliability across {4} production AI surfaces by building an {eval harness} that blocked unsafe releases in CI and an {agent observability} console for tracing state, LLM calls, failures, and cost at each step",
-      "Improved deployment reliability and scalability by provisioning production infrastructure in Terraform, with autoscaling AWS ECS services and ephemeral GitHub Actions runners for migrations and deploys",
-      "Grew first-time downloads {147%} in 90 days through {App Store Optimization} and keyword iteration",
-      "Drove {2000+ downloads}, {520k+ organic views}, and industry invitations to {Toronto Fashion Week} by running a {build-in-public} content strategy in the fashion niche across Instagram, TikTok, and LinkedIn",
       "Converted waitlist into {862 subscribers} at a {60%} open rate by writing newsletters on an in-house platform",
-      "Cut manual marketing production time {80%} by building {3 internal LLM agent workflows}, with human review gates, to automate newsletter production, content generation, and design-system-to-code sync",
     ],
   },
   {
-    title: "Campus Leader",
+    title: "Events",
     company: "Notion",
+    logo: "/assets/logos/notion.png",
     dates: "Aug 2026 - Present",
     location: "Waterloo",
     tags: ["growth", "ops"],
-    bullets: ["Scaling Notion in Waterloo by hosting events, building templates, and creating content"],
+    bullets: ["Scaling Notion in Waterloo by hosting events, building templates, and creating content. {10k+} students reached through events and Instagram reels."],
   },
   {
-    title: "Founding Growth Lead",
+    title: "Growth & Events",
     company: "Sip & Scale",
+    logo: "/assets/logos/sip-scale.png",
     summary: "Drove {1000+ launch week signups} and {$1200+ in ticket sales}.",
     dates: "Jun 2026 - Present",
     location: "Waterloo",
@@ -123,16 +123,18 @@ export const roles: Role[] = [
   },
   {
     title: "Growth Contractor",
-    company: "Stan, Polarity, GenTube, Jobright",
+    company: "Stan, Polarity, 1851 Labs",
+    logos: ["/assets/logos/stan.png", "/assets/logos/polarity.png", "/assets/logos/1851-labs.png"],
     dates: "Feb 2026 - Present",
     location: "Remote",
     tags: ["growth"],
-    summary: "Reached {2M+ impressions} through {multi-channel distribution} for four startups.",
-    bullets: ["Reached {2M+ impressions} by running {multi-channel distribution} on a weekly editorial cadence across LinkedIn, Instagram, TikTok, X, Reddit, and Pinterest, adapting format and voice to each platform", "Ran {UGC} program on GenTube's company account and {ghost-wrote} the founder account as thought leadership", "Drove {130k impressions} on Polarity's top-performing post by repositioning content based on performance data"],
+    summary: "Reached {2M+ impressions} through {multi-channel distribution} for three companies.",
+    bullets: ["Reached {2M+ impressions} by running {multi-channel distribution} on a weekly editorial cadence across LinkedIn, Instagram, TikTok, X, Reddit, and Pinterest, adapting format and voice to each platform", "Ran UGC on 1851 Labs' company account and {ghost-wrote} the founder account as thought leadership", "Drove {130k impressions} on Polarity's top-performing post by repositioning content based on performance data"],
   },
   {
     title: "Software Engineer Intern",
     company: "Rocket",
+    logo: "/assets/logos/rocket.png",
     summary: "Built an {AI skill registry} for {5,400+ engineers} at {zero infrastructure cost}.",
     dates: "May - Aug 2026",
     location: "Remote",
@@ -142,12 +144,12 @@ export const roles: Role[] = [
       "Cut manual QA time by {75%} by building an agentic workflow translating user flows into Playwright tests",
       "Reduced site latency by {55%} for {600k+} monthly visitors using Next.js and Payload CMS, {caching production content} while preventing stale updates after content changes",
       "{Migrated 20 React components} to a new design system used across {32} downstream applications",
-      "Scoped, designed, and prototyped an internal {innovation platform} in 6 weeks, enabling engineers to surface promising side projects and internal tools to senior leadership for sponsorship and organizational backing",
     ],
   },
   {
     title: "Product Manager",
     company: "UW Blueprint",
+    logo: "/assets/logos/blueprint.png",
     summary: "Led {10 engineers and designers} to build an {event management platform} for a nonprofit serving {10k+ members}.",
     dates: "Apr - Aug 2026",
     location: "Waterloo",
@@ -159,20 +161,9 @@ export const roles: Role[] = [
     ],
   },
   {
-    title: "Growth & Operations",
-    company: "1851 Labs",
-    dates: "Apr 2026",
-    location: "Toronto",
-    tags: ["growth", "ops"],
-    bullets: [
-      "Scaled to {500k+} users",
-      "Gained {550k+} impressions across 6 social channels",
-      "Defined the brand narrative and standardised the hiring pipeline",
-    ],
-  },
-  {
-    title: "Founder & Chief Executive Officer",
+    title: "Founder",
     company: "The Pink Stairs",
+    logo: "/assets/logos/pinkstairs.png",
     summary: "Built a community reaching {8M+ girls} across {26 countries}.",
     dates: "Jun 2024 - Dec 2025",
     location: "Toronto",

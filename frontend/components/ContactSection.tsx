@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import Cloud from "@/components/Cloud";
 import { socials } from "@/lib/data";
 import { externalLinkProps } from "@/lib/links";
@@ -6,15 +5,16 @@ import { color, emphasis, font, gradient, pill } from "@/lib/tokens";
 import styles from "./ContactSection.module.css";
 
 const CONTACT_TOP_FADE = "linear-gradient(to bottom, transparent 0px, #000 110px)";
+const contactAccent = { ...emphasis(), color: color.blueInk };
 
-export default function ContactSection({ headline = "If you've read this far, say something ;)", subline, immersive = false }: {
-  headline?: ReactNode;
-  subline?: ReactNode;
+export default function ContactSection({ immersive = false }: {
   immersive?: boolean;
 }) {
   return (
-    <div
+    <section
       id="contact"
+      aria-label="Contact"
+      tabIndex={-1}
       data-scene={immersive ? undefined : true}
       className={`${styles.section} ${immersive ? styles.immersive : ""}`}
       style={{
@@ -65,15 +65,11 @@ export default function ContactSection({ headline = "If you've read this far, sa
             color: color.inkDeepSky,
           }}
         >
-          {headline}
+          All that scrolling, and we haven’t even met.
         </div>
         <div data-contact-part="subline" className={styles.subline} style={{ color: color.skyInk }}>
-          {subline ?? (
-            <>
-              Open to <em style={emphasis()}>product</em> and <em style={emphasis()}>engineering</em> roles,
-              and being convinced otherwise. Always up for <em style={emphasis()}>side quests</em>.
-            </>
-          )}
+          If you need someone who can <em style={contactAccent}>build the product</em> and{" "}
+          <em style={contactAccent}>understand the people</em> using it, <em style={contactAccent}>let’s talk.</em>
         </div>
         <a data-contact-part="button" className={styles.button} href={socials[2].href} style={pill.close}>
           Say hi &rarr;
@@ -94,6 +90,6 @@ export default function ContactSection({ headline = "If you've read this far, sa
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

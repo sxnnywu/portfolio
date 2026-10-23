@@ -71,14 +71,7 @@ export default function Content() {
         <PostCarousel />
       </div>
 
-      <ContactSection
-        subline={
-          <>
-            Open to <em style={emphasis()}>brand deals</em>, <em style={emphasis()}>public speaking</em>,
-            and anything else you&apos;ve got.
-          </>
-        }
-      />
+      <ContactSection />
     </>
   );
 }

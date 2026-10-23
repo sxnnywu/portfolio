@@ -2,21 +2,36 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { color, font } from "@/lib/tokens";
+import { scrollToContact } from "@/lib/scrollToContact";
 
 const LINKS = [
   { href: "/work", label: "Work" },
   { href: "/projects", label: "Projects" },
   { href: "/awards", label: "Awards" },
   { href: "/content", label: "Content" },
-  { href: "/story", label: "Story" },
 ];
 
 export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [solid, setSolid] = useState(false);
+  const cancelContactScroll = useRef<(() => void) | null>(null);
+
+  useEffect(() => () => cancelContactScroll.current?.(), [pathname]);
+
+  const visitContact = (event: MouseEvent<HTMLAnchorElement>) => {
+    // Home maps this link to its scroll-driven camera; let that handler own it.
+    if (isHome || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const target = document.getElementById("contact");
+    if (!target) return;
+    event.preventDefault();
+    cancelContactScroll.current?.();
+    if (window.location.hash !== "#contact") window.history.pushState(null, "", "#contact");
+    const headerBottom = event.currentTarget.closest("[data-site-header]")?.getBoundingClientRect().bottom ?? 80;
+    cancelContactScroll.current = scrollToContact(target, headerBottom + 16);
+  };
 
   useEffect(() => {
     const threshold = () => (isHome ? window.innerHeight * 0.7 : 140);
@@ -78,7 +93,7 @@ export default function Header() {
             {label}
           </Link>
         ))}
-        <a href="#contact" style={{ color: color.blueInk }}>
+        <a href="#contact" onClick={visitContact} style={{ color: color.blueInk }}>
           Contact
         </a>
       </div>

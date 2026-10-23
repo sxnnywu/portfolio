@@ -1,0 +1,138 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.role {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 18px;
+  padding: 30px 0;
+  border-bottom: 1px solid rgba(42, 42, 36, 0.12);
+  scroll-margin-top: 110px;
+}
+
+.role:first-child {
+  padding-top: 4px;
+}
+
+.role:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(42, 42, 36, 0.045);
+  color: #4a463c;
+  font-family: var(--font-schibsted), sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.details {
+  min-width: 0;
+}
+
+.logoStack {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.logoStack img {
+  position: absolute;
+  border: 2px solid #fdfaf1;
+  border-radius: 7px !important;
+  background: #fdfaf1;
+  box-shadow: 0 1px 3px rgba(17, 40, 58, 0.12);
+}
+
+.logoStack img:nth-child(1) { left: 0; top: 0; }
+.logoStack img:nth-child(2) { left: 9px; top: 9px; }
+.logoStack img:nth-child(3) { left: 18px; top: 18px; }
+
+.title {
+  margin: 0;
+  font-family: var(--font-newsreader), serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: #11283a;
+}
+
+.company {
+  margin: 4px 0 0;
+  font-family: var(--font-schibsted), sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #3d3a32;
+}
+
+.meta {
+  margin: 3px 0 0;
+  font-family: var(--font-schibsted), sans-serif;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #8a8375;
+}
+
+.meta span {
+  margin: 0 3px;
+}
+
+.bullets {
+  margin: 14px 0 0;
+  padding-left: 16px;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  list-style: disc outside;
+  color: #3d3a32;
+  font-family: var(--font-schibsted), sans-serif;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.bullets em {
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .role {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 12px;
+    padding: 26px 0;
+  }
+
+  .logo,
+  .logo img {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .logoStack {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logoStack img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .logoStack img:nth-child(2) { left: 6px; top: 6px; }
+  .logoStack img:nth-child(3) { left: 12px; top: 12px; }
+
+  .title {
+    font-size: 22px;
+  }
+}

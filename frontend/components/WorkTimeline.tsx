@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
 import { highlightMetrics } from "@/lib/highlight";
-import { color, font, layout, rule, skyTint } from "@/lib/tokens";
+import { color, font, layout } from "@/lib/tokens";
 import { disciplines, roleSlug, roles, type Discipline } from "@/lib/data";
+import styles from "./WorkTimeline.module.css";
 
 const FILTER_BASE = {
   fontFamily: font.sans,
@@ -45,7 +46,6 @@ function FilterButton({
 }
 
 export default function WorkTimeline() {
-  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set());
   const [selected, setSelected] = useState<Set<Discipline>>(new Set());
 
   // Read once on mount rather than through useSearchParams, which would opt the
@@ -111,165 +111,30 @@ export default function WorkTimeline() {
         <div
           data-filter-list
           key={[...selected].sort().join(",") || "all"}
-          style={{ position: "relative", display: "flex", flexDirection: "column", paddingLeft: 34 }}
+          className={styles.list}
         >
-          <div
-            style={{
-              position: "absolute",
-              left: 5,
-              top: 14,
-              bottom: 14,
-              width: 1,
-              background: rule.statBand,
-            }}
-          />
-          {visible.map((role, i) => (
-            <div
+          {visible.map((role) => (
+            <article
               key={`${role.title}-${role.company}`}
               id={roleSlug(role.company)}
-              style={{
-                position: "relative",
-                // Clears the fixed header when linked to directly.
-                scrollMarginTop: 96,
-                padding: "0 0 46px",
-                borderBottom: i === visible.length - 1 ? `1px solid ${rule.hairline}` : "none",
-              }}
+              aria-labelledby={`${roleSlug(role.company)}-title`}
+              className={styles.role}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  left: -34,
-                  top: 6,
-                  width: 11,
-                  height: 11,
-                  borderRadius: "50%",
-                  background: color.paper,
-                  border: `1.5px solid ${color.blueInk}`,
-                }}
-              />
-              <div style={{ display: "flex", alignItems: "baseline", gap: 14, flexWrap: "wrap" }}>
-                <span
-                  style={{
-                    fontFamily: font.serif,
-                    fontSize: "clamp(20px,2vw,26px)",
-                    fontWeight: 300,
-                    lineHeight: 1.2,
-                    color: color.inkDeepSky,
-                  }}
-                >
-                  {role.title}
-                </span>
-                <span
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 7,
-                    fontFamily: font.serif,
-                    fontStyle: "italic",
-                    fontSize: 19,
-                    fontWeight: 300,
-                    color: color.skyInkLight,
-                  }}
-                >
-                  {role.logo && <Logo src={role.logo} />}
-                  <span>@&nbsp;{role.company}</span>
-                </span>
-                <span
-                  data-role-dates
-                  style={{
-                    fontFamily: font.serif,
-                    fontStyle: "normal",
-                    fontSize: 14.5,
-                    lineHeight: 1.5,
-                    color: color.skyInkLight,
-                    marginLeft: "auto",
-                    textAlign: "right",
-                  }}
-                >
-                  {role.dates}
-                  <br />
-                  {role.location}
-                </span>
+              <div className={role.logos ? styles.logoStack : styles.logo} aria-hidden="true">
+                {role.logos ? role.logos.map((src) => <Logo key={src} src={src} size={30} />)
+                  : role.logo ? <Logo src={role.logo} size={48} /> : <span>{role.company[0]}</span>}
               </div>
-
-              <div style={{ marginTop: -4, display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {role.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    style={{
-                      padding: "4px 11px",
-                      borderRadius: 999,
-                      background: skyTint(0.28),
-                      fontSize: 10.5,
-                      letterSpacing: ".16em",
-                      textTransform: "uppercase",
-                      color: color.skyInkLight,
-                    }}
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div className={styles.details}>
+                <h2 id={`${roleSlug(role.company)}-title`} className={styles.title}>{role.title}</h2>
+                <p className={styles.company}>{role.company}</p>
+                <p className={styles.meta}>{role.dates} <span aria-hidden="true">·</span> {role.location}</p>
+                <ul id={`${roleSlug(role.company)}-bullets`} className={styles.bullets}>
+                  {role.bullets.map((bullet) => (
+                    <li key={bullet}>{highlightMetrics(bullet)}</li>
+                  ))}
+                </ul>
               </div>
-
-              <div
-                id={`${roleSlug(role.company)}-preview`}
-                className={role.summary ? "experience-details" : undefined}
-                data-expanded={!role.summary || !expandedRoles.has(role.company)}
-                aria-hidden={!!role.summary && expandedRoles.has(role.company)}
-                inert={!!role.summary && expandedRoles.has(role.company)}
-              >
-                <div className="experience-details-inner">
-                  <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
-                    <li>{highlightMetrics(role.summary ?? role.bullets[0])}</li>
-                  </ul>
-                </div>
-              </div>
-              {role.bullets.length > (role.summary ? 0 : 1) && (
-                <div
-                  id={`${roleSlug(role.company)}-bullets`}
-                  className="experience-details"
-                  data-expanded={expandedRoles.has(role.company)}
-                  aria-hidden={!expandedRoles.has(role.company)}
-                  inert={!expandedRoles.has(role.company)}
-                >
-                  <div className="experience-details-inner">
-                    <ul className="experience-bullets" style={{ color: color.body, fontFamily: font.serif }}>
-                      {role.bullets.slice(role.summary ? 0 : 1).map((bullet) => (
-                        <li key={bullet}>{highlightMetrics(bullet)}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              )}
-              {role.bullets.length > (role.summary ? 0 : 1) && (
-                <button
-                  type="button"
-                  aria-expanded={expandedRoles.has(role.company)}
-                  className="experience-toggle"
-                  aria-controls={`${roleSlug(role.company)}-preview ${roleSlug(role.company)}-bullets`}
-                  aria-label={`${expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`} about ${role.company}`}
-                  onClick={() => setExpandedRoles((previous) => {
-                    const next = new Set(previous);
-                    if (next.has(role.company)) next.delete(role.company);
-                    else next.add(role.company);
-                    return next;
-                  })}
-                  style={{
-                    marginTop: 10,
-                    padding: "6px 0",
-                    background: "transparent",
-                    border: 0,
-                    fontFamily: font.sans,
-                    fontSize: 12,
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    textUnderlineOffset: 3,
-                  }}
-                >
-                  {expandedRoles.has(role.company) ? "Show less" : `Show ${role.bullets.length - 1} more`}
-                </button>
-              )}
-            </div>
+            </article>
           ))}
         </div>
       </div>

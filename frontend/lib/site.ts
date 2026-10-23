@@ -7,6 +7,5 @@ export const ROUTES = [
   { path: "/work", priority: 0.9 },
   { path: "/projects", priority: 0.9 },
   { path: "/content", priority: 0.8 },
-  { path: "/story", priority: 0.7 },
   { path: "/awards", priority: 0.6 },
 ] as const;
