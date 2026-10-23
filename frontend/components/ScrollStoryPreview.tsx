@@ -181,7 +181,7 @@ export default function ScrollStoryPreview() {
                 Hey, I&apos;m <span className={styles.signature}>Sunny</span>
               </Typed>
               <Typed as="p" className={styles.tagline} text={heroTagline} delay={sequenceEnd(heroHeadline.length)}>
-                a <em>theatre kid</em> with a GitHub
+                a <em>theatre kid</em> with a <a href="https://github.com/sxnnywu" target="_blank" rel="noopener noreferrer" className={styles.githubLink}>GitHub</a>
               </Typed>
               <div className={styles.roles}><HeroRoles delay={sequenceEnd(heroHeadline.length, heroTagline.length)} /></div>
               <div className={styles.cta}>

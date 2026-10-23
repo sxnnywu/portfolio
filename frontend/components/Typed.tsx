@@ -24,18 +24,20 @@ export function afterTyping(...lengths: number[]) {
  */
 function typeCharacters(node: ReactNode, state: { index: number }, step: number, start: number): ReactNode {
   if (typeof node === "string") {
-    return [...node].map((character) => {
+    const characters = [...node].map((character) => {
       const delay = start + state.index++ * step;
       return (
         <span
           key={delay}
           className="oro-ch"
+          aria-hidden="true"
           style={{ animationDelay: `${delay}ms` } as CSSProperties}
         >
           {character}
         </span>
       );
     });
+    return <><span className="oro-sr-only">{node}</span>{characters}</>;
   }
   if (Array.isArray(node)) {
     return Children.map(node, (child) => typeCharacters(child, state, step, start));
@@ -50,7 +52,9 @@ function typeCharacters(node: ReactNode, state: { index: number }, step: number,
  * Types text out one whole character at a time. Every character is in the DOM
  * from the start and only its visibility flips, so the line never reflows and
  * a centred heading cannot shift. `text` is the plain-text copy, used for the
- * timing and for the accessible name; `children` carries the styled version.
+ * timing; `children` carries the styled version and accessible text. Text
+ * chunks remain readable while individual visual characters stay hidden from
+ * assistive tech, so links inside a typed line remain accessible.
  */
 export default function Typed({
   as: Tag = "div",
@@ -72,8 +76,7 @@ export default function Typed({
 
   return (
     <Tag className={className} style={{ ...style, "--type-step": `${step}ms` } as CSSProperties}>
-      <span className="oro-sr-only">{text}</span>
-      <span aria-hidden="true" data-typed>
+      <span data-typed>
         {typeCharacters(children, { index: 0 }, step, delay)}
       </span>
     </Tag>

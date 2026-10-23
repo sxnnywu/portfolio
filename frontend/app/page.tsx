@@ -108,7 +108,7 @@ function Hero() {
             color: color.inkDeepSky,
           }}
         >
-          a <em>theatre kid</em> with a GitHub
+          a <em>theatre kid</em> with a <a href="https://github.com/sxnnywu" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "underline", textDecorationThickness: 1, textUnderlineOffset: ".14em" }}>GitHub</a>
         </Typed>
         <HeroRoles delay={sequenceEnd(heroHeadline.length, heroTagline.length)} />
         <div

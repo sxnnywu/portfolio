@@ -80,7 +80,7 @@ export default function Sun({ size = 116 }: { size?: number }) {
         transition: "transform .5s cubic-bezier(.34,1.4,.5,1)",
       }}
     >
-      <svg viewBox="0 0 240 240" style={{ width: "100%", height: "100%", overflow: "visible" }} aria-hidden>
+      <svg viewBox="0 0 240 240" style={{ width: "100%", height: "100%", overflow: "visible", filter: "drop-shadow(0 4px 6px rgba(96,70,20,.22))" }} aria-hidden>
         <g filter="url(#sunTex)">
           <path d={BODY_PATH} fill="#f7b500" />
           <path d={BODY_PATH} fill="none" stroke="#e09600" strokeWidth={5} opacity={0.5} />

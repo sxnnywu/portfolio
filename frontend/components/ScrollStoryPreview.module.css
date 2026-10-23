@@ -191,6 +191,13 @@
   margin-top: 0;
 }
 
+.githubLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+
 .cta {
   margin-top: 32px;
 }
@@ -259,7 +266,7 @@
   width: 100%;
   height: auto;
   border-radius: 1px;
-  transform: scale(1.03);
+  transform: scale(1.05);
   transform-origin: 50% 40%;
 }
 
