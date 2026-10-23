@@ -1,0 +1,35 @@
+frontend/components/JourneyIndex.tsx
+  s_e7cc0136fd1ff6::t_fc85d5dd2fc367 42
+  s_e7cc0136fd1ff6::t_a3b5dfec93426b 1-41,43-50
+frontend/components/LaunchpadChapter.module.css
+  s_e7cc0136fd1ff6::t_e2a21b8d40e5ff 14,201
+frontend/components/Bloom.tsx
+  s_e7cc0136fd1ff6::t_e2a21b8d40e5ff 21-25
+frontend/components/JourneyIndex.module.css
+  s_e7cc0136fd1ff6::t_fc85d5dd2fc367 82,85-88,100,115,125-132
+  s_e7cc0136fd1ff6::t_a3b5dfec93426b 1-6,8-28,30-43,45-53,55-56,58-81,83-84,89-99,101-112,114,116-124,133-134
+  s_e7cc0136fd1ff6::t_e2a21b8d40e5ff 7,29,113
+  s_e7cc0136fd1ff6::t_644af67ffc06ad 44,54,57
+frontend/components/ScrollStoryPreview.module.css
+  s_e7cc0136fd1ff6::t_a3b5dfec93426b 49-52,562-563
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_e2a21b8d40e5ff 216-217,311-314
+  s_e7cc0136fd1ff6::t_fc85d5dd2fc367 574,576
+  s_e7cc0136fd1ff6::t_644af67ffc06ad 23,76,109,133,178-179,181,213-215,254,276-277,307-310,315-330,573,575,577-596,613,616,621-623,631-633,721
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "20b7fca972ad66539df85cd11155bdb81b80f278",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
