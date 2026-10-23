@@ -1,0 +1,57 @@
+frontend/app/content/page.tsx
+  s_41c6f71248ee8d::t_063707f8f6c475 74
+frontend/app/page.tsx
+  s_41c6f71248ee8d::t_34a095a4655ddf 8
+frontend/app/story/page.tsx
+  s_b9ce6ecc27f946::t_7a281044ee544f 1,4
+frontend/app/work/page.tsx
+  s_e1ba16e594d1fd::t_64cf63aea3882a 10
+frontend/components/ContactSection.tsx
+  s_41c6f71248ee8d::t_62209e582aa2b3 8,10,14,16-17,68,71-72,93
+frontend/components/Header.tsx
+  s_e1ba16e594d1fd::t_fc7c65d02a3170 5,7,20-34,96
+frontend/components/SkyBand.tsx
+  s_e1ba16e594d1fd::t_60bc42a0859969 13,15,63,73-74
+frontend/components/WorkTimeline.module.css
+  s_e1ba16e594d1fd::t_fa4c86ae912df3 1-138
+frontend/components/WorkTimeline.tsx
+  s_e1ba16e594d1fd::t_712ddc4e4c78a6 6,8,114,116-117,120-121,123-125,127-135,137
+frontend/lib/data.ts
+  s_e1ba16e594d1fd::t_a079773909de9a 76-77,88-89,94,101,103,107,110,112,126-127,131-132,137,152,164,166
+frontend/lib/highlight.tsx
+  s_e1ba16e594d1fd::t_1840f8f7adff3f 2,8,10
+frontend/lib/scrollToContact.ts
+  s_e1ba16e594d1fd::t_0d52dc66769099 1-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2324e048f40dd64caf0fd607f2069b4cc31bdc73",
+  "prompts": {},
+  "sessions": {
+    "s_41c6f71248ee8d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16a88-198c-72c3-80cf-c4f35a4e8f00",
+        "model": "unknown"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    },
+    "s_b9ce6ecc27f946": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16a6a-8694-7c63-9566-4b5eb1d6f062",
+        "model": "unknown"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    },
+    "s_e1ba16e594d1fd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1694a-92e8-7bd1-bf6f-87e2e27eb7e2",
+        "model": "unknown"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
