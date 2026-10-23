@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Cloud from "@/components/Cloud";
 import ContactSection from "@/components/ContactSection";
 import Sun, { SunFilterDefs } from "@/components/Sun";
@@ -166,6 +167,31 @@ function Lede() {
         textAlign: "center",
       }}
     >
+      <div
+        data-reveal
+        style={{ width: "clamp(144px,14vw,168px)", margin: "0 auto 36px" }}
+      >
+        <figure
+          style={{
+            margin: 0,
+            padding: "8px 8px 26px",
+            background: "#fffdf6",
+            borderRadius: 2,
+            transform: "rotate(-5deg)",
+            boxShadow:
+              "0 1px 2px rgba(42,42,36,.12), 0 14px 28px -16px rgba(60,50,30,.32)",
+          }}
+        >
+          <Image
+            src="/assets/sunny-portrait.jpg"
+            alt="Sunny Wu"
+            width={747}
+            height={887}
+            sizes="(max-width: 1028px) 128px, (max-width: 1200px) 14vw, 152px"
+            style={{ display: "block", width: "100%", height: "auto" }}
+          />
+        </figure>
+      </div>
       <div
         data-reveal
         style={{

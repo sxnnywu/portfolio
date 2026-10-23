@@ -53,11 +53,15 @@ function typeCharacters(node: ReactNode, state: { index: number }, step: number,
  * timing and for the accessible name; `children` carries the styled version.
  */
 export default function Typed({
+  as: Tag = "div",
+  className,
   text,
   delay = 0,
   style,
   children,
 }: {
+  as?: "div" | "h1" | "p";
+  className?: string;
   text: string;
   delay?: number;
   style?: CSSProperties;
@@ -67,11 +71,11 @@ export default function Typed({
   const step = typingDuration(length) / length;
 
   return (
-    <div style={{ ...style, "--type-step": `${step}ms` } as CSSProperties}>
+    <Tag className={className} style={{ ...style, "--type-step": `${step}ms` } as CSSProperties}>
       <span className="oro-sr-only">{text}</span>
       <span aria-hidden="true" data-typed>
         {typeCharacters(children, { index: 0 }, step, delay)}
       </span>
-    </div>
+    </Tag>
   );
 }
