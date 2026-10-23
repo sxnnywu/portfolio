@@ -714,11 +714,11 @@ img {
   overflow: hidden;
 }
 
-[data-phone-screen] video,
 [data-phone-screen] img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fff;
   display: block;
   transition: opacity 0.45s ease;
 }

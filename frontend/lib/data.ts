@@ -442,8 +442,7 @@ export interface ContentPhone {
   platform: string;
   count: string;
   topics: string;
-  video: string;
-  poster: string;
+  screenshot: { src: string; width: number; height: number };
   /** Resting tilt in degrees; the pair lean away from each other. */
   rotate: number;
   /** Omitted until the real profile URL is known. */
@@ -455,8 +454,7 @@ export const contentPhones: ContentPhone[] = [
     platform: "LinkedIn",
     count: "11k followers",
     topics: "student life, productivity, early career",
-    video: "/assets/content/linkedin-scroll.mp4",
-    poster: "/assets/content/linkedin-poster.jpg",
+    screenshot: { src: "/assets/content/linkedin-screenshot.png", width: 1170, height: 2532 },
     rotate: -2,
     profile: "https://www.linkedin.com/in/sunny-wu-dev/",
   },
@@ -464,8 +462,7 @@ export const contentPhones: ContentPhone[] = [
     platform: "Instagram",
     count: "3k followers",
     topics: "fashion, gratitude & mindset, early career",
-    video: "/assets/content/insta-scroll.mp4",
-    poster: "/assets/content/insta-poster.jpg",
+    screenshot: { src: "/assets/content/instagram-screenshot.png", width: 1170, height: 2532 },
     rotate: 2.4,
     profile: "https://www.instagram.com/imsunnywu/",
   },

@@ -1,5 +1,5 @@
-:global(body):has(.page) :global([data-site-header]),
-:global(body):has(.page) :global([data-like-button]) {
+:global(body):has(.page:not(.homepage)) :global([data-site-header]),
+:global(body):has(.page:not(.homepage)) :global([data-like-button]) {
   display: none !important;
 }
 
@@ -43,7 +43,7 @@
 
 .runway {
   position: relative;
-  height: 500svh;
+  height: 4380svh;
 }
 
 .stage {
@@ -230,12 +230,26 @@
   justify-content: center;
   padding: 100px 6vw 50px;
   pointer-events: none;
+  transform: scale(var(--journey-scale, 1)) rotate(var(--journey-turn, 0deg)) translate3d(var(--journey-x, 0px), var(--journey-y, 0px), 0);
+  transform-origin: 50% calc(50% + 25px);
+  will-change: transform;
 }
 
 .introInner {
+  position: relative;
   width: 100%;
   max-width: 1080px;
   text-align: center;
+}
+
+.journeyWorld {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  transform-origin: 0 0;
+  will-change: transform;
 }
 
 .photoAnchor {
@@ -453,6 +467,11 @@
 }
 
 @media (max-width: 359px) {
+  :global(body):has(.homepage) :global([data-site-header]) > div {
+    gap: 12px !important;
+    font-size: 12px !important;
+  }
+
   .greeting {
     font-size: 52px;
   }
@@ -574,6 +593,16 @@
     inset: auto;
     display: block;
     padding: 80px 6vw 120px;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .journeyWorld {
+    position: relative;
+    visibility: visible;
+    padding: 50px 6vw 100px;
+    transform: none !important;
+    will-change: auto;
   }
 
   .introInner {
@@ -601,10 +630,13 @@
   .farClouds,
   .midClouds,
   .nearClouds {
+    z-index: 1;
     opacity: 0.25;
   }
 
   .sky {
+    bottom: auto;
+    height: 100svh;
     opacity: 0.8;
     will-change: auto;
   }
