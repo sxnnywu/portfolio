@@ -8,14 +8,14 @@ import Logo from "@/components/Logo";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import Bloom from "@/components/Bloom";
 import StatBand from "@/components/StatBand";
+import HeroRoles from "@/components/HeroRoles";
+import HeroCTA from "@/components/HeroCTA";
 import { education, heroHeadline, heroTagline, navRows } from "@/lib/data";
 import {
   color,
-  emphasis,
   font,
   gradient,
   layout,
-  pill,
   skyTint,
   type,
 } from "@/lib/tokens";
@@ -67,10 +67,12 @@ function Hero() {
       </div>
 
       <div
+        data-hero-copy
         data-speed="0.55"
         data-fade="1"
         style={{
           position: "absolute",
+          zIndex: 1,
           left: 0,
           right: 0,
           top: "36%",
@@ -96,21 +98,24 @@ function Hero() {
           text={heroTagline}
           delay={sequenceEnd(heroHeadline.length)}
           style={{
-            marginTop: 20,
-            fontSize: "clamp(19px,1.8vw,25px)",
-            color: color.skyInk,
+            marginTop: 24,
+            fontFamily: font.serif,
+            fontWeight: 300,
+            fontSize: "clamp(28px,3.2vw,42px)",
+            lineHeight: 1.18,
+            letterSpacing: "-.015em",
+            color: color.inkDeepSky,
           }}
         >
-          An <span style={emphasis(1.18)}>engineer</span> who speaks{" "}
-          <span style={emphasis(1.18)}>business</span>
+          a <em>theatre kid</em> with a GitHub
         </Typed>
-        <a
-          href="#work"
+        <HeroRoles delay={sequenceEnd(heroHeadline.length, heroTagline.length)} />
+        <div
           data-after-type
-          style={{ ...pill.hero, marginTop: 42, ...afterTyping(heroHeadline.length, heroTagline.length) }}
+          style={{ marginTop: 32, ...afterTyping(heroHeadline.length, heroTagline.length) }}
         >
-          See what I&apos;ve built &rarr;
-        </a>
+          <HeroCTA />
+        </div>
       </div>
 
       <div

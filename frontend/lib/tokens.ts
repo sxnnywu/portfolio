@@ -48,7 +48,7 @@ export const type = {
   heroDisplay: {
     fontFamily: font.serif,
     fontWeight: 200,
-    fontSize: "clamp(56px,7vw,104px)",
+    fontSize: "clamp(60px,8vw,116px)",
     lineHeight: 1.08,
     letterSpacing: "-.024em",
     color: color.inkDeepSky,

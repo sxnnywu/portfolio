@@ -1,6 +1,19 @@
 /** The hero's two typed lines. Shared so the like button can wait for them. */
 export const heroHeadline = "Hey, I'm Sunny";
-export const heroTagline = "An engineer who speaks business";
+export const heroTagline = "a theatre kid with a GitHub";
+
+export const heroRoles = [
+  "a content creator",
+  "a full-stack engineer",
+  "a double degree student",
+  "an AI agent wrangler",
+  "a storyteller",
+  "an entrepreneur",
+  "hackathon obsessed",
+  "an event host",
+  "a video editor",
+  "probably debugging",
+] as const;
 
 export const socials = [
   { label: "GitHub", href: "https://github.com/sxnnywu" },

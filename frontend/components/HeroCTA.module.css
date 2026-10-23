@@ -1,0 +1,179 @@
+.cta {
+  --pull-x: 0px;
+  --pull-y: 0px;
+  --pull-tilt: 0deg;
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  border: 0;
+  background: transparent;
+  color: var(--cta-ink);
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* The site dims links on hover; this one keeps the watercolor and ink crisp. */
+.cta:hover,
+.cta:active {
+  opacity: 1;
+}
+
+.surface {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--cta-background);
+  box-shadow: var(--cta-shadow);
+  transition: transform 460ms cubic-bezier(0.2, 1.65, 0.4, 1);
+  pointer-events: none;
+}
+
+.label {
+  position: relative;
+  display: inline-block;
+  transition: transform 460ms cubic-bezier(0.2, 1.65, 0.4, 1);
+  pointer-events: none;
+}
+
+/* Deform the surface and ink without moving the anchor's hit area. */
+.cta[data-active="true"] .surface {
+  transform: translate(var(--pull-x), var(--pull-y)) rotate(var(--pull-tilt)) scale(1.065, 0.965);
+}
+
+.cta[data-active="true"] .label {
+  transform: translate(calc(var(--pull-x) * 0.34), calc(var(--pull-y) * 0.34));
+}
+
+.cta[data-pressed="true"] .surface {
+  transform: translateY(3px) scale(1.11, 0.8);
+  transition-duration: 90ms;
+}
+
+.cta[data-pressed="true"] .label {
+  transform: translateY(2px) scale(0.98);
+}
+
+.arrowSlot {
+  position: relative;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: 2px;
+  vertical-align: -2px;
+}
+
+.arrow {
+  display: block;
+  transition: opacity 180ms ease;
+}
+
+.doodleArrow {
+  position: absolute;
+  left: -2px;
+  top: -5px;
+  overflow: visible;
+  color: var(--cta-blue);
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.doodleArrow path {
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.cta[data-active="true"] .arrow {
+  opacity: 0;
+}
+
+.cta[data-active="true"] .doodleArrow {
+  opacity: 1;
+  animation: doodleSpring 850ms both;
+}
+
+.cta[data-active="true"] .doodleStem {
+  animation: doodleDraw 500ms ease both;
+}
+
+.cta[data-active="true"] .doodleTip {
+  animation: doodleDraw 250ms 300ms ease both;
+}
+
+@keyframes doodleDraw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes doodleSpring {
+  0% { transform: translateX(-3px) scaleX(0.86); }
+  52% { transform: translateX(4px) scaleX(1.12); }
+  76% { transform: translateX(1px) scaleX(0.97); }
+  100% { transform: translateX(2px) scaleX(1); }
+}
+
+/* Only the explicit playground Replay synthesizes a press. */
+.cta[data-replaying="true"] .surface {
+  animation: squishyPreview 1350ms both;
+}
+
+@keyframes squishyPreview {
+  0% { transform: none; }
+  24% { transform: translate(8px, -1px) rotate(1deg) scale(1.075, 0.95); }
+  42% { transform: translateY(3px) scale(1.11, 0.8); }
+  65% { transform: translateY(-2px) scale(0.97, 1.08); }
+  83% { transform: scale(1.025, 0.985); }
+  100% { transform: none; }
+}
+
+/* A scroll gesture cancels immediately, rather than springing during the pan. */
+.cta[data-gesture="true"] .surface,
+.cta[data-gesture="true"] .label {
+  transform: none !important;
+  transition: none;
+  animation: none;
+}
+
+.cta[data-gesture="true"] .doodleArrow {
+  opacity: 0;
+  transition: none;
+  animation: none;
+}
+
+.cta[data-gesture="true"] .doodleArrow path {
+  animation: none;
+}
+
+.cta[data-gesture="true"] .arrow {
+  opacity: 1;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta,
+  .cta * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .cta .surface,
+  .cta .label {
+    transform: none !important;
+  }
+
+  .cta .arrow {
+    opacity: 1 !important;
+  }
+
+  .cta .doodleArrow {
+    display: none;
+  }
+}
