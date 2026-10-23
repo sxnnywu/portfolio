@@ -1,0 +1,32 @@
+frontend/app/page.tsx
+  s_e7cc0136fd1ff6::t_234cf76147cabf 3,170-194
+frontend/components/ScrollStoryPreview.module.css
+  s_e7cc0136fd1ff6::t_24f9d44553f68d 267-268,524,546
+  s_e7cc0136fd1ff6::t_95499148082b0a 1-266,269-523,525-545,547-615
+frontend/app/motion-playground/page.tsx
+  s_e7cc0136fd1ff6::t_054873101ca202 2,10
+  s_e7cc0136fd1ff6::t_e5c30240676033 1,3-9,11
+frontend/components/Typed.tsx
+  s_e7cc0136fd1ff6::t_fc60b6b089c6c4 56-57,63-64,74,79
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_054873101ca202 1-10,13-66,72-86,88,90,92-133,135-179,190-226,230-232,234-241
+  s_e7cc0136fd1ff6::t_fc60b6b089c6c4 11-12,180-189,227-229
+  s_e7cc0136fd1ff6::t_d5c7a2ef4d2013 67-71,87,89,91
+  s_e7cc0136fd1ff6::t_95870437fae42a 134,233
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "63a18774606cdab876e054cab017215666cb6714",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
