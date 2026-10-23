@@ -69,7 +69,7 @@ export default function HeroRoles({ delay }: { delay: number }) {
             justifyItems: "center",
             textAlign: "center",
             whiteSpace: "nowrap",
-            color: color.skyInk,
+            color: color.blueInk,
           }}
         >
           {heroRoles.map((role, index) => (

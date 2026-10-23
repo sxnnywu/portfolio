@@ -64,11 +64,11 @@ export default function ScrollStoryPreview() {
       const p = clamp((window.scrollY - start) / travel);
       const still = linear.matches;
       const leave = still ? 0 : ease(p, 0.015, 0.25);
-      // Keep the original entrance, then carry the whole cloud bank upward.
-      const cloudEntry = Math.min(p, 0.12);
-      const closing = still ? 0 : ease(cloudEntry, 0, 0.12) * (1 - ease(cloudEntry, 0.12, 0.3));
-      const opening = still ? 0 : ease(cloudEntry, 0.11, 0.4);
-      const cloudRise = still ? 0 : ease(p, 0.12, 0.4) * (height + 260);
+      // One diagonal path and speed curve, with no handoff between cloud phases.
+      const cloudTravel = still ? 0 : ease(p, 0, 0.4);
+      const farTravel = cloudTravel * Math.max(300, height * 0.75);
+      const midTravel = cloudTravel * Math.max(520, height * 0.85);
+      const nearTravel = cloudTravel * (height + 350);
       const arrival = still ? 1 : ease(p, 0.16, 0.34);
       const placement = still ? 1 : ease(p, 0.36, 0.57);
       const sunlight = still ? 0 : ease(p, 0.04, 0.6);
@@ -83,12 +83,12 @@ export default function ScrollStoryPreview() {
         "--hero-blur": `${leave * 3}px`,
         "--cue-opacity": still ? 0 : 1 - ease(p, 0.005, 0.085),
         "--cloud-opacity": still ? 0.4 : 1 - ease(p, 0.36, 0.55),
-        "--far-x": `${-closing * 12 + opening * (width * 0.35 + 380)}px`,
-        "--far-y": `${-opening * height * 0.1 - cloudRise}px`,
-        "--mid-x": `${-closing * 28 + opening * (width * 0.55 + 380)}px`,
-        "--mid-y": `${-closing * height * 0.06 - opening * height * 0.12 - cloudRise}px`,
-        "--near-x": `${-closing * 55 + opening * (width * 0.65 + 520)}px`,
-        "--near-y": `${(1 - closing) * 90 - closing * height * 0.25 - opening * height * 0.12 - cloudRise}px`,
+        "--far-x": `${-farTravel * 0.18}px`,
+        "--far-y": `${-farTravel}px`,
+        "--mid-x": `${-midTravel * 0.18}px`,
+        "--mid-y": `${-midTravel}px`,
+        "--near-x": `${-nearTravel * 0.18}px`,
+        "--near-y": `${90 - nearTravel}px`,
         "--sun-x": `${sunlight * sunEndX + Math.sin(sunlight * Math.PI) * width * 0.19}px`,
         "--sun-y": `${sunlight * sunEndY - Math.sin(sunlight * Math.PI) * height * 0.05}px`,
         "--sun-turn": `${sunlight * 115}deg`,
@@ -193,7 +193,9 @@ export default function ScrollStoryPreview() {
             <div className={styles.introInner}>
               <div ref={photoRef} className={styles.photoAnchor}>
                 <figure className={styles.polaroid}>
-                  <Image className={styles.portrait} src="/assets/sunny-portrait.jpg" alt="Sunny Wu" width={747} height={887} sizes="280px" />
+                  <div className={styles.photoWindow}>
+                    <Image className={styles.portrait} src="/assets/sunny-portrait.jpg" alt="Sunny Wu" width={747} height={887} sizes="280px" />
+                  </div>
                 </figure>
               </div>
               <p className={styles.story}>

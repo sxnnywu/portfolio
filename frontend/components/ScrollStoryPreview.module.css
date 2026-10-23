@@ -249,11 +249,18 @@
   will-change: transform, opacity;
 }
 
+.photoWindow {
+  overflow: hidden;
+  border-radius: 1px;
+}
+
 .portrait {
   display: block;
   width: 100%;
   height: auto;
   border-radius: 1px;
+  transform: scale(1.03);
+  transform-origin: 50% 40%;
 }
 
 .story {
