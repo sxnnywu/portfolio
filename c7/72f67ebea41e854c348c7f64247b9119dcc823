@@ -1,0 +1,40 @@
+frontend/components/LaunchpadChapter.module.css
+  s_e7cc0136fd1ff6::t_552614324bcda9 14
+frontend/lib/storyScrollPerformance.test.mjs
+  s_e7cc0136fd1ff6::t_93c733f563ab77 35,75,77,96,105-106
+  s_e7cc0136fd1ff6::t_3ee649f5dd33e8 247-367,370-435
+  s_e7cc0136fd1ff6::t_4f31d87046c4f0 368-369
+frontend/components/EndingChapter.module.css
+  s_e7cc0136fd1ff6::t_ad9d48e83c70cb 1-78,81-107,110-127
+  s_e7cc0136fd1ff6::t_0acfb76fd8463a 79,108-109
+  s_e7cc0136fd1ff6::t_78d0817e5a834c 80
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_78d0817e5a834c 155
+  s_e7cc0136fd1ff6::t_9c90cb3ef976f9 467-482,485,494,540,546,569,580,582,594,596,707
+  s_e7cc0136fd1ff6::t_07447423776c13 23,82,117,146,150,152-154,165,184,251-252,254,258,293,296-298,367-373,415-419
+frontend/components/ScrollStoryPreview.module.css
+  s_e7cc0136fd1ff6::t_552614324bcda9 50,54
+frontend/components/EndingChapter.tsx
+  s_e7cc0136fd1ff6::t_9c90cb3ef976f9 35
+  s_e7cc0136fd1ff6::t_ad9d48e83c70cb 1-33,44-50
+  s_e7cc0136fd1ff6::t_0acfb76fd8463a 34,36-43
+frontend/lib/storyMeasurements.ts
+  s_e7cc0136fd1ff6::t_552614324bcda9 39,80,129,155,174,429-443,445-448,450-451,520
+  s_e7cc0136fd1ff6::t_2d349c8eef1459 444
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c772f67ebea41e854c348c7f64247b9119dcc823",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
