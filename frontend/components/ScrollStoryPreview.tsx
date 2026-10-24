@@ -20,6 +20,7 @@ import RocketChapter from "@/components/RocketChapter";
 import BlueprintChapter from "@/components/BlueprintChapter";
 import EventHostingChapter from "@/components/EventHostingChapter";
 import LaunchpadChapter from "@/components/LaunchpadChapter";
+import EndingChapter from "@/components/EndingChapter";
 import JourneyIndex from "@/components/JourneyIndex";
 import WatercolourWash from "@/components/WatercolourWash";
 import { education, heroHeadline, heroTagline, introBackground } from "@/lib/data";
@@ -78,6 +79,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
   const eventHostingGalleryRef = useRef<HTMLDivElement>(null);
   const launchpadChapterRef = useRef<HTMLElement>(null);
   const launchpadGalleryRef = useRef<HTMLDivElement>(null);
+  const endingChapterRef = useRef<HTMLElement>(null);
   const indexChapterRef = useRef<HTMLElement>(null);
   const contactStageRef = useRef<HTMLDivElement>(null);
 
@@ -112,6 +114,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     const eventHostingGallery = eventHostingGalleryRef.current;
     const launchpadChapter = launchpadChapterRef.current;
     const launchpadGallery = launchpadGalleryRef.current;
+    const endingChapter = endingChapterRef.current;
     const indexChapter = indexChapterRef.current;
     const contactStage = contactStageRef.current;
     const contactContent = contactStage?.querySelector<HTMLElement>("[data-contact-content]");
@@ -140,12 +143,16 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     let blueprintFrames: typeof cameraFrames = [];
     let eventHostingFrames: typeof cameraFrames = [];
     let launchpadFrames: typeof cameraFrames = [];
+    let endingFrames: typeof cameraFrames = [];
     let indexFrames: typeof cameraFrames = [];
     let chapterBounds: StoryMeasurements["chapterBounds"] = [];
     const writer = createStoryFrameWriter();
-    const chapters = [chapter, pinkChapter, hackathonChapter, universityChapter, creatorChapter, growthChapter, oroProjectChapter, rocketChapter, blueprintChapter, eventHostingChapter, launchpadChapter];
+    const chapters = [chapter, pinkChapter, hackathonChapter, universityChapter, creatorChapter, growthChapter, oroProjectChapter, rocketChapter, blueprintChapter, eventHostingChapter, launchpadChapter, ...(home && endingChapter ? [endingChapter] : [])];
     const chapterElements = new Set(chapters);
-    const chapterStarts = [4, 6.8, 10.4, 14.4, 17.6, 21.6, 24.8, 28.8, 32, 35.6, 39.2, 42.8];
+    const endingDuration = home && endingChapter ? 2.8 : 0;
+    const indexStart = 42.8 + endingDuration;
+    const contactStart = indexStart + 3.2;
+    const chapterStarts = [4, 6.8, 10.4, 14.4, 17.6, 21.6, 24.8, 28.8, 32, 35.6, 39.2, 42.8, ...(endingDuration ? [indexStart] : [])];
     const visibleChapters = new Set<HTMLElement>();
     const inner = intro.firstElementChild as HTMLElement;
     const sky = page.querySelector<HTMLElement>(`.${styles.sky}`);
@@ -155,7 +162,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     const midClouds = page.querySelector<HTMLElement>(`.${styles.midClouds}`);
     const nearClouds = page.querySelector<HTMLElement>(`.${styles.nearClouds}`);
     const wash = page.querySelector<HTMLElement>("[data-watercolour-wash]");
-    // Prepare the closing textures during Launchpad, before the index/contact transition.
+    // Prepare the closing textures one stop before the index/contact transition.
     const imagePreparer = createStoryImagePreparer(wash ? [...chapters, wash] : chapters);
     const polaroid = photo.firstElementChild as HTMLElement;
     const story = intro.querySelector<HTMLElement>(`.${styles.story}`);
@@ -174,6 +181,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       else if (key.startsWith("--rocket-")) owner = rocketChapter;
       else if (key.startsWith("--event-")) owner = eventHostingChapter;
       else if (key.startsWith("--launchpad-")) owner = launchpadChapter;
+      else if (key.startsWith("--ending-")) owner = endingChapter;
       else if (key === "--index-departure") owner = launchpadChapter;
       else if (key.startsWith("--index-")) owner = indexChapter;
       else if (key.startsWith("--wash-")) owner = wash;
@@ -240,12 +248,14 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       const blueprintProgress = still ? 1 : clamp((distance - height * 32) / (height * 3.6));
       const eventHostingProgress = still ? 1 : clamp((distance - height * 35.6) / (height * 3.6));
       const launchpadProgress = still ? 1 : clamp((distance - height * 39.2) / (height * 3.6));
-      const indexProgress = home && indexChapter ? clamp((distance - height * 42.8) / (height * 3.2)) : 0;
+      const endingProgress = endingDuration ? clamp((distance - height * 42.8) / (height * endingDuration)) : 0;
+      const indexProgress = home && indexChapter ? clamp((distance - height * indexStart) / (height * 3.2)) : 0;
       const indexOpen = still ? 1 : ease(indexProgress, 0.32, 0.86);
-      const contactProgress = hasContact && !still ? clamp((distance - height * 46) / (height * 2.2)) : 0;
+      const contactProgress = hasContact && !still ? clamp((distance - height * contactStart) / (height * 2.2)) : 0;
       const washDrift = still ? 0 : ease(contactProgress, 0.08, 0.72);
       const camera = still ? { x: 0, y: 0, z: 1, r: 0 }
         : indexProgress > 0 ? cameraAt(indexProgress, indexFrames)
+        : endingProgress > 0 ? cameraAt(endingProgress, endingFrames)
         : launchpadProgress > 0 ? cameraAt(launchpadProgress, launchpadFrames)
         : eventHostingProgress > 0 ? cameraAt(eventHostingProgress, eventHostingFrames)
         : blueprintProgress > 0 ? cameraAt(blueprintProgress, blueprintFrames)
@@ -280,10 +290,12 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
         const bounds = chapterBounds[index];
         const inView = bounds && Math.abs(bounds.x - camera.x) <= halfWidth + bounds.width / 2
           && Math.abs(bounds.y - camera.y) <= halfHeight + bounds.height / 2;
-        if (still || Math.abs(index - currentChapter) <= 1 || inView) visibleChapters.add(element);
+        if (element === endingChapter || still || Math.abs(index - currentChapter) <= 1 || inView) visibleChapters.add(element);
         // Inherit respects the world's initial hidden state; explicit visible
         // would let chapters show through while the hero is still on screen.
-        writer.style(element, "visibility", visibleChapters.has(element) ? "inherit" : "hidden");
+        // The small closing CTA stays keyboard-eligible like the index. Focus
+        // settles its camera synchronously, even before scrolling there.
+        if (element !== endingChapter) writer.style(element, "visibility", visibleChapters.has(element) ? "inherit" : "hidden");
       }
       imagePreparer.prepare(currentChapter, visibleChapters, still);
       const leave = still ? 0 : ease(p, 0.015, 0.25);
@@ -352,6 +364,13 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
         "--education-opacity": educationReveal,
         "--education-y": `${(1 - educationReveal) * 35}px`,
       };
+      if (endingChapter) {
+        values["--launchpad-departure"] = still ? 0 : ease(endingProgress, 0.12, 0.5);
+        values["--ending-heading"] = still ? 1 : ease(endingProgress, 0.24, 0.54);
+        values["--ending-description"] = still ? 1 : ease(endingProgress, 0.48, 0.68);
+        values["--ending-button"] = still ? 1 : ease(endingProgress, 0.6, 0.76);
+        values["--ending-departure"] = still ? 0 : ease(indexProgress, 0.12, 0.4);
+      }
       for (let i = 0; i < 3; i++) {
         values[`--clause-${i}`] = still ? 1 : ease(p, 0.48 + i * 0.065, 0.59 + i * 0.065);
         values[`--pink-result-${i}`] = still ? 1 : ease(pinkProgress, 0.63 + i * 0.07, 0.73 + i * 0.07);
@@ -393,7 +412,11 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       writer.attribute(rocketChapter, "aria-hidden", !still && (rocketProgress < 0.14 || blueprintProgress > 0.3));
       writer.attribute(blueprintChapter, "aria-hidden", !still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3));
       writer.attribute(eventHostingChapter, "aria-hidden", !still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3));
-      writer.attribute(launchpadChapter, "aria-hidden", !still && (launchpadProgress < 0.14 || indexProgress > 0.6));
+      writer.attribute(launchpadChapter, "aria-hidden", !still && (launchpadProgress < 0.14 || (endingDuration ? endingProgress > 0.5 : indexProgress > 0.6)));
+      if (endingChapter) {
+        writer.attribute(endingChapter, "aria-hidden", !still && (endingProgress < 0.24 || indexProgress > 0.4));
+        writer.inert(endingChapter, !still && indexProgress > 0.4);
+      }
       if (indexChapter) {
         writer.attribute(indexChapter, "aria-hidden", !still && (indexProgress < 0.3 || contactProgress > 0.6));
         writer.inert(indexChapter, !still && contactProgress > 0.6);
@@ -441,9 +464,25 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       window.scrollTo({ top: start + height * (24.8 + 4 * 0.94), behavior: "instant" });
       schedule();
     };
+    const visitEnding = () => {
+      if (!endingChapter || linear.matches) return;
+      window.scrollTo({ top: start + height * (42.8 + endingDuration * 0.9), behavior: "instant" });
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      renderFrame();
+    };
+    const focusEnding = (event: FocusEvent) => {
+      if (event.target instanceof Element && event.target.matches("a:focus-visible")) visitEnding();
+    };
+    const bridgeEndingFocus = (event: KeyboardEvent) => {
+      if (!endingChapter || !indexChapter || linear.matches || event.key !== "Tab" || !event.shiftKey) return;
+      if (event.target !== indexChapter.querySelector("a")) return;
+      event.preventDefault();
+      visitEnding();
+      endingChapter.querySelector<HTMLElement>("[data-ending-cta]")?.focus({ preventScroll: true });
+    };
     const visitIndex = (behavior: ScrollBehavior = "instant") => {
       if (!home || !indexChapter || linear.matches) return;
-      window.scrollTo({ top: start + height * (42.8 + 3.2 * 0.93), behavior });
+      window.scrollTo({ top: start + height * (indexStart + 3.2 * 0.93), behavior });
       // Settle the camera before the focused link is painted.
       if (behavior === "instant") {
         if (frame !== null) window.cancelAnimationFrame(frame);
@@ -452,7 +491,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     };
     const visitContact = (behavior: ScrollBehavior = "instant") => {
       if (!hasContact || !contactStage || linear.matches) return;
-      window.scrollTo({ top: start + height * (46 + 2.2 * 0.98), behavior });
+      window.scrollTo({ top: start + height * (contactStart + 2.2 * 0.98), behavior });
       if (behavior === "instant") {
         if (frame !== null) window.cancelAnimationFrame(frame);
         renderFrame();
@@ -498,13 +537,13 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       ({ start, travel, height, width, contactCloudHeight, photoCenter, introOverflow,
         sunEndX, sunEndY, cameraFrames, pinkFrames, hackathonFrames, universityFrames,
         creatorFrames, growthFrames, oroProjectFrames, rocketFrames, blueprintFrames,
-        eventHostingFrames, launchpadFrames, indexFrames, chapterBounds } = measureStory({
+        eventHostingFrames, launchpadFrames, endingFrames, indexFrames, chapterBounds } = measureStory({
           page, runway, stage, photo, intro, sun, chapter, gallery, pinkChapter, pinkGallery,
           hackathonChapter, hackathonGallery, universityChapter, universityGallery,
           creatorChapter, creatorGallery, growthChapter, growthGallery, oroProjectChapter,
           oroProjectGallery, rocketChapter, rocketGallery, blueprintChapter, blueprintGallery,
           eventHostingChapter, eventHostingGallery, launchpadChapter, launchpadGallery,
-          indexChapter, contactContent,
+          endingChapter, indexChapter, contactContent,
         }, { home, hasContact, linear: linear.matches }));
     };
     const queueMeasurement = () => {
@@ -527,6 +566,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     resize.observe(blueprintChapter);
     resize.observe(eventHostingChapter);
     resize.observe(launchpadChapter);
+    if (endingChapter) resize.observe(endingChapter);
     if (indexChapter) resize.observe(indexChapter);
     if (contactContent) resize.observe(contactContent);
     if (intro.firstElementChild) resize.observe(intro.firstElementChild);
@@ -537,7 +577,9 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     hackathonGallery.addEventListener("focusin", focusProject);
     creatorGallery.addEventListener("focusin", focusCreatorProfile);
     oroProjectChapter.addEventListener("focusin", focusOroProject);
+    endingChapter?.addEventListener("focusin", focusEnding);
     indexChapter?.addEventListener("focusin", focusIndex);
+    indexChapter?.addEventListener("keydown", bridgeEndingFocus);
     contactStage?.addEventListener("focusin", focusContact);
     indexChapter?.addEventListener("keydown", bridgeContactFocus);
     contactStage?.addEventListener("keydown", bridgeContactFocus);
@@ -549,7 +591,9 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       hackathonGallery.removeEventListener("focusin", focusProject);
       creatorGallery.removeEventListener("focusin", focusCreatorProfile);
       oroProjectChapter.removeEventListener("focusin", focusOroProject);
+      endingChapter?.removeEventListener("focusin", focusEnding);
       indexChapter?.removeEventListener("focusin", focusIndex);
+      indexChapter?.removeEventListener("keydown", bridgeEndingFocus);
       contactStage?.removeEventListener("focusin", focusContact);
       indexChapter?.removeEventListener("keydown", bridgeContactFocus);
       contactStage?.removeEventListener("keydown", bridgeContactFocus);
@@ -660,6 +704,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
             <BlueprintChapter chapterRef={blueprintChapterRef} galleryRef={blueprintGalleryRef} />
             <EventHostingChapter chapterRef={eventHostingChapterRef} galleryRef={eventHostingGalleryRef} />
             <LaunchpadChapter chapterRef={launchpadChapterRef} galleryRef={launchpadGalleryRef} />
+            {home && <EndingChapter chapterRef={endingChapterRef} />}
             {home && <JourneyIndex chapterRef={indexChapterRef} />}
           </div>
           {hasContact && <>

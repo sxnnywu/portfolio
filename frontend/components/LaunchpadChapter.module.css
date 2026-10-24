@@ -11,7 +11,7 @@
   font-family: var(--launchpad-serif);
   font-weight: 300;
   color: var(--launchpad-body);
-  opacity: calc(1 - var(--index-departure, 0));
+  opacity: calc(1 - var(--launchpad-departure, var(--index-departure, 0)));
 }
 
 .number {

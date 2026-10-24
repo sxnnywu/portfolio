@@ -36,6 +36,7 @@ export interface StoryMeasurementElements {
   eventHostingGallery: HTMLElement;
   launchpadChapter: HTMLElement;
   launchpadGallery: HTMLElement;
+  endingChapter?: HTMLElement | null;
   indexChapter?: HTMLElement | null;
   contactContent?: HTMLElement | null;
 }
@@ -76,6 +77,7 @@ export interface StoryMeasurements {
   blueprintFrames: StoryCameraFrame[];
   eventHostingFrames: StoryCameraFrame[];
   launchpadFrames: StoryCameraFrame[];
+  endingFrames: StoryCameraFrame[];
   indexFrames: StoryCameraFrame[];
 }
 
@@ -124,6 +126,7 @@ export function measureStory(
     eventHostingGallery,
     launchpadChapter,
     launchpadGallery,
+    endingChapter,
     indexChapter,
     contactContent,
   } = elements;
@@ -149,7 +152,7 @@ export function measureStory(
     creatorChapter, creatorGallery, growthChapter, growthGallery,
     oroProjectChapter, oroProjectGallery, rocketChapter, rocketGallery,
     blueprintChapter, blueprintGallery, eventHostingChapter, eventHostingGallery,
-    launchpadChapter, launchpadGallery, indexChapter, contactContent,
+    launchpadChapter, launchpadGallery, endingChapter, indexChapter, contactContent,
     inner, ...projects, ...profiles, rows, ...cards, lastCard,
   ]);
   for (const element of measuredElements) {
@@ -168,6 +171,7 @@ export function measureStory(
     writes.push({ element, property, value });
   };
   let contactCloudHeight = 550;
+  let endingFrames: StoryCameraFrame[] = [];
   let indexFrames: StoryCameraFrame[] = [];
   const start = runwayTop;
   const travel = Math.max(1, box(runway).offsetHeight - stageHeight);
@@ -422,9 +426,29 @@ export function measureStory(
     { p: 0.94, x: launchpadX + 8, y: launchpadY + launchpadOverflow / 2, z: launchpadReadingFit, r: 0 },
     { p: 1, x: launchpadX + 12, y: launchpadY + launchpadOverflow / 2 + 5, z: launchpadReadingFit, r: 0 },
   ];
+  let closingExit = launchpadFrames[launchpadFrames.length - 1];
+  let closingX = launchpadX;
+  if (home && endingChapter) {
+    const endingX = launchpadX + (width > 850 ? 1450 : 980);
+    const endingY = launchpadY + (width > 850 ? 180 : 140);
+    setStyle(endingChapter, "left", linear ? "" : `${endingX}px`);
+    setStyle(endingChapter, "top", linear ? "" : `${endingY}px`);
+    const endingWidth = box(endingChapter).offsetWidth;
+    const endingHeight = box(endingChapter).offsetHeight;
+    chapterBounds.push({ element: endingChapter, x: endingX, y: endingY, width: endingWidth, height: endingHeight });
+    const endingFit = Math.min(width / (endingWidth + (width > 850 ? 160 : 46)), room / (endingHeight + 80), 1);
+    endingFrames = [
+      { ...closingExit, p: 0 },
+      { p: 0.36, x: endingX - 120, y: endingY - 40, z: Math.min(closingExit.z, endingFit) * 0.82, r: 0.8 },
+      { p: 0.62, x: endingX, y: endingY, z: endingFit, r: 0 },
+      { p: 1, x: endingX + 8, y: endingY + 5, z: endingFit * 1.015, r: 0 },
+    ];
+    closingExit = endingFrames[endingFrames.length - 1];
+    closingX = endingX;
+  }
   if (home && indexChapter) {
-    const exit = launchpadFrames[launchpadFrames.length - 1];
-    const indexX = launchpadX + (width > 850 ? 1120 : 780);
+    const exit = closingExit;
+    const indexX = closingX + (width > 850 ? 1120 : 780);
     const indexY = exit.y + (width > 850 ? 360 : 200);
     setStyle(indexChapter, "left", linear ? "" : `${indexX}px`);
     setStyle(indexChapter, "top", linear ? "" : `${indexY}px`);
@@ -493,6 +517,7 @@ export function measureStory(
     blueprintFrames,
     eventHostingFrames,
     launchpadFrames,
+    endingFrames,
     indexFrames,
   };
 }

@@ -1,0 +1,127 @@
+.chapter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 940px;
+  transform: translate(-50%, -50%);
+  font-family: var(--ending-serif);
+  font-weight: 300;
+  text-align: center;
+  color: var(--ending-body);
+}
+
+.composition {
+  opacity: calc(1 - var(--ending-departure, 0));
+  transform: translateY(calc(var(--ending-departure, 0) * -26px));
+}
+
+.heading {
+  margin: 0 auto;
+  font-size: 68px;
+  font-weight: 300;
+  line-height: 1.07;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+  color: var(--ending-title);
+  opacity: var(--ending-heading, 1);
+  transform: translateY(calc((1 - var(--ending-heading, 1)) * 28px));
+}
+
+.chapter em {
+  font-weight: inherit;
+  color: var(--ending-blue);
+}
+
+.description {
+  max-width: 720px;
+  margin: 28px auto 0;
+  font-size: 28px;
+  line-height: 1.45;
+  text-wrap: pretty;
+  opacity: var(--ending-description, 1);
+  transform: translateY(calc((1 - var(--ending-description, 1)) * 22px));
+}
+
+.description a {
+  text-decoration-color: var(--ending-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.buttonArrival {
+  margin-top: 32px;
+  opacity: var(--ending-button, 1);
+  transform: translateY(calc((1 - var(--ending-button, 1)) * 18px));
+}
+
+.button {
+  font-family: var(--ending-sans);
+  line-height: 1.4;
+}
+
+.button span {
+  display: inline-block;
+  margin-left: 7px;
+}
+
+.button:hover {
+  box-shadow: 0 5px 16px -7px rgba(17, 40, 58, .4);
+}
+
+.chapter a:focus-visible {
+  outline: 2px solid var(--ending-blue);
+  outline-offset: 6px;
+}
+
+@media (max-width: 850px) {
+  .chapter {
+    width: 440px;
+    --ending-button-size: 18px;
+    --ending-button-padding: 21px 36px;
+  }
+
+  .heading {
+    font-size: 50px;
+    line-height: 1.08;
+  }
+
+  .description {
+    margin-top: 25px;
+    padding: 0 8px;
+    font-size: 26px;
+    line-height: 1.4;
+  }
+
+  .buttonArrival {
+    margin-top: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), (max-height: 540px) {
+  .chapter {
+    position: relative;
+    top: auto !important;
+    left: auto !important;
+    width: min(100%, 940px);
+    margin: 140px auto 0;
+    transform: none;
+    --ending-button-size: 13.5px;
+    --ending-button-padding: 14px 30px;
+  }
+
+  .composition,
+  .heading,
+  .description,
+  .buttonArrival {
+    opacity: 1;
+    transform: none;
+  }
+
+  .heading {
+    font-size: clamp(36px, 5.2vw, 68px);
+  }
+
+  .description {
+    font-size: clamp(22px, 2.6vw, 28px);
+  }
+}
