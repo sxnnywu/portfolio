@@ -28,7 +28,7 @@ export default function EndingChapter({ chapterRef }: {
         <p className={styles.description}>
           Currently growing{" "}
           <a href="https://askoro.now" {...externalLinkProps("https://askoro.now")}><em>oro</em></a>,{" "}
-          keeping up with <em>2 degrees</em>, and looking for a team to join for <em>winter 2027.</em>
+          keeping up with <em>2 degrees</em>, and finding somewhere exciting to work for <em>winter 2027.</em>
         </p>
         <div className={styles.buttonArrival}>
           <a
