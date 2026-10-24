@@ -1,0 +1,79 @@
+frontend/lib/storyImagePreparation.ts
+  s_e7cc0136fd1ff6::t_18032861749e26 1-39
+frontend/scripts/prerender-story-art.mjs
+  s_e7cc0136fd1ff6::t_a278bd4a0b7aba 1-85
+frontend/components/WatercolourWash.module.css
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 35-38
+frontend/lib/heroPlayback.ts
+  s_e7cc0136fd1ff6::t_8ad7087b7ea5ca 59
+  s_e7cc0136fd1ff6::t_dcc46c86de2a5d 1-58,60-74
+frontend/components/MotionPlayground.tsx
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 10
+frontend/lib/storyScrollPerformance.test.mjs
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 7,114
+frontend/components/HeroRoles.tsx
+  s_e7cc0136fd1ff6::t_dcc46c86de2a5d 5,14,17,19-26,31
+frontend/lib/storyImagePreparation.test.mjs
+  s_e7cc0136fd1ff6::t_18032861749e26 1-61
+frontend/components/WatercolourWash.tsx
+  s_e7cc0136fd1ff6::t_39edbb73e4b746 1,13
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 4,10-12,14-15
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_a278bd4a0b7aba 158-159
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 10,27,288,560,605
+frontend/package.json
+  s_e7cc0136fd1ff6::t_c7b43f49e6ff34 6
+frontend/lib/heroPlayback.test.mjs
+  s_e7cc0136fd1ff6::t_f754b857c14f9f 1-164
+frontend/components/ParallaxRoot.tsx
+  s_e7cc0136fd1ff6::t_dcc46c86de2a5d 31-33
+  s_e7cc0136fd1ff6::t_b943d114873dcc 34
+frontend/components/BlueprintChapter.tsx
+  s_e1ba16e594d1fd::t_98398af9a9f19e 42
+frontend/components/CreatorChapter.tsx
+  s_e1ba16e594d1fd::t_ff09a274312943 54
+frontend/components/EventHostingChapter.tsx
+  s_e1ba16e594d1fd::t_214cbfc02563b0 45,48,51,54,57
+frontend/components/GrowthChapter.tsx
+  s_e1ba16e594d1fd::t_e8ae6033959ef5 40,49
+frontend/components/HackathonChapter.tsx
+  s_e1ba16e594d1fd::t_f832ee67bd8e74 88
+frontend/components/LaunchpadChapter.tsx
+  s_e1ba16e594d1fd::t_2807cf695b732e 38,41,45,49
+frontend/components/OroProjectChapter.tsx
+  s_e1ba16e594d1fd::t_9ea46f0adf336e 47,58
+frontend/components/PinkStairsChapter.tsx
+  s_e1ba16e594d1fd::t_322abfa2316f3d 37,45,53
+frontend/components/RocketChapter.tsx
+  s_e1ba16e594d1fd::t_57177fd3a32695 40
+frontend/components/Sun.tsx
+  s_e1ba16e594d1fd::t_59111e1c8946ba 1,16-18
+frontend/components/TheatreChapter.tsx
+  s_e1ba16e594d1fd::t_1b040377ebbd49 33,36,39
+frontend/components/UniversityChapter.tsx
+  s_e1ba16e594d1fd::t_6004f44b3dea64 38,47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "324df25a897fa0c0863a26341ae104a8f11aa6ea",
+  "prompts": {},
+  "sessions": {
+    "s_e1ba16e594d1fd": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1694a-92e8-7bd1-bf6f-87e2e27eb7e2",
+        "model": "unknown"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    },
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
