@@ -1,0 +1,23 @@
+frontend/lib/homeReloadScroll.ts
+  s_e7cc0136fd1ff6::t_b8df519fa912ae 1-39
+frontend/app/layout.tsx
+  s_e7cc0136fd1ff6::t_b8df519fa912ae 4,58-60
+frontend/lib/homeReloadScroll.test.mjs
+  s_e7cc0136fd1ff6::t_418a541a6badf6 1-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "197df13c66290177403e083c31e72b76bac43b46",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
