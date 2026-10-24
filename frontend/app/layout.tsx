@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
+import { HOME_RELOAD_SCROLL_SCRIPT } from "@/lib/homeReloadScroll";
 import { Caveat, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -54,6 +55,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${newsreader.variable} ${schibsted.variable} ${caveat.variable}`}
     >
+      <head>
+        <script id="home-reload-scroll" dangerouslySetInnerHTML={{ __html: HOME_RELOAD_SCROLL_SCRIPT }} />
+      </head>
       <body>
         <noscript>
           {/* Without JS nothing can add .is-visible, so opt out of the reveal entirely. */}
