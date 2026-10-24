@@ -1,0 +1,19 @@
+frontend/components/EndingChapter.tsx
+  s_e7cc0136fd1ff6::t_480630de824df9 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cc906900e64560d64e7c5977092e64c925bff68c",
+  "prompts": {},
+  "sessions": {
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
