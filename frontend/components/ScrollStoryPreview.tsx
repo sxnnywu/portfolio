@@ -23,6 +23,8 @@ import LaunchpadChapter from "@/components/LaunchpadChapter";
 import JourneyIndex from "@/components/JourneyIndex";
 import WatercolourWash from "@/components/WatercolourWash";
 import { education, heroHeadline, heroTagline, introBackground } from "@/lib/data";
+import { createStoryFrameWriter } from "@/lib/storyFrameWriter";
+import { measureStory, type StoryMeasurements } from "@/lib/storyMeasurements";
 import styles from "./ScrollStoryPreview.module.css";
 
 const clamp = (value: number) => Math.max(0, Math.min(1, value));
@@ -125,7 +127,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     let introOverflow = 0;
     let sunEndX = 0;
     let sunEndY = 0;
-    let chapterX = 1430;
+    let needsMeasurement = false;
     let cameraFrames: { p: number; x: number; y: number; z: number; r: number }[] = [];
     let pinkFrames: typeof cameraFrames = [];
     let hackathonFrames: typeof cameraFrames = [];
@@ -138,6 +140,59 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     let eventHostingFrames: typeof cameraFrames = [];
     let launchpadFrames: typeof cameraFrames = [];
     let indexFrames: typeof cameraFrames = [];
+    let chapterBounds: StoryMeasurements["chapterBounds"] = [];
+    const writer = createStoryFrameWriter();
+    const chapters = [chapter, pinkChapter, hackathonChapter, universityChapter, creatorChapter, growthChapter, oroProjectChapter, rocketChapter, blueprintChapter, eventHostingChapter, launchpadChapter];
+    const chapterElements = new Set(chapters);
+    const chapterStarts = [4, 6.8, 10.4, 14.4, 17.6, 21.6, 24.8, 28.8, 32, 35.6, 39.2, 42.8];
+    const visibleChapters = new Set<HTMLElement>();
+    const inner = intro.firstElementChild as HTMLElement;
+    const sky = page.querySelector<HTMLElement>(`.${styles.sky}`);
+    const cue = page.querySelector<HTMLElement>(`.${styles.cue}`);
+    const progressBar = page.querySelector<HTMLElement>(`.${styles.progress}`);
+    const farClouds = page.querySelector<HTMLElement>(`.${styles.farClouds}`);
+    const midClouds = page.querySelector<HTMLElement>(`.${styles.midClouds}`);
+    const nearClouds = page.querySelector<HTMLElement>(`.${styles.nearClouds}`);
+    const wash = page.querySelector<HTMLElement>("[data-watercolour-wash]");
+    const polaroid = photo.firstElementChild as HTMLElement;
+    const story = intro.querySelector<HTMLElement>(`.${styles.story}`);
+    const schools = intro.querySelector<HTMLElement>(`.${styles.education}`);
+    const background = intro.querySelector<HTMLElement>(`.${styles.backgroundSummary}`);
+    const introElements = new Set([intro, inner, polaroid, story, schools, background]);
+    const propertyOwners = new Map<string, HTMLElement[]>();
+    const ownersFor = (key: string): HTMLElement[] => {
+      const cached = propertyOwners.get(key);
+      if (cached) return cached;
+      let owner: HTMLElement | null = null;
+      if (key === "--progress") owner = progressBar;
+      else if (key.startsWith("--journey-")) owner = intro;
+      else if (key.startsWith("--pink-")) owner = pinkChapter;
+      else if (key.startsWith("--oro-")) owner = oroProjectChapter;
+      else if (key.startsWith("--rocket-")) owner = rocketChapter;
+      else if (key.startsWith("--event-")) owner = eventHostingChapter;
+      else if (key.startsWith("--launchpad-")) owner = launchpadChapter;
+      else if (key === "--index-departure") owner = launchpadChapter;
+      else if (key.startsWith("--index-")) owner = indexChapter;
+      else if (key.startsWith("--wash-")) owner = wash;
+      else if (key.startsWith("--contact-")) owner = contactStage;
+      else if (key.startsWith("--sky-")) owner = sky;
+      else if (key.startsWith("--hero-")) owner = hero;
+      else if (key.startsWith("--cue-")) owner = cue;
+      else if (key.startsWith("--far-")) owner = farClouds;
+      else if (key.startsWith("--mid-")) owner = midClouds;
+      else if (key.startsWith("--near-")) owner = nearClouds;
+      else if (key.startsWith("--sun-")) owner = sun;
+      else if (key.startsWith("--photo-")) owner = polaroid;
+      else if (key.startsWith("--story-") || key.startsWith("--clause-") || key.startsWith("--draw-")) owner = story;
+      else if (key === "--intro-read-y") owner = inner;
+      else if (key.startsWith("--education-")) owner = schools;
+      else if (key.startsWith("--background-item-")) owner = background;
+      const owners = key === "--cloud-opacity"
+        ? [farClouds, midClouds, nearClouds].filter((element): element is HTMLElement => element !== null)
+        : owner ? [owner] : [];
+      propertyOwners.set(key, owners);
+      return owners;
+    };
 
     // Monotone cubic interpolation keeps the camera reversible, with no overshoot
     // or rotation during the reading segment.
@@ -202,6 +257,31 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       // while the pigment expands in screen space beneath it.
       camera.y += washDrift * height * 0.16 / camera.z;
       camera.z *= 1 - washDrift * 0.03;
+      const units = distance / height;
+      writer.style(hero, "visibility", still || units < 4 ? "inherit" : "hidden");
+      let currentChapter = 0;
+      for (let i = 1; i < chapterStarts.length; i++) {
+        if (units >= chapterStarts[i]) currentChapter = i;
+      }
+      // Keep neighbors ready before a transition. A conservative cached viewport
+      // also preserves wide-screen views and overflowing polaroid edges.
+      const angle = camera.r * Math.PI / 180;
+      const halfWidth = (Math.abs(Math.cos(angle)) * width + Math.abs(Math.sin(angle)) * height) / (2 * camera.z) + 320;
+      const halfHeight = (Math.abs(Math.sin(angle)) * width + Math.abs(Math.cos(angle)) * height) / (2 * camera.z) + 320;
+      const introInView = Math.abs(camera.x) <= halfWidth + width / 2
+        && Math.abs(camera.y) <= halfHeight + (height + introOverflow) / 2;
+      const introVisible = still || units < 6.8 || introInView;
+      writer.style(intro, "visibility", introVisible ? "inherit" : "hidden");
+      visibleChapters.clear();
+      for (const [index, element] of chapters.entries()) {
+        const bounds = chapterBounds[index];
+        const inView = bounds && Math.abs(bounds.x - camera.x) <= halfWidth + bounds.width / 2
+          && Math.abs(bounds.y - camera.y) <= halfHeight + bounds.height / 2;
+        if (still || Math.abs(index - currentChapter) <= 1 || inView) visibleChapters.add(element);
+        // Inherit respects the world's initial hidden state; explicit visible
+        // would let chapters show through while the hero is still on screen.
+        writer.style(element, "visibility", visibleChapters.has(element) ? "inherit" : "hidden");
+      }
       const leave = still ? 0 : ease(p, 0.015, 0.25);
       // One diagonal path and speed curve, with no handoff between cloud phases.
       const cloudTravel = still ? 0 : ease(p, 0, 0.4);
@@ -282,39 +362,54 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       for (let i = 0; i < introBackground.length; i++) {
         values[`--background-item-${i}`] = still ? 1 : ease(p, 0.71 + i * 0.042, 0.78 + i * 0.042);
       }
-      for (const [key, value] of Object.entries(values)) page.style.setProperty(key, String(value));
-      journey.style.transform = `translate(${width / 2}px,${height / 2 + 25}px) scale(${camera.z}) rotate(${camera.r}deg) translate(${-camera.x}px,${-camera.y}px)`;
-      journey.style.opacity = String(still ? 1 : 1 - ease(contactProgress, 0.12, 0.64));
-      journey.style.visibility = still || distance > height * 3.9 ? "visible" : "hidden";
+      for (const [key, value] of Object.entries(values)) {
+        for (const owner of ownersFor(key)) {
+          if (chapterElements.has(owner) && !visibleChapters.has(owner)) continue;
+          if (introElements.has(owner) && !introVisible) continue;
+          writer.style(owner, key, value);
+        }
+      }
+      writer.style(journey, "transform", `translate(${width / 2}px,${height / 2 + 25}px) scale(${camera.z}) rotate(${camera.r}deg) translate(${-camera.x}px,${-camera.y}px)`);
+      writer.style(journey, "opacity", still ? 1 : 1 - ease(contactProgress, 0.12, 0.64));
+      writer.style(journey, "visibility", still || distance > height * 3.9 ? "visible" : "hidden");
       // Hidden hero controls leave the keyboard order as the story takes over.
-      hero.inert = !still && p > 0.245;
-      hero.setAttribute("aria-hidden", String(!still && p > 0.245));
-      intro.setAttribute("aria-hidden", String(!still && (p < 0.18 || q > 0.42)));
-      chapter.setAttribute("aria-hidden", String(!still && (q < 0.16 || pinkProgress > 0.4)));
-      pinkChapter.setAttribute("aria-hidden", String(!still && (pinkProgress < 0.14 || hackathonProgress > 0.3)));
-      hackathonChapter.setAttribute("aria-hidden", String(!still && (hackathonProgress < 0.12 || universityProgress > 0.3)));
-      hackathonChapter.inert = !still && (hackathonProgress < 0.12 || universityProgress > 0.3);
-      universityChapter.setAttribute("aria-hidden", String(!still && (universityProgress < 0.14 || creatorProgress > 0.3)));
-      creatorChapter.setAttribute("aria-hidden", String(!still && (creatorProgress < 0.12 || growthProgress > 0.3)));
-      creatorChapter.inert = !still && (creatorProgress < 0.12 || growthProgress > 0.3);
-      growthChapter.setAttribute("aria-hidden", String(!still && (growthProgress < 0.14 || oroProjectProgress > 0.3)));
-      oroProjectChapter.setAttribute("aria-hidden", String(!still && (oroProjectProgress < 0.14 || rocketProgress > 0.3)));
-      oroProjectChapter.inert = !still && (oroProjectProgress < 0.14 || rocketProgress > 0.3);
-      rocketChapter.setAttribute("aria-hidden", String(!still && (rocketProgress < 0.14 || blueprintProgress > 0.3)));
-      blueprintChapter.setAttribute("aria-hidden", String(!still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3)));
-      eventHostingChapter.setAttribute("aria-hidden", String(!still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3)));
-      launchpadChapter.setAttribute("aria-hidden", String(!still && (launchpadProgress < 0.14 || indexProgress > 0.6)));
+      writer.inert(hero, !still && p > 0.245);
+      writer.attribute(hero, "aria-hidden", !still && p > 0.245);
+      writer.attribute(intro, "aria-hidden", !still && (p < 0.18 || q > 0.42));
+      writer.attribute(chapter, "aria-hidden", !still && (q < 0.16 || pinkProgress > 0.4));
+      writer.attribute(pinkChapter, "aria-hidden", !still && (pinkProgress < 0.14 || hackathonProgress > 0.3));
+      writer.attribute(hackathonChapter, "aria-hidden", !still && (hackathonProgress < 0.12 || universityProgress > 0.3));
+      writer.inert(hackathonChapter, !still && (hackathonProgress < 0.12 || universityProgress > 0.3));
+      writer.attribute(universityChapter, "aria-hidden", !still && (universityProgress < 0.14 || creatorProgress > 0.3));
+      writer.attribute(creatorChapter, "aria-hidden", !still && (creatorProgress < 0.12 || growthProgress > 0.3));
+      writer.inert(creatorChapter, !still && (creatorProgress < 0.12 || growthProgress > 0.3));
+      writer.attribute(growthChapter, "aria-hidden", !still && (growthProgress < 0.14 || oroProjectProgress > 0.3));
+      writer.attribute(oroProjectChapter, "aria-hidden", !still && (oroProjectProgress < 0.14 || rocketProgress > 0.3));
+      writer.inert(oroProjectChapter, !still && (oroProjectProgress < 0.14 || rocketProgress > 0.3));
+      writer.attribute(rocketChapter, "aria-hidden", !still && (rocketProgress < 0.14 || blueprintProgress > 0.3));
+      writer.attribute(blueprintChapter, "aria-hidden", !still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3));
+      writer.attribute(eventHostingChapter, "aria-hidden", !still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3));
+      writer.attribute(launchpadChapter, "aria-hidden", !still && (launchpadProgress < 0.14 || indexProgress > 0.6));
       if (indexChapter) {
-        indexChapter.setAttribute("aria-hidden", String(!still && (indexProgress < 0.3 || contactProgress > 0.6)));
-        indexChapter.inert = !still && contactProgress > 0.6;
+        writer.attribute(indexChapter, "aria-hidden", !still && (indexProgress < 0.3 || contactProgress > 0.6));
+        writer.inert(indexChapter, !still && contactProgress > 0.6);
       }
       if (contactStage) {
-        contactStage.dataset.contactVisible = String(still || contactProgress > 0.5);
-        contactStage.dataset.contactActive = String(still || contactProgress > 0.84);
-        contactStage.setAttribute("aria-hidden", String(!still && contactProgress < 0.57));
+        writer.attribute(contactStage, "data-contact-visible", still || contactProgress > 0.5);
+        writer.attribute(contactStage, "data-contact-active", still || contactProgress > 0.84);
+        writer.attribute(contactStage, "aria-hidden", !still && contactProgress < 0.57);
       }
     };
-    const schedule = () => { if (frame === null) frame = window.requestAnimationFrame(paint); };
+    const renderFrame = () => {
+      if (needsMeasurement) {
+        needsMeasurement = false;
+        measure();
+      }
+      paint();
+    };
+    const schedule = () => {
+      if (frame === null) frame = window.requestAnimationFrame(renderFrame);
+    };
     const focusProject = (event: FocusEvent) => {
       const link = event.target instanceof Element
         ? event.target.closest<HTMLElement>("[data-hackathon-project]") : null;
@@ -348,7 +443,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       // Settle the camera before the focused link is painted.
       if (behavior === "instant") {
         if (frame !== null) window.cancelAnimationFrame(frame);
-        paint();
+        renderFrame();
       } else schedule();
     };
     const visitContact = (behavior: ScrollBehavior = "instant") => {
@@ -356,7 +451,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       window.scrollTo({ top: start + height * (46 + 2.2 * 0.98), behavior });
       if (behavior === "instant") {
         if (frame !== null) window.cancelAnimationFrame(frame);
-        paint();
+        renderFrame();
       } else schedule();
     };
     const focusIndex = (event: FocusEvent) => {
@@ -396,295 +491,25 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       else if (window.location.hash === "#contact") visitContact();
     };
     const measure = () => {
-      start = runway.getBoundingClientRect().top + window.scrollY;
-      travel = Math.max(1, runway.offsetHeight - stage.clientHeight);
-      height = stage.clientHeight;
-      width = stage.clientWidth;
-      // Layout offsets stay independent of the camera transform when resizing.
-      const inner = intro.firstElementChild as HTMLElement;
-      const photoTop = inner.offsetTop + photo.offsetTop;
-      const introStyle = window.getComputedStyle(intro);
-      const introRoom = height - parseFloat(introStyle.paddingTop) - parseFloat(introStyle.paddingBottom);
-      introOverflow = linear.matches ? 0 : Math.max(0, inner.offsetHeight - introRoom);
-      photoCenter = photoTop + photo.offsetHeight / 2 + introOverflow / 2;
-      sunEndX = inner.offsetLeft + photo.offsetLeft + photo.offsetWidth - width / 2 + 4;
-      sunEndY = photoTop + 16 - sun.offsetTop - 58;
-      chapterX = width > 850 ? 1430 : 800;
-      chapter.style.left = linear.matches ? "" : `${chapterX}px`;
-      const chapterWidth = chapter.offsetWidth;
-      const chapterHeight = chapter.offsetHeight;
-      const galleryX = chapterX - chapterWidth / 2 + gallery.offsetLeft + gallery.offsetWidth / 2;
-      const galleryY = -chapterHeight / 2 + gallery.offsetTop + gallery.offsetHeight / 2;
-      const room = height - (home ? 150 : 105);
-      const photoFit = Math.min(width / (gallery.offsetWidth + 50), room / (gallery.offsetHeight + 40), 1.12);
-      const readingFit = Math.min(width / (chapterWidth + (width > 850 ? 130 : 46)), room / (chapterHeight + 45), 1.06);
-      cameraFrames = [
-        { p: 0, x: 0, y: 0, z: 1, r: 0 },
-        { p: 0.42, x: galleryX, y: galleryY, z: photoFit, r: 1.5 },
-        { p: 0.70, x: chapterX, y: 0, z: readingFit, r: 0 },
-        { p: 1, x: chapterX + 12, y: 5, z: readingFit, r: 0 },
-      ];
-      const pinkX = chapterX + (width > 850 ? 1530 : 940);
-      const pinkY = width > 850 ? 210 : 90;
-      pinkChapter.style.left = linear.matches ? "" : `${pinkX}px`;
-      pinkChapter.style.top = linear.matches ? "" : `${pinkY}px`;
-      const pinkWidth = pinkChapter.offsetWidth;
-      const pinkHeight = pinkChapter.offsetHeight;
-      const pinkGalleryX = pinkX - pinkWidth / 2 + pinkGallery.offsetLeft + pinkGallery.offsetWidth / 2;
-      const pinkGalleryY = pinkY - pinkHeight / 2 + pinkGallery.offsetTop + pinkGallery.offsetHeight / 2;
-      const pinkPhotoFit = Math.min(width / (pinkGallery.offsetWidth + 65), room / (pinkGallery.offsetHeight + 50), 1.12);
-      const pinkWidthFit = Math.min(width / (pinkWidth + (width > 850 ? 130 : 46)), 1.06);
-      // On shorter phones, move through the chapter vertically rather than
-      // shrinking the copy to fit every photo and result into a single frame.
-      const pinkReadingFit = width > 850 ? Math.min(pinkWidthFit, room / (pinkHeight + 45)) : pinkWidthFit;
-      const readingOverflow = Math.max(0, pinkHeight - room / pinkReadingFit);
-      pinkFrames = [
-        { ...cameraFrames[cameraFrames.length - 1], p: 0 },
-        { p: 0.40, x: pinkGalleryX, y: pinkGalleryY, z: pinkPhotoFit, r: -1.5 },
-        { p: 0.65, x: pinkX, y: pinkY - readingOverflow / 2, z: pinkReadingFit, r: 0 },
-        { p: 0.88, x: pinkX + 8, y: pinkY + readingOverflow / 2, z: pinkReadingFit, r: 0 },
-        { p: 1, x: pinkX + 12, y: pinkY + readingOverflow / 2 + 5, z: pinkReadingFit, r: 0 },
-      ];
-      const hackathonX = pinkX + (width > 850 ? 1700 : 1100);
-      const hackathonY = width > 850 ? -90 : 160;
-      hackathonChapter.style.left = linear.matches ? "" : `${hackathonX}px`;
-      hackathonChapter.style.top = linear.matches ? "" : `${hackathonY}px`;
-      const hackathonWidth = hackathonChapter.offsetWidth;
-      const hackathonHeight = hackathonChapter.offsetHeight;
-      const hackathonGalleryX = hackathonX - hackathonWidth / 2 + hackathonGallery.offsetLeft;
-      const hackathonGalleryY = hackathonY - hackathonHeight / 2 + hackathonGallery.offsetTop;
-      const projectFrames = [...hackathonGallery.querySelectorAll<HTMLElement>("[data-hackathon-project]")].map((project, index) => ({
-        p: 0.24 + index * 0.17,
-        x: hackathonGalleryX + project.offsetLeft + project.offsetWidth / 2,
-        y: hackathonGalleryY + project.offsetTop + project.offsetHeight / 2,
-        z: Math.min(width / (project.offsetWidth + 65), room / (project.offsetHeight + 55), 1.35),
-        r: 0,
-      }));
-      const hackathonWidthFit = Math.min(width / (hackathonWidth + (width > 850 ? 130 : 46)), 1.06);
-      const hackathonReadingFit = width > 850 ? Math.min(hackathonWidthFit, room / (hackathonHeight + 45)) : hackathonWidthFit;
-      const hackathonOverflow = Math.max(0, hackathonHeight - room / hackathonReadingFit);
-      hackathonFrames = [
-        { ...pinkFrames[pinkFrames.length - 1], p: 0 },
-        ...projectFrames,
-        { p: 0.76, x: hackathonX, y: hackathonY - hackathonOverflow / 2, z: hackathonReadingFit, r: 0 },
-        { p: 0.94, x: hackathonX + 8, y: hackathonY + hackathonOverflow / 2, z: hackathonReadingFit, r: 0 },
-        { p: 1, x: hackathonX + 12, y: hackathonY + hackathonOverflow / 2 + 5, z: hackathonReadingFit, r: 0 },
-      ];
-      const universityX = hackathonX + (width > 850 ? 1600 : 1050);
-      const universityY = width > 850 ? 160 : 90;
-      universityChapter.style.left = linear.matches ? "" : `${universityX}px`;
-      universityChapter.style.top = linear.matches ? "" : `${universityY}px`;
-      const universityWidth = universityChapter.offsetWidth;
-      const universityHeight = universityChapter.offsetHeight;
-      const universityGalleryX = universityX - universityWidth / 2 + universityGallery.offsetLeft + universityGallery.offsetWidth / 2;
-      const universityGalleryY = universityY - universityHeight / 2 + universityGallery.offsetTop + universityGallery.offsetHeight / 2;
-      const universityPhotoFit = Math.min(width / (universityGallery.offsetWidth + 65), room / (universityGallery.offsetHeight + 55), 1.12);
-      const universityWidthFit = Math.min(width / (universityWidth + (width > 850 ? 130 : 46)), 1.06);
-      const universityReadingFit = width > 850 ? Math.min(universityWidthFit, room / (universityHeight + 45)) : universityWidthFit;
-      const universityOverflow = Math.max(0, universityHeight - room / universityReadingFit);
-      universityFrames = [
-        { ...hackathonFrames[hackathonFrames.length - 1], p: 0 },
-        { p: 0.32, x: universityGalleryX, y: universityGalleryY, z: universityPhotoFit, r: 1.5 },
-        { p: 0.66, x: universityX, y: universityY - universityOverflow / 2, z: universityReadingFit, r: 0 },
-        { p: 0.91, x: universityX + 8, y: universityY + universityOverflow / 2, z: universityReadingFit, r: 0 },
-        { p: 1, x: universityX + 12, y: universityY + universityOverflow / 2 + 5, z: universityReadingFit, r: 0 },
-      ];
-      const creatorX = universityX + (width > 850 ? 1650 : 1100);
-      const creatorY = width > 850 ? -110 : 160;
-      creatorChapter.style.left = linear.matches ? "" : `${creatorX}px`;
-      creatorChapter.style.top = linear.matches ? "" : `${creatorY}px`;
-      const creatorWidth = creatorChapter.offsetWidth;
-      const creatorHeight = creatorChapter.offsetHeight;
-      const creatorGalleryX = creatorX - creatorWidth / 2 + creatorGallery.offsetLeft;
-      const creatorGalleryY = creatorY - creatorHeight / 2 + creatorGallery.offsetTop;
-      const profileFrames = [...creatorGallery.querySelectorAll<HTMLElement>("[data-creator-profile]")].map((profile, index) => ({
-        p: 0.27 + index * 0.22,
-        x: creatorGalleryX + profile.offsetLeft + profile.offsetWidth / 2,
-        y: creatorGalleryY + profile.offsetTop + profile.offsetHeight / 2,
-        z: Math.min(width / (profile.offsetWidth + 65), room / (profile.offsetHeight + 55), 1.35),
-        r: 0,
-      }));
-      const creatorWidthFit = Math.min(width / (creatorWidth + (width > 850 ? 130 : 46)), 1.06);
-      const creatorReadingFit = width > 850 ? Math.min(creatorWidthFit, room / (creatorHeight + 45)) : creatorWidthFit;
-      const creatorOverflow = Math.max(0, creatorHeight - room / creatorReadingFit);
-      creatorFrames = [
-        { ...universityFrames[universityFrames.length - 1], p: 0 },
-        ...profileFrames,
-        { p: 0.74, x: creatorX, y: creatorY - creatorOverflow / 2, z: creatorReadingFit, r: 0 },
-        { p: 0.94, x: creatorX + 8, y: creatorY + creatorOverflow / 2, z: creatorReadingFit, r: 0 },
-        { p: 1, x: creatorX + 12, y: creatorY + creatorOverflow / 2 + 5, z: creatorReadingFit, r: 0 },
-      ];
-      const growthX = creatorX + (width > 850 ? 1600 : 1050);
-      const growthY = width > 850 ? 180 : 90;
-      growthChapter.style.left = linear.matches ? "" : `${growthX}px`;
-      growthChapter.style.top = linear.matches ? "" : `${growthY}px`;
-      const growthWidth = growthChapter.offsetWidth;
-      const growthHeight = growthChapter.offsetHeight;
-      const growthGalleryX = growthX - growthWidth / 2 + growthGallery.offsetLeft + growthGallery.offsetWidth / 2;
-      const growthGalleryY = growthY - growthHeight / 2 + growthGallery.offsetTop + growthGallery.offsetHeight / 2;
-      const growthPhotoFit = Math.min(width / (growthGallery.offsetWidth + 65), room / (growthGallery.offsetHeight + 55), 1.12);
-      const growthWidthFit = Math.min(width / (growthWidth + (width > 850 ? 130 : 46)), 1.06);
-      const growthReadingFit = width > 850 ? Math.min(growthWidthFit, room / (growthHeight + 45)) : growthWidthFit;
-      const growthOverflow = Math.max(0, growthHeight - room / growthReadingFit);
-      growthFrames = [
-        { ...creatorFrames[creatorFrames.length - 1], p: 0 },
-        { p: 0.36, x: growthGalleryX, y: growthGalleryY, z: growthPhotoFit, r: -1.5 },
-        { p: 0.68, x: growthX, y: growthY - growthOverflow / 2, z: growthReadingFit, r: 0 },
-        { p: 0.92, x: growthX + 8, y: growthY + growthOverflow / 2, z: growthReadingFit, r: 0 },
-        { p: 1, x: growthX + 12, y: growthY + growthOverflow / 2 + 5, z: growthReadingFit, r: 0 },
-      ];
-      const oroProjectX = growthX + (width > 850 ? 1700 : 1100);
-      const oroProjectY = width > 850 ? -100 : 160;
-      oroProjectChapter.style.left = linear.matches ? "" : `${oroProjectX}px`;
-      oroProjectChapter.style.top = linear.matches ? "" : `${oroProjectY}px`;
-      const oroProjectWidth = oroProjectChapter.offsetWidth;
-      const oroProjectHeight = oroProjectChapter.offsetHeight;
-      const oroProjectGalleryX = oroProjectX - oroProjectWidth / 2 + oroProjectGallery.offsetLeft + oroProjectGallery.offsetWidth / 2;
-      const oroProjectGalleryY = oroProjectY - oroProjectHeight / 2 + oroProjectGallery.offsetTop + oroProjectGallery.offsetHeight / 2;
-      const oroProjectPhotoFit = Math.min(width / (oroProjectGallery.offsetWidth + 65), room / (oroProjectGallery.offsetHeight + 55), 1.12);
-      const oroProjectWidthFit = Math.min(width / (oroProjectWidth + (width > 850 ? 130 : 46)), 1.06);
-      const oroProjectHeightFit = room / (oroProjectHeight + 45);
-      // Keep the technical bullets readable on phones and shorter laptops by
-      // moving down the complete chapter rather than scaling the copy away.
-      const oroProjectReadingFit = width > 850 && oroProjectHeightFit >= 0.8
-        ? Math.min(oroProjectWidthFit, oroProjectHeightFit) : oroProjectWidthFit;
-      const oroProjectOverflow = Math.max(0, oroProjectHeight - room / oroProjectReadingFit);
-      oroProjectFrames = [
-        { ...growthFrames[growthFrames.length - 1], p: 0 },
-        { p: 0.30, x: oroProjectGalleryX, y: oroProjectGalleryY, z: oroProjectPhotoFit, r: 1.5 },
-        { p: 0.58, x: oroProjectX, y: oroProjectY - oroProjectOverflow / 2, z: oroProjectReadingFit, r: 0 },
-        { p: 0.94, x: oroProjectX + 8, y: oroProjectY + oroProjectOverflow / 2, z: oroProjectReadingFit, r: 0 },
-        { p: 1, x: oroProjectX + 12, y: oroProjectY + oroProjectOverflow / 2 + 5, z: oroProjectReadingFit, r: 0 },
-      ];
-      const rocketX = oroProjectX + (width > 850 ? 1700 : 1100);
-      const rocketY = width > 850 ? 180 : 90;
-      rocketChapter.style.left = linear.matches ? "" : `${rocketX}px`;
-      rocketChapter.style.top = linear.matches ? "" : `${rocketY}px`;
-      const rocketWidth = rocketChapter.offsetWidth;
-      const rocketHeight = rocketChapter.offsetHeight;
-      const rocketGalleryX = rocketX - rocketWidth / 2 + rocketGallery.offsetLeft + rocketGallery.offsetWidth / 2;
-      const rocketGalleryY = rocketY - rocketHeight / 2 + rocketGallery.offsetTop + rocketGallery.offsetHeight / 2;
-      const rocketPhotoFit = Math.min(width / (rocketGallery.offsetWidth + 65), room / (rocketGallery.offsetHeight + 55), 1.12);
-      const rocketWidthFit = Math.min(width / (rocketWidth + (width > 850 ? 130 : 46)), 1.06);
-      const rocketHeightFit = room / (rocketHeight + 45);
-      const rocketReadingFit = width > 850 && rocketHeightFit >= 0.8
-        ? Math.min(rocketWidthFit, rocketHeightFit) : rocketWidthFit;
-      const rocketOverflow = Math.max(0, rocketHeight - room / rocketReadingFit);
-      rocketFrames = [
-        { ...oroProjectFrames[oroProjectFrames.length - 1], p: 0 },
-        { p: 0.34, x: rocketGalleryX, y: rocketGalleryY, z: rocketPhotoFit, r: -1.5 },
-        { p: 0.60, x: rocketX, y: rocketY - rocketOverflow / 2, z: rocketReadingFit, r: 0 },
-        { p: 0.94, x: rocketX + 8, y: rocketY + rocketOverflow / 2, z: rocketReadingFit, r: 0 },
-        { p: 1, x: rocketX + 12, y: rocketY + rocketOverflow / 2 + 5, z: rocketReadingFit, r: 0 },
-      ];
-      const blueprintX = rocketX + (width > 850 ? 1700 : 1100);
-      const blueprintY = width > 850 ? -100 : 160;
-      blueprintChapter.style.left = linear.matches ? "" : `${blueprintX}px`;
-      blueprintChapter.style.top = linear.matches ? "" : `${blueprintY}px`;
-      const blueprintWidth = blueprintChapter.offsetWidth;
-      const blueprintHeight = blueprintChapter.offsetHeight;
-      const blueprintGalleryX = blueprintX - blueprintWidth / 2 + blueprintGallery.offsetLeft + blueprintGallery.offsetWidth / 2;
-      const blueprintGalleryY = blueprintY - blueprintHeight / 2 + blueprintGallery.offsetTop + blueprintGallery.offsetHeight / 2;
-      const blueprintPhotoFit = Math.min(width / (blueprintGallery.offsetWidth + 65), room / (blueprintGallery.offsetHeight + 55), 1.12);
-      const blueprintWidthFit = Math.min(width / (blueprintWidth + (width > 850 ? 130 : 46)), 1.06);
-      const blueprintHeightFit = room / (blueprintHeight + 45);
-      const blueprintReadingFit = width > 850 && blueprintHeightFit >= 0.8
-        ? Math.min(blueprintWidthFit, blueprintHeightFit) : blueprintWidthFit;
-      const blueprintOverflow = Math.max(0, blueprintHeight - room / blueprintReadingFit);
-      blueprintFrames = [
-        { ...rocketFrames[rocketFrames.length - 1], p: 0 },
-        { p: 0.34, x: blueprintGalleryX, y: blueprintGalleryY, z: blueprintPhotoFit, r: -1.5 },
-        { p: 0.64, x: blueprintX, y: blueprintY - blueprintOverflow / 2, z: blueprintReadingFit, r: 0 },
-        { p: 0.94, x: blueprintX + 8, y: blueprintY + blueprintOverflow / 2, z: blueprintReadingFit, r: 0 },
-        { p: 1, x: blueprintX + 12, y: blueprintY + blueprintOverflow / 2 + 5, z: blueprintReadingFit, r: 0 },
-      ];
-      const eventHostingX = blueprintX + (width > 850 ? 1700 : 1100);
-      const eventHostingY = width > 850 ? 180 : 90;
-      eventHostingChapter.style.left = linear.matches ? "" : `${eventHostingX}px`;
-      eventHostingChapter.style.top = linear.matches ? "" : `${eventHostingY}px`;
-      const eventHostingWidth = eventHostingChapter.offsetWidth;
-      const eventHostingHeight = eventHostingChapter.offsetHeight;
-      const eventHostingGalleryX = eventHostingX - eventHostingWidth / 2 + eventHostingGallery.offsetLeft + eventHostingGallery.offsetWidth / 2;
-      const eventHostingGalleryY = eventHostingY - eventHostingHeight / 2 + eventHostingGallery.offsetTop + eventHostingGallery.offsetHeight / 2;
-      const eventHostingPhotoFit = Math.min(width / (eventHostingGallery.offsetWidth + 65), room / (eventHostingGallery.offsetHeight + 55), 1.12);
-      const eventHostingWidthFit = Math.min(width / (eventHostingWidth + (width > 850 ? 130 : 46)), 1.06);
-      const eventHostingHeightFit = room / (eventHostingHeight + 45);
-      const eventHostingReadingFit = width > 850 && eventHostingHeightFit >= 0.8
-        ? Math.min(eventHostingWidthFit, eventHostingHeightFit) : eventHostingWidthFit;
-      const eventHostingOverflow = Math.max(0, eventHostingHeight - room / eventHostingReadingFit);
-      eventHostingFrames = [
-        { ...blueprintFrames[blueprintFrames.length - 1], p: 0 },
-        { p: 0.34, x: eventHostingGalleryX, y: eventHostingGalleryY, z: eventHostingPhotoFit, r: 1.5 },
-        { p: 0.60, x: eventHostingX, y: eventHostingY - eventHostingOverflow / 2, z: eventHostingReadingFit, r: 0 },
-        { p: 0.94, x: eventHostingX + 8, y: eventHostingY + eventHostingOverflow / 2, z: eventHostingReadingFit, r: 0 },
-        { p: 1, x: eventHostingX + 12, y: eventHostingY + eventHostingOverflow / 2 + 5, z: eventHostingReadingFit, r: 0 },
-      ];
-      const launchpadX = eventHostingX + (width > 850 ? 1700 : 1100);
-      const launchpadY = width > 850 ? -120 : 120;
-      launchpadChapter.style.left = linear.matches ? "" : `${launchpadX}px`;
-      launchpadChapter.style.top = linear.matches ? "" : `${launchpadY}px`;
-      const launchpadWidth = launchpadChapter.offsetWidth;
-      const launchpadHeight = launchpadChapter.offsetHeight;
-      const launchpadGalleryX = launchpadX - launchpadWidth / 2 + launchpadGallery.offsetLeft + launchpadGallery.offsetWidth / 2;
-      const launchpadGalleryY = launchpadY - launchpadHeight / 2 + launchpadGallery.offsetTop + launchpadGallery.offsetHeight / 2;
-      const launchpadPhotoFit = Math.min(width / (launchpadGallery.offsetWidth + 65), room / (launchpadGallery.offsetHeight + 55), 1.12);
-      const launchpadWidthFit = Math.min(width / (launchpadWidth + (width > 850 ? 130 : 46)), 1.06);
-      const launchpadHeightFit = room / (launchpadHeight + 45);
-      const launchpadReadingFit = width > 850 && launchpadHeightFit >= 0.8
-        ? Math.min(launchpadWidthFit, launchpadHeightFit) : launchpadWidthFit;
-      const launchpadOverflow = Math.max(0, launchpadHeight - room / launchpadReadingFit);
-      launchpadFrames = [
-        { ...eventHostingFrames[eventHostingFrames.length - 1], p: 0 },
-        { p: 0.34, x: launchpadGalleryX, y: launchpadGalleryY, z: launchpadPhotoFit, r: -1.5 },
-        { p: 0.62, x: launchpadX, y: launchpadY - launchpadOverflow / 2, z: launchpadReadingFit, r: 0 },
-        { p: 0.94, x: launchpadX + 8, y: launchpadY + launchpadOverflow / 2, z: launchpadReadingFit, r: 0 },
-        { p: 1, x: launchpadX + 12, y: launchpadY + launchpadOverflow / 2 + 5, z: launchpadReadingFit, r: 0 },
-      ];
-      if (home && indexChapter) {
-        const exit = launchpadFrames[launchpadFrames.length - 1];
-        const indexX = launchpadX + (width > 850 ? 1120 : 780);
-        const indexY = exit.y + (width > 850 ? 360 : 200);
-        indexChapter.style.left = linear.matches ? "" : `${indexX}px`;
-        indexChapter.style.top = linear.matches ? "" : `${indexY}px`;
-        const indexWidth = indexChapter.offsetWidth;
-        const indexHeight = indexChapter.offsetHeight;
-        const indexFit = Math.min(width / (indexWidth + (width > 850 ? 130 : 46)), room / (indexHeight + 40), 1);
-        indexFrames = [
-          { ...exit, p: 0 },
-          { p: 0.23, x: exit.x + 140, y: exit.y + 60, z: Math.min(exit.z, indexFit) * 0.76, r: -1 },
-          { p: 0.58, x: indexX - 80, y: indexY - 30, z: indexFit * 0.9, r: 1 },
-          { p: 0.88, x: indexX, y: indexY, z: indexFit, r: 0 },
-          { p: 1, x: indexX, y: indexY, z: indexFit, r: 0 },
-        ];
-        const rows = indexChapter.querySelector<HTMLElement>("[data-index-rows]");
-        if (rows) {
-          for (const [index, card] of [...rows.querySelectorAll<HTMLElement>("[data-index-card]")].entries()) {
-            // Offsets ignore transforms, so resizing never measures a half-open stack.
-            card.style.setProperty("--stack-y", `${rows.offsetHeight / 2 - card.offsetTop - card.offsetHeight / 2 + index * 4}px`);
-          }
-          const lastCard = rows.lastElementChild as HTMLElement | null;
-          if (hasContact && lastCard) {
-            // Derive the origin from the settled camera and layout offsets.
-            // A resize during an earlier chapter must not move the ink's source.
-            const x = width / 2 + (-indexWidth / 2 + rows.offsetLeft + lastCard.offsetLeft + lastCard.offsetWidth * 0.68) * indexFit;
-            const y = height / 2 + 25 + (-indexHeight / 2 + rows.offsetTop + lastCard.offsetTop + lastCard.offsetHeight * 0.8) * indexFit;
-            const radius = Math.hypot(Math.max(x, width - x), Math.max(y, height - y));
-            page.style.setProperty("--wash-x", `${x}px`);
-            page.style.setProperty("--wash-y", `${y}px`);
-            page.style.setProperty("--wash-size", `${radius * 3.6}px`);
-          }
-        }
-      }
-      if (contactContent) {
-        const style = window.getComputedStyle(contactContent);
-        // Preserve the old section's cloud canvas and vertical parallax, rather
-        // than redistributing the artwork around the full-screen wash stage.
-        contactCloudHeight = contactContent.offsetHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom) + 310;
-        page.style.setProperty("--contact-cloud-height", `${contactCloudHeight}px`);
-      }
+      ({ start, travel, height, width, contactCloudHeight, photoCenter, introOverflow,
+        sunEndX, sunEndY, cameraFrames, pinkFrames, hackathonFrames, universityFrames,
+        creatorFrames, growthFrames, oroProjectFrames, rocketFrames, blueprintFrames,
+        eventHostingFrames, launchpadFrames, indexFrames, chapterBounds } = measureStory({
+          page, runway, stage, photo, intro, sun, chapter, gallery, pinkChapter, pinkGallery,
+          hackathonChapter, hackathonGallery, universityChapter, universityGallery,
+          creatorChapter, creatorGallery, growthChapter, growthGallery, oroProjectChapter,
+          oroProjectGallery, rocketChapter, rocketGallery, blueprintChapter, blueprintGallery,
+          eventHostingChapter, eventHostingGallery, launchpadChapter, launchpadGallery,
+          indexChapter, contactContent,
+        }, { home, hasContact, linear: linear.matches }));
+    };
+    const queueMeasurement = () => {
+      needsMeasurement = true;
       schedule();
     };
-    const resize = new ResizeObserver(measure);
+    // Observe actual layout changes. Mobile browser chrome can resize the visual
+    // viewport without changing this stable svh stage, so it needs no remeasure.
+    const resize = new ResizeObserver(queueMeasurement);
     resize.observe(stage);
     resize.observe(intro);
     resize.observe(chapter);
@@ -703,6 +528,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     if (intro.firstElementChild) resize.observe(intro.firstElementChild);
     measure();
     followHash();
+    schedule();
     window.addEventListener("scroll", schedule, { passive: true });
     hackathonGallery.addEventListener("focusin", focusProject);
     creatorGallery.addEventListener("focusin", focusCreatorProfile);
@@ -713,8 +539,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     contactStage?.addEventListener("keydown", bridgeContactFocus);
     document.addEventListener("click", jumpToChapter);
     window.addEventListener("hashchange", followHash);
-    window.addEventListener("resize", measure);
-    linear.addEventListener("change", measure);
+    linear.addEventListener("change", queueMeasurement);
     return () => {
       window.removeEventListener("scroll", schedule);
       hackathonGallery.removeEventListener("focusin", focusProject);
@@ -726,8 +551,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       contactStage?.removeEventListener("keydown", bridgeContactFocus);
       document.removeEventListener("click", jumpToChapter);
       window.removeEventListener("hashchange", followHash);
-      window.removeEventListener("resize", measure);
-      linear.removeEventListener("change", measure);
+      linear.removeEventListener("change", queueMeasurement);
       resize.disconnect();
       if (frame !== null) window.cancelAnimationFrame(frame);
     };

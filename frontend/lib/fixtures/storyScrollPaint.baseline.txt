@@ -1,0 +1,175 @@
+// Approved animation reference from commit 2324e048f40dd64caf0fd607f2069b4cc31bdc73.
+// Source fixture only: tests extract these functions; this is not bundled by the site.
+const cameraAt = (progress: number, points = cameraFrames) => {
+      const keys = ["x", "y", "z", "r"] as const;
+      const value = (index: number, key: typeof keys[number]) => key === "z" ? Math.log(points[index][key]) : points[index][key];
+      const tangent = (index: number, key: typeof keys[number]) => {
+        if (index === 0 || index === points.length - 1) return 0;
+        const a = (value(index, key) - value(index - 1, key)) / (points[index].p - points[index - 1].p);
+        const b = (value(index + 1, key) - value(index, key)) / (points[index + 1].p - points[index].p);
+        return a * b <= 0 ? 0 : 2 * a * b / (a + b);
+      };
+      let index = points.findIndex((point, i) => i < points.length - 1 && progress >= point.p && progress <= points[i + 1].p);
+      if (index < 0) index = points.length - 2;
+      const span = points[index + 1].p - points[index].p;
+      const t = clamp((progress - points[index].p) / span);
+      const camera = { x: 0, y: 0, z: 1, r: 0 };
+      for (const key of keys) {
+        const result = (2 * t ** 3 - 3 * t ** 2 + 1) * value(index, key)
+          + (t ** 3 - 2 * t ** 2 + t) * span * tangent(index, key)
+          + (-2 * t ** 3 + 3 * t ** 2) * value(index + 1, key)
+          + (t ** 3 - t ** 2) * span * tangent(index + 1, key);
+        camera[key] = key === "z" ? Math.exp(result) : result;
+      }
+      return camera;
+    };
+
+const paint = () => {
+      frame = null;
+      const still = linear.matches;
+      const distance = Math.max(0, window.scrollY - start);
+      // Keep the approved hero's original four viewport scroll distance.
+      const p = clamp(distance / (height * 4));
+      const q = still ? 1 : clamp((distance - height * 4) / (height * 2.8));
+      const pinkProgress = still ? 1 : clamp((distance - height * 6.8) / (height * 3.6));
+      const hackathonProgress = still ? 1 : clamp((distance - height * 10.4) / (height * 4));
+      const universityProgress = still ? 1 : clamp((distance - height * 14.4) / (height * 3.2));
+      const creatorProgress = still ? 1 : clamp((distance - height * 17.6) / (height * 4));
+      const growthProgress = still ? 1 : clamp((distance - height * 21.6) / (height * 3.2));
+      const oroProjectProgress = still ? 1 : clamp((distance - height * 24.8) / (height * 4));
+      const rocketProgress = still ? 1 : clamp((distance - height * 28.8) / (height * 3.2));
+      const blueprintProgress = still ? 1 : clamp((distance - height * 32) / (height * 3.6));
+      const eventHostingProgress = still ? 1 : clamp((distance - height * 35.6) / (height * 3.6));
+      const launchpadProgress = still ? 1 : clamp((distance - height * 39.2) / (height * 3.6));
+      const indexProgress = home && indexChapter ? clamp((distance - height * 42.8) / (height * 3.2)) : 0;
+      const indexOpen = still ? 1 : ease(indexProgress, 0.32, 0.86);
+      const contactProgress = hasContact && !still ? clamp((distance - height * 46) / (height * 2.2)) : 0;
+      const washDrift = still ? 0 : ease(contactProgress, 0.08, 0.72);
+      const camera = still ? { x: 0, y: 0, z: 1, r: 0 }
+        : indexProgress > 0 ? cameraAt(indexProgress, indexFrames)
+        : launchpadProgress > 0 ? cameraAt(launchpadProgress, launchpadFrames)
+        : eventHostingProgress > 0 ? cameraAt(eventHostingProgress, eventHostingFrames)
+        : blueprintProgress > 0 ? cameraAt(blueprintProgress, blueprintFrames)
+        : rocketProgress > 0 ? cameraAt(rocketProgress, rocketFrames)
+        : oroProjectProgress > 0 ? cameraAt(oroProjectProgress, oroProjectFrames)
+        : growthProgress > 0 ? cameraAt(growthProgress, growthFrames)
+        : creatorProgress > 0 ? cameraAt(creatorProgress, creatorFrames)
+        : universityProgress > 0 ? cameraAt(universityProgress, universityFrames)
+        : hackathonProgress > 0 ? cameraAt(hackathonProgress, hackathonFrames)
+        : pinkProgress > 0 ? cameraAt(pinkProgress, pinkFrames) : cameraAt(q);
+      // Hold the settled index camera, then let its composition float away
+      // while the pigment expands in screen space beneath it.
+      camera.y += washDrift * height * 0.16 / camera.z;
+      camera.z *= 1 - washDrift * 0.03;
+      const leave = still ? 0 : ease(p, 0.015, 0.25);
+      // One diagonal path and speed curve, with no handoff between cloud phases.
+      const cloudTravel = still ? 0 : ease(p, 0, 0.4);
+      const farTravel = cloudTravel * Math.max(300, height * 0.75);
+      const midTravel = cloudTravel * Math.max(520, height * 0.85);
+      const nearTravel = cloudTravel * (height + 350);
+      const arrival = still ? 1 : ease(p, 0.16, 0.34);
+      const placement = still ? 1 : ease(p, 0.36, 0.57);
+      const sunlight = still ? 0 : ease(p, 0.04, 0.6);
+      const story = still ? 1 : ease(p, 0.44, 0.73);
+      const introReadY = still ? 0 : introOverflow * (0.5 - ease(p, 0.64, 0.96));
+      const educationReveal = still ? 1 : ease(p, 0.71, 0.83);
+      const values: Record<string, string | number> = {
+        "--progress": clamp(distance / travel),
+        "--journey-x": `${-camera.x}px`,
+        "--journey-y": `${-camera.y}px`,
+        "--journey-scale": camera.z,
+        "--journey-turn": `${camera.r}deg`,
+        "--oro-download-progress": still ? 1 : ease(oroProjectProgress, 0.84, 0.94),
+        "--event-photo-spread": still ? 1 : ease(eventHostingProgress, 0.08, 0.42),
+        "--launchpad-photo-spread": still ? 1 : ease(launchpadProgress, 0.08, 0.42),
+        "--launchpad-revenue": still ? 1 : ease(launchpadProgress, 0.76, 0.9),
+        "--index-open": indexOpen,
+        "--index-closed": 1 - indexOpen,
+        "--index-heading": still ? 1 : ease(indexProgress, 0.3, 0.56),
+        "--index-arrival": still ? 1 : ease(indexProgress, 0.08, 0.32),
+        "--index-departure": still ? 0 : ease(indexProgress, 0.36, 0.7),
+        "--index-wash": washDrift,
+        "--wash-scale": 0.014 + ease(contactProgress, 0.02, 0.76) * 0.986,
+        "--wash-pigment": ease(contactProgress, 0.015, 0.16),
+        "--wash-flow": washDrift,
+        "--wash-fill": ease(contactProgress, 0.64, 0.84),
+        "--contact-cloud-travel": `${still ? 0 : contactCloudHeight * ease(contactProgress, 0.42, 1)}px`,
+        "--contact-clouds": still ? 0.5 : ease(contactProgress, 0.5, 0.86),
+        "--contact-heading": still ? 1 : ease(contactProgress, 0.57, 0.78),
+        "--contact-subline": still ? 1 : ease(contactProgress, 0.64, 0.83),
+        "--contact-button": still ? 1 : ease(contactProgress, 0.72, 0.9),
+        "--contact-socials": still ? 1 : ease(contactProgress, 0.77, 0.95),
+        "--sky-opacity": still ? 1 : 1 - ease(p, 0.12, 0.55),
+        "--hero-y": `${-leave * height * 0.32}px`,
+        "--hero-scale": 1 - leave * 0.07,
+        "--hero-opacity": still ? 1 : 1 - ease(p, 0.065, 0.245),
+        "--hero-blur": `${leave * 3}px`,
+        "--cue-opacity": still ? 0 : 1 - ease(p, 0.005, 0.085),
+        "--cloud-opacity": still ? 0.4 : 1 - ease(p, 0.36, 0.55),
+        "--far-x": `${-farTravel * 0.18}px`,
+        "--far-y": `${-farTravel}px`,
+        "--mid-x": `${-midTravel * 0.18}px`,
+        "--mid-y": `${-midTravel}px`,
+        "--near-x": `${-nearTravel * 0.18}px`,
+        "--near-y": `${90 - nearTravel}px`,
+        "--sun-x": `${sunlight * sunEndX + Math.sin(sunlight * Math.PI) * width * 0.19}px`,
+        "--sun-y": `${sunlight * (sunEndY + introReadY) - Math.sin(sunlight * Math.PI) * height * 0.05}px`,
+        "--sun-turn": `${sunlight * 115}deg`,
+        "--sun-scale": 1 - sunlight * 0.74,
+        "--sun-opacity": still ? 1 : 1 - ease(q, 0, 0.22),
+        "--photo-y": `${still ? 0 : (1 - arrival) * height * 0.85 + (1 - placement) * (height * 0.52 - photoCenter)}px`,
+        "--photo-scale": 1.7 - placement * 0.7,
+        "--photo-turn": `${10 - placement * 15}deg`,
+        "--photo-opacity": arrival,
+        "--photo-shadow": 0.35 + placement * 0.65,
+        "--story-y": `${(1 - story) * 70}px`,
+        "--intro-read-y": `${introReadY}px`,
+        "--education-opacity": educationReveal,
+        "--education-y": `${(1 - educationReveal) * 35}px`,
+      };
+      for (let i = 0; i < 3; i++) {
+        values[`--clause-${i}`] = still ? 1 : ease(p, 0.48 + i * 0.065, 0.59 + i * 0.065);
+        values[`--pink-result-${i}`] = still ? 1 : ease(pinkProgress, 0.63 + i * 0.07, 0.73 + i * 0.07);
+        values[`--oro-result-${i}`] = still ? 1 : ease(oroProjectProgress, 0.63 + i * 0.07, 0.73 + i * 0.07);
+        values[`--rocket-result-${i}`] = still ? 1 : ease(rocketProgress, 0.63 + i * 0.07, 0.73 + i * 0.07);
+        values[`--event-result-${i}`] = still ? 1 : ease(eventHostingProgress, 0.63 + i * 0.07, 0.73 + i * 0.07);
+      }
+      for (let i = 0; i < 4; i++) {
+        values[`--draw-${i}`] = still ? 1 : ease(p, 0.55 + i * 0.05, 0.64 + i * 0.05);
+        values[`--index-label-${i}`] = still ? 1 : ease(indexProgress, 0.5 + i * 0.05, 0.64 + i * 0.05);
+      }
+      for (let i = 0; i < introBackground.length; i++) {
+        values[`--background-item-${i}`] = still ? 1 : ease(p, 0.71 + i * 0.042, 0.78 + i * 0.042);
+      }
+      for (const [key, value] of Object.entries(values)) page.style.setProperty(key, String(value));
+      journey.style.transform = `translate(${width / 2}px,${height / 2 + 25}px) scale(${camera.z}) rotate(${camera.r}deg) translate(${-camera.x}px,${-camera.y}px)`;
+      journey.style.opacity = String(still ? 1 : 1 - ease(contactProgress, 0.12, 0.64));
+      journey.style.visibility = still || distance > height * 3.9 ? "visible" : "hidden";
+      // Hidden hero controls leave the keyboard order as the story takes over.
+      hero.inert = !still && p > 0.245;
+      hero.setAttribute("aria-hidden", String(!still && p > 0.245));
+      intro.setAttribute("aria-hidden", String(!still && (p < 0.18 || q > 0.42)));
+      chapter.setAttribute("aria-hidden", String(!still && (q < 0.16 || pinkProgress > 0.4)));
+      pinkChapter.setAttribute("aria-hidden", String(!still && (pinkProgress < 0.14 || hackathonProgress > 0.3)));
+      hackathonChapter.setAttribute("aria-hidden", String(!still && (hackathonProgress < 0.12 || universityProgress > 0.3)));
+      hackathonChapter.inert = !still && (hackathonProgress < 0.12 || universityProgress > 0.3);
+      universityChapter.setAttribute("aria-hidden", String(!still && (universityProgress < 0.14 || creatorProgress > 0.3)));
+      creatorChapter.setAttribute("aria-hidden", String(!still && (creatorProgress < 0.12 || growthProgress > 0.3)));
+      creatorChapter.inert = !still && (creatorProgress < 0.12 || growthProgress > 0.3);
+      growthChapter.setAttribute("aria-hidden", String(!still && (growthProgress < 0.14 || oroProjectProgress > 0.3)));
+      oroProjectChapter.setAttribute("aria-hidden", String(!still && (oroProjectProgress < 0.14 || rocketProgress > 0.3)));
+      oroProjectChapter.inert = !still && (oroProjectProgress < 0.14 || rocketProgress > 0.3);
+      rocketChapter.setAttribute("aria-hidden", String(!still && (rocketProgress < 0.14 || blueprintProgress > 0.3)));
+      blueprintChapter.setAttribute("aria-hidden", String(!still && (blueprintProgress < 0.14 || eventHostingProgress > 0.3)));
+      eventHostingChapter.setAttribute("aria-hidden", String(!still && (eventHostingProgress < 0.14 || launchpadProgress > 0.3)));
+      launchpadChapter.setAttribute("aria-hidden", String(!still && (launchpadProgress < 0.14 || indexProgress > 0.6)));
+      if (indexChapter) {
+        indexChapter.setAttribute("aria-hidden", String(!still && (indexProgress < 0.3 || contactProgress > 0.6)));
+        indexChapter.inert = !still && contactProgress > 0.6;
+      }
+      if (contactStage) {
+        contactStage.dataset.contactVisible = String(still || contactProgress > 0.5);
+        contactStage.dataset.contactActive = String(still || contactProgress > 0.84);
+        contactStage.setAttribute("aria-hidden", String(!still && contactProgress < 0.57));
+      }
+    };
