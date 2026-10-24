@@ -13,8 +13,6 @@ export default function ParallaxRoot() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
     const layers = [...document.querySelectorAll<HTMLElement>("[data-speed]")].map(
       (el) => ({
         el,
@@ -29,6 +27,10 @@ export default function ParallaxRoot() {
         scene: (el.closest("[data-scene]") ?? el.parentElement) as HTMLElement,
       }),
     );
+
+    // The scrolling story owns its motion; do not schedule empty global frames.
+    if (layers.length === 0 && locals.length === 0) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const reset = () => {
       for (const { el } of layers) {

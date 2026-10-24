@@ -39,7 +39,7 @@ export default function BlueprintChapter({ chapterRef, galleryRef }: BlueprintCh
       </div>
       <div ref={galleryRef} className={styles.gallery} data-blueprint-gallery>
         <figure className={`${styles.print} ${styles.dinnerPrint}`} data-blueprint-photo="team-dinner">
-          <Image src={teamDinner} alt="The UW Blueprint team together outside Kinton Ramen" sizes="(max-width: 850px) 392px, 450px" loading="eager" />
+          <Image src={teamDinner} alt="The UW Blueprint team together outside Kinton Ramen" sizes="(max-width: 850px) 392px, 450px" loading="lazy" />
         </figure>
       </div>
     </article>

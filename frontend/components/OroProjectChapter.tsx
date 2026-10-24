@@ -44,7 +44,7 @@ export default function OroProjectChapter({ chapterRef, galleryRef }: OroProject
             width={1237}
             height={2688}
             sizes="(max-width: 850px) 190px, 230px"
-            loading="eager"
+            loading="lazy"
             className={styles.screenshot}
           />
         </figure>
@@ -55,7 +55,7 @@ export default function OroProjectChapter({ chapterRef, galleryRef }: OroProject
             width={1237}
             height={2688}
             sizes="(max-width: 850px) 190px, 230px"
-            loading="eager"
+            loading="lazy"
             className={styles.screenshot}
           />
         </figure>

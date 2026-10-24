@@ -35,18 +35,18 @@ export default function LaunchpadChapter({ chapterRef, galleryRef }: LaunchpadCh
       </div>
       <div ref={galleryRef} className={styles.gallery} data-launchpad-gallery>
         <figure className={`${styles.print} ${styles.momentPrint}`} data-launchpad-photo="moment">
-          <Image src={moment} alt="Sunny with another contestant at the Stan Launchpad lodge" sizes="(max-width: 850px) 250px, 300px" loading="eager" />
+          <Image src={moment} alt="Sunny with another contestant at the Stan Launchpad lodge" sizes="(max-width: 850px) 250px, 300px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.lodgePrint}`} data-launchpad-photo="lodge">
-          <Image src={lodge} alt="A photo from the Stan Launchpad lodge" sizes="(max-width: 850px) 190px, 230px" loading="eager" />
+          <Image src={lodge} alt="A photo from the Stan Launchpad lodge" sizes="(max-width: 850px) 190px, 230px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.groupPrint}`} data-launchpad-photo="group">
           <div className={styles.groupWindow}>
-            <Image src="/assets/story/launchpad/group.jpg" alt="A group photo at Stan Launchpad" width={1920} height={1440} unoptimized loading="eager" />
+            <Image src="/assets/story/launchpad/group.jpg" alt="A group photo at Stan Launchpad" width={1920} height={1440} unoptimized loading="lazy" />
           </div>
         </figure>
         <figure className={`${styles.print} ${styles.selfiePrint}`} data-launchpad-photo="selfie">
-          <Image src={selfie} alt="A selfie from Stan Launchpad" sizes="(max-width: 850px) 180px, 210px" loading="eager" />
+          <Image src={selfie} alt="A selfie from Stan Launchpad" sizes="(max-width: 850px) 180px, 210px" loading="lazy" />
         </figure>
       </div>
     </article>

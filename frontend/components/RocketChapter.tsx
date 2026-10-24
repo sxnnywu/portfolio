@@ -37,7 +37,7 @@ export default function RocketChapter({ chapterRef, galleryRef }: RocketChapterP
       </div>
       <div ref={galleryRef} className={styles.gallery} data-rocket-gallery>
         <figure className={styles.print}>
-          <Image src={rocketTeam} alt="Sunny with the Rocket team" sizes="(max-width: 850px) 410px, 490px" loading="eager" />
+          <Image src={rocketTeam} alt="Sunny with the Rocket team" sizes="(max-width: 850px) 410px, 490px" loading="lazy" />
         </figure>
       </div>
     </article>

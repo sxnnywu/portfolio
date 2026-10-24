@@ -7,7 +7,7 @@ import Cloud from "@/components/Cloud";
 import HeroCTA from "@/components/HeroCTA";
 import HeroRoles from "@/components/HeroRoles";
 import Logo from "@/components/Logo";
-import Sun, { SunFilterDefs } from "@/components/Sun";
+import Sun from "@/components/Sun";
 import Typed, { afterTyping, sequenceEnd } from "@/components/Typed";
 import TheatreChapter from "@/components/TheatreChapter";
 import PinkStairsChapter from "@/components/PinkStairsChapter";
@@ -24,6 +24,7 @@ import JourneyIndex from "@/components/JourneyIndex";
 import WatercolourWash from "@/components/WatercolourWash";
 import { education, heroHeadline, heroTagline, introBackground } from "@/lib/data";
 import { createStoryFrameWriter } from "@/lib/storyFrameWriter";
+import { createStoryImagePreparer } from "@/lib/storyImagePreparation";
 import { measureStory, type StoryMeasurements } from "@/lib/storyMeasurements";
 import styles from "./ScrollStoryPreview.module.css";
 
@@ -154,6 +155,8 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
     const midClouds = page.querySelector<HTMLElement>(`.${styles.midClouds}`);
     const nearClouds = page.querySelector<HTMLElement>(`.${styles.nearClouds}`);
     const wash = page.querySelector<HTMLElement>("[data-watercolour-wash]");
+    // Prepare the closing textures during Launchpad, before the index/contact transition.
+    const imagePreparer = createStoryImagePreparer(wash ? [...chapters, wash] : chapters);
     const polaroid = photo.firstElementChild as HTMLElement;
     const story = intro.querySelector<HTMLElement>(`.${styles.story}`);
     const schools = intro.querySelector<HTMLElement>(`.${styles.education}`);
@@ -282,6 +285,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
         // would let chapters show through while the hero is still on screen.
         writer.style(element, "visibility", visibleChapters.has(element) ? "inherit" : "hidden");
       }
+      imagePreparer.prepare(currentChapter, visibleChapters, still);
       const leave = still ? 0 : ease(p, 0.015, 0.25);
       // One diagonal path and speed curve, with no handoff between cloud phases.
       const cloudTravel = still ? 0 : ease(p, 0, 0.4);
@@ -553,6 +557,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
       window.removeEventListener("hashchange", followHash);
       linear.removeEventListener("change", queueMeasurement);
       resize.disconnect();
+      imagePreparer.dispose();
       if (frame !== null) window.cancelAnimationFrame(frame);
     };
   }, [home, hasContact]);
@@ -569,7 +574,6 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
           .${styles.contactStage} [data-contact-clouds] { opacity: .5; transform: none; }
         `}</style>
       </noscript>}
-      <SunFilterDefs />
       {!home && <header className={styles.labBar}>
         <Link href="/" className={styles.backLink}>← Portfolio</Link>
         <span className={styles.label}>Scroll to unfold</span>
@@ -598,7 +602,7 @@ export default function ScrollStoryPreview({ home = false, children }: { home?: 
             </div>
           </div>
           <div className={styles.heroAnchor}>
-            <div ref={heroRef} className={styles.heroCopy}>
+            <div ref={heroRef} className={styles.heroCopy} data-story-hero>
               <Typed as="h1" className={styles.greeting} text={heroHeadline}>
                 Hey, I&apos;m <span className={styles.signature}>Sunny</span>
               </Typed>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "artwork": "node scripts/prerender-story-art.mjs",
     "dev": "node node_modules/next/dist/bin/next dev --port 5173",
     "build": "node node_modules/next/dist/bin/next build",
     "start": "node node_modules/next/dist/bin/next start --port 5173",

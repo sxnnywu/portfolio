@@ -7,7 +7,7 @@ import Cloud from "@/components/Cloud";
 import HeroCTA from "@/components/HeroCTA";
 import HeroRoles from "@/components/HeroRoles";
 import Logo from "@/components/Logo";
-import Sun, { SunFilterDefs } from "@/components/Sun";
+import Sun from "@/components/Sun";
 import { education } from "@/lib/data";
 import { gradient } from "@/lib/tokens";
 import styles from "./MotionPlayground.module.css";
@@ -139,7 +139,6 @@ export default function MotionPlayground() {
 
   return (
     <main ref={root} className={styles.page} data-motion-playground data-mode={active.id}>
-      <SunFilterDefs />
       <header className={styles.toolbar}>
         <Link href="/" className={styles.backLink}>← Portfolio</Link>
         <div className={styles.chooser}>

@@ -51,7 +51,7 @@ export default function CreatorChapter({ chapterRef, galleryRef }: CreatorChapte
                   width={phone.screenshot.width}
                   height={phone.screenshot.height}
                   sizes="(max-width: 850px) 200px, 240px"
-                  loading="eager"
+                  loading="lazy"
                 />
               </div>
             </div>

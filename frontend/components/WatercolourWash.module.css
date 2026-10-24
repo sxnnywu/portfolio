@@ -30,32 +30,21 @@
 .pool {
   position: absolute;
   inset: 0;
-  border-radius: 43% 57% 61% 39% / 54% 43% 57% 46%;
-  mask-image: radial-gradient(closest-side, #000 52%, rgb(0 0 0 / .72) 70%, rgb(0 0 0 / .2) 86%, transparent 100%);
 }
 
-.pigment {
-  background:
-    radial-gradient(ellipse at 44% 54%, rgb(158 203 231 / .74) 0%, rgb(176 212 236 / .68) 38%, transparent 72%),
-    radial-gradient(ellipse at 57% 42%, rgb(170 207 236 / .6) 0%, rgb(194 223 242 / .54) 42%, transparent 74%),
-    radial-gradient(ellipse at 48% 48%, #d1e5f2 18%, rgb(183 217 239 / .58) 58%, transparent 76%);
+.texture {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .edge {
   inset: 3% -4% -2% 2%;
-  border-radius: 57% 43% 42% 58% / 46% 59% 41% 54%;
-  background:
-    radial-gradient(ellipse at 34% 59%, rgb(153 195 227 / .28) 12%, transparent 55%),
-    radial-gradient(ellipse at 67% 37%, rgb(166 205 235 / .32) 10%, transparent 57%);
   transform: rotate(calc(-8deg + var(--wash-flow, 0) * 13deg));
 }
 
 .pool {
   inset: 13% 8% 12% 9%;
-  border-radius: 48% 52% 57% 43% / 61% 43% 57% 39%;
-  background:
-    radial-gradient(ellipse at 57% 54%, rgb(142 190 225 / .18), transparent 63%),
-    radial-gradient(ellipse at 38% 43%, rgb(228 240 248 / .7), transparent 68%);
   transform: rotate(calc(5deg - var(--wash-flow, 0) * 9deg));
 }
 

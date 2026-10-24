@@ -42,19 +42,19 @@ export default function EventHostingChapter({ chapterRef, galleryRef }: EventHos
       </div>
       <div ref={galleryRef} className={styles.gallery} data-event-hosting-gallery>
         <figure className={`${styles.print} ${styles.firstPrint}`} data-event-photo="gathering">
-          <Image src={eventGathering} alt="Attendees mingling beneath string lights at an outdoor event" sizes="(max-width: 850px) 280px, 340px" loading="eager" />
+          <Image src={eventGathering} alt="Attendees mingling beneath string lights at an outdoor event" sizes="(max-width: 850px) 280px, 340px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.secondPrint}`} data-event-photo="community">
-          <Image src={community} alt="Sunny speaking to a room full of event attendees" sizes="(max-width: 850px) 280px, 340px" loading="eager" />
+          <Image src={community} alt="Sunny speaking to a room full of event attendees" sizes="(max-width: 850px) 280px, 340px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.thirdPrint}`} data-event-photo="conversations">
-          <Image src={conversations} alt="Sunny chatting with guests at the event" sizes="(max-width: 850px) 280px, 340px" loading="eager" />
+          <Image src={conversations} alt="Sunny chatting with guests at the event" sizes="(max-width: 850px) 280px, 340px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.fourthPrint}`} data-event-photo="dj">
-          <Image src={dj} alt="A DJ playing music at the event" sizes="(max-width: 850px) 280px, 340px" loading="eager" />
+          <Image src={dj} alt="A DJ playing music at the event" sizes="(max-width: 850px) 280px, 340px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.fifthPrint}`} data-event-photo="event-conversation">
-          <Image src={eventConversation} alt="Sunny chatting with an attendee at a bar counter" sizes="(max-width: 850px) 190px, 220px" loading="eager" />
+          <Image src={eventConversation} alt="Sunny chatting with an attendee at a bar counter" sizes="(max-width: 850px) 190px, 220px" loading="lazy" />
         </figure>
       </div>
     </article>

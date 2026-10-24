@@ -37,7 +37,7 @@ export default function GrowthChapter({ chapterRef, galleryRef }: GrowthChapterP
             src={stan}
             alt="Sunny standing beside the Stan office sign"
             sizes="(max-width: 850px) 230px, 260px"
-            loading="eager"
+            loading="lazy"
           />
           <figcaption>Stan</figcaption>
         </figure>
@@ -46,7 +46,7 @@ export default function GrowthChapter({ chapterRef, galleryRef }: GrowthChapterP
             src={polarity}
             alt="A group photo with the Polarity team"
             sizes="(max-width: 850px) 260px, 300px"
-            loading="eager"
+            loading="lazy"
           />
           <figcaption>Polarity</figcaption>
         </figure>

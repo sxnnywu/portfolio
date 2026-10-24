@@ -85,7 +85,7 @@ export default function HackathonChapter({ chapterRef, galleryRef }: HackathonCh
               src={project.image}
               alt={project.alt}
               sizes="(max-width: 850px) 340px, 420px"
-              loading="eager"
+              loading="lazy"
               className={styles.screenshot}
             />
             <div className={styles.projectDetails}>

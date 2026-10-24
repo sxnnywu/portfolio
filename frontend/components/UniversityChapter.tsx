@@ -35,7 +35,7 @@ export default function UniversityChapter({ chapterRef, galleryRef }: University
       <div ref={galleryRef} className={styles.gallery} data-university-gallery>
         <section className={`${styles.sheet} ${styles.csSheet}`} aria-label="Computer science at the University of Waterloo">
           <div className={styles.sheetHeader}>
-            <Image src={waterloo} alt="" width={44} height={44} loading="eager" className={styles.logo} />
+            <Image src={waterloo} alt="" width={44} height={44} loading="lazy" className={styles.logo} />
             <span className={styles.degree}>CS</span>
           </div>
           <h3>Computer science</h3>
@@ -44,7 +44,7 @@ export default function UniversityChapter({ chapterRef, galleryRef }: University
         <span className={styles.ampersand} aria-hidden="true">&amp;</span>
         <section className={`${styles.sheet} ${styles.bbaSheet}`} aria-label="Business administration at Lazaridis School of Business, Wilfrid Laurier University">
           <div className={styles.sheetHeader}>
-            <Image src={laurier} alt="" width={44} height={44} loading="eager" className={styles.logo} />
+            <Image src={laurier} alt="" width={44} height={44} loading="lazy" className={styles.logo} />
             <span className={styles.degree}>BBA</span>
           </div>
           <h3>Business administration</h3>

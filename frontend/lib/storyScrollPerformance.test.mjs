@@ -4,6 +4,7 @@ import test from "node:test";
 import vm from "node:vm";
 import ts from "typescript";
 import { createStoryFrameWriter } from "./storyFrameWriter.ts";
+import { createStoryImagePreparer } from "./storyImagePreparation.ts";
 
 // Keep the approved animation as the regression reference after this change lands.
 const originalSource = readFileSync(new URL("./fixtures/storyScrollPaint.baseline.txt", import.meta.url), "utf8");
@@ -110,7 +111,7 @@ function paintHarness(source, width, height, linear = false) {
     ...result.elements, ...result.measured,
     window: result.window, home: true, hasContact: true,
     linear: { matches: linear }, frame: null,
-    introBackground: Array(4), clamp, ease, createStoryFrameWriter,
+    introBackground: Array(4), clamp, ease, createStoryFrameWriter, createStoryImagePreparer,
     styles: new Proxy({}, { get: (_, property) => property }),
   });
   vm.runInContext(transpile(`${setup}\nconst cameraAt = ${camera.text};\nconst paint = ${paint.text};`), context);

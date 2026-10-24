@@ -34,7 +34,7 @@ export default function PinkStairsChapter({ chapterRef, galleryRef }: PinkStairs
             src={planning}
             alt="Sunny and a colleague collaborating at a table"
             sizes="(max-width: 850px) 300px, 420px"
-            loading="eager"
+            loading="lazy"
           />
         </figure>
         <figure className={`${styles.print} ${styles.carePrint}`}>
@@ -42,7 +42,7 @@ export default function PinkStairsChapter({ chapterRef, galleryRef }: PinkStairs
             src={carePackages}
             alt="Handwritten notes and scrunchies laid out for care packages"
             sizes="(max-width: 850px) 148px, 225px"
-            loading="eager"
+            loading="lazy"
           />
         </figure>
         <figure className={`${styles.print} ${styles.communityPrint}`}>
@@ -50,7 +50,7 @@ export default function PinkStairsChapter({ chapterRef, galleryRef }: PinkStairs
             src={community}
             alt="Sunny and the team speaking with visitors at The Pink Stairs table"
             sizes="(max-width: 850px) 160px, 220px"
-            loading="eager"
+            loading="lazy"
           />
         </figure>
       </div>

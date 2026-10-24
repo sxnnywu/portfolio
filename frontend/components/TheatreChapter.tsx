@@ -30,13 +30,13 @@ export default function TheatreChapter({ chapterRef, galleryRef }: TheatreChapte
       <span className={styles.number} aria-hidden="true">01</span>
       <div ref={galleryRef} className={styles.gallery}>
         <figure className={`${styles.print} ${styles.mainPrint}`}>
-          <Image src={curtainCall} alt="Sunny and the cast taking a curtain call for a school play" sizes="(max-width: 850px) 340px, 440px" />
+          <Image src={curtainCall} alt="Sunny and the cast taking a curtain call for a school play" sizes="(max-width: 850px) 340px, 440px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.childhoodPrint}`}>
-          <Image src={danceKids} alt="Sunny performing in a childhood dance show" sizes="(max-width: 850px) 150px, 199px" />
+          <Image src={danceKids} alt="Sunny performing in a childhood dance show" sizes="(max-width: 850px) 150px, 199px" loading="lazy" />
         </figure>
         <figure className={`${styles.print} ${styles.backstagePrint}`}>
-          <Image src={backstage} alt="Backstage before a performance" sizes="(max-width: 850px) 151px, 216px" />
+          <Image src={backstage} alt="Backstage before a performance" sizes="(max-width: 850px) 151px, 216px" loading="lazy" />
         </figure>
       </div>
       <div className={styles.copy}>
