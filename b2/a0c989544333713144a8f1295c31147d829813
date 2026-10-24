@@ -1,0 +1,44 @@
+frontend/lib/storyScrollPerformance.test.mjs
+  s_e7cc0136fd1ff6::t_95ba6ea8afb7fd 161,173
+  s_e7cc0136fd1ff6::t_7acf4b83bb08f1 1-8,10-98,100-133,135-160,162-172,174-185,190-208,243
+  s_e7cc0136fd1ff6::t_7b74117de639ff 9,134,186-189
+  s_e7cc0136fd1ff6::t_cecad22bdfb756 99,209-242
+frontend/components/WatercolourWash.tsx
+  s_e7cc0136fd1ff6::t_7ec453fd8335a0 6
+frontend/lib/storyFrameWriter.test.mjs
+  s_e7cc0136fd1ff6::t_de0bfb1a79785d 1-64
+frontend/lib/storyFrameWriter.ts
+  s_e7cc0136fd1ff6::t_de0bfb1a79785d 1-38
+frontend/components/ScrollStoryPreview.tsx
+  s_e7cc0136fd1ff6::t_20f01db11e794f 271-274
+  s_e7cc0136fd1ff6::t_9271f30c344e93 403-406,408-409,411,446,454
+  s_e7cc0136fd1ff6::t_7ec453fd8335a0 26-27,143-145,147-160,162-173,175-195,260,262-270,275-284,365-366,370-374,376-392,394-395,398-401
+  s_e7cc0136fd1ff6::t_af9b64b21fb825 174
+  s_e7cc0136fd1ff6::t_014091290286b9 130,146,161,261,367-369,402,410,494-507,510-512,531,542,554
+frontend/lib/fixtures/storyScrollPaint.baseline.txt
+  s_4b9ec2da19d8e1::t_14a61d037d8579 1-175
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b2a0c989544333713144a8f1295c31147d829813",
+  "prompts": {},
+  "sessions": {
+    "s_4b9ec2da19d8e1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16b47-a415-7e41-b6eb-7fd112d1b5ca",
+        "model": "unknown"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    },
+    "s_e7cc0136fd1ff6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165b3-d1f8-7230-adc7-66f2bbaaf218",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Sunny Wu <w.sunny0618@gmail.com>"
+    }
+  }
+}
